@@ -1,0 +1,208 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Warehouse {
+    - warehouseId: String
+    - name: String
+    - address: String
+
+    + getName(): String
+    + getAddress(): String
+    + getWarehouseId(): String
+    + setName(name: String): void
+    + setAddress(location: Location)): void
+    + setWarehouseId(id: String): void
+}
+
+class User {
+    - name: String
+    - username: String
+    - password: String
+
+    + getName(): String
+    + getUsername(): String
+    + getPassword(): String
+    + setName(name: String): void
+    + setUsername(username: String)): void
+    + setPassword(id: String): void
+}
+
+class Manager extends User {
+    + generateReport(): void
+    + approveTransaction(transaction: Transaction): void
+}
+
+class Staff extends User {
+    + processTransaction(transaction: Transaction): void
+}
+
+class Supplier {
+    - supplierId: UUID
+    - name: String
+    - address: String
+    - contactInfo: String
+
+    + updateContactInfo(newInfo: String)
+}
+
+'========================================
+' PRODUCT HIERARCHY (CORE OF THE OOP MODEL)
+'========================================
+class Product {
+    # sku: String
+    # name: String
+    # description: String
+    # brand: String
+    # purchasePrice: double
+    # weightPerUnitKg: double
+    # volumePerUnitM3: double
+
+    + calculateStockValue(): double
+    + needsSpecialAttention(): boolean
+}
+
+class DryGoodProduct extends Product {
+    - quantity: int
+    - reorderPoint: int
+    - reorderQuantity: int
+    - unitsPerCase: int
+}
+
+class BatchedProduct extends Product {
+    - shelfLifeDays: int
+}
+
+class FreshProduct extends Product {
+  # soldByWeight: boolean
+}
+
+class FrozenProduct extends BatchedProduct {
+  # requiredTemp: double
+}
+
+' Helper class for BatchedProduct
+class Batch {
+    - quantity: int
+    - batchId: UUID
+    - batchNumber: String
+    - expiryDate: Date
+
+    + isExpired(): boolean
+    + getRemainingShelfLifeDays(): int
+}
+
+'========================================
+' STORAGE LOCATION HIERARCHY
+'========================================
+class StorageLocation {
+    # locationId: UUID
+    # locationCode: String
+    # locationType: String
+    # maxCapacity: double
+    + getItems(): List<StockLedger>
+    + getUtilization(): double
+    + canAccommodate(product: Product, quantity: double): boolean
+    + setStatus(status: LocationStatus): void
+}
+
+
+class StockLedger {
+    - quantity: double
+    + increaseQuantity(amount: double): void
+    + decreaseQuantity(amount: double): void
+    + getQuantity(): double
+    + isEmpty(): boolean
+}
+note right of StockLedger
+  This class tracks the exact quantity
+  of a specific Batch of a Product
+  at a specific Storage Location.
+end note
+
+
+'========================================
+' TRANSACTION HIERARCHY
+'========================================
+' Enum untuk status transaksi masuk
+enum InboundStatus {
+    AWAITING_ARRIVAL
+    RECEIVING
+    COMPLETED
+    COMPLETED_WITH_DISCREPANCY
+}
+
+' Enum untuk status transaksi keluar
+enum OutboundStatus {
+    PENDING_PICKING
+    PACKED
+    SHIPPED
+    COMPLETED
+}
+
+class Transaction {
+  # transactionId: UUID
+  # date: Timestamp
+  # notes: String
+}
+
+class InboundTransaction extends Transaction {
+    - supplierInvoiceNumber: String
+    - deliveryOrderNumber: String
+    - inspectionNotes: String
+    - status: InboundStatus
+
+    + addItem(product: Product, quantity: int, batchInfo: Batch): void
+    + verifyAgainstOrder(): boolean
+    + completeReceiving(): void
+    + cancel(): void
+}
+
+class OutboundTransaction extends Transaction {
+    - internalRequestId: String
+    - destinationAddress: String
+    - shippingMethod: String
+    - trackingNumber: String
+    - status: OutboundStatus
+
+    + generatePickingList(): void
+    + confirmItemPicked(product: Product, quantity: int, location: StorageLocation): void
+    + completeShipment(): void
+}
+
+class TransactionDetail {
+  - quantity: double
+  + calculateSubtotal(): double
+}
+
+'========================================
+' RELATIONSHIPS
+'========================================
+' --- Container Relationships ---
+Warehouse "1" *-- "0..*" User
+Warehouse "1" *-- "0..*" StorageLocation
+
+' --- Inheritance ---
+User <|-- Manager
+User <|-- Staff
+Product <|-- DryGoodProduct
+Product <|-- BatchedProduct
+Product <|-- FreshProduct
+BatchedProduct <|-- FrozenProduct
+Transaction <|-- InboundTransaction
+Transaction <|-- OutboundTransaction
+
+' --- Core Logic Relationships ---
+' StockLedger is the central link
+StockLedger "1" -- "1" Product
+StockLedger "1" -- "1" StorageLocation
+StockLedger "1" -- "0..1" Batch
+
+' Transaction relationships
+Transaction "1" -- "1" User : handled by
+Transaction "1" *-- "1..*" TransactionDetail
+TransactionDetail "1" -- "1" Product
+
+InboundTransaction "1" -- "1" Supplier
+Supplier "1" --o "0..*" Product
+
+@enduml
