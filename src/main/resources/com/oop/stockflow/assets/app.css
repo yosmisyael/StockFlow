@@ -1,0 +1,10 @@
+/* app.css */
+.root {
+    -fx-font-family: "SF Pro Display";
+    -fx-font-size: 18px;
+}
+
+.label.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.oop.stockflow.controller.RegisterController"
+            maxHeight="Infinity" maxWidth="Infinity">
+
+    <!-- Left Side -->
+    <left>
+        <StackPane style="-fx-background-color: linear-gradient(to bottom right, #1E5BE6, #0044CC);">
+            <VBox alignment="CENTER" spacing="20">
+                <Group>
+                    <SVGPath
+                            content="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-80 92L160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11Zm200-528 77-44-237-137-78 45 238 136Zm-160 93 78-45-237-137-78 45 237 137Z"
+                            fill="#e3e3e3" scaleX="0.1" scaleY="0.1"/>
+                </Group>
+                <Text style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: white;" text="Welcome to DataFlow" />
+                <Text wrappingWidth="400" style="-fx-fill: #E0E7FF; -fx-font-size: 14px; -fx-text-alignment: center;"
+                      text="Streamline your workflow with our powerful analytics platform designed for modern teams." />
+                <HBox alignment="CENTER" spacing="40">
+                    <VBox alignment="CENTER" spacing="5">
+                        <StackPane scaleY=".05" scaleX=".05">
+                            <SVGPath fill="#e3e3e3"
+                                     content="M320-414v-306h120v306l-60-56-60 56Zm200 60v-526h120v406L520-354ZM120-216v-344h120v224L120-216Zm0 98 258-258 142 122 224-224h-64v-80h200v200h-80v-64L524-146 382-268 232-118H120Z"/>
+                        </StackPane>
+                        <Text style="-fx-fill: white; -fx-font-size: 13px;" text="Analytics" />
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="5">
+<!--                        <ImageView fitWidth="30" fitHeight="30">-->
+<!--                            <Image url="@/com/oop/stockflow/assets/security.png" />-->
+<!--                        </ImageView>-->
+                        <Text style="-fx-fill: white; -fx-font-size: 13px;" text="Security" />
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="5">
+<!--                        <ImageView fitWidth="30" fitHeight="30">-->
+<!--                            <Image url="@/com/oop/stockflow/assets/collaboration.png" />-->
+<!--                        </ImageView>-->
+                        <Text style="-fx-fill: white; -fx-font-size: 13px;" text="Collaboration" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </StackPane>
+    </left>
+
+    <!-- Right Side (Form) -->
+    <center>
+        <StackPane style="-fx-background-color: #FFFFFF;">
+            <VBox alignment="CENTER" spacing="20" prefWidth="600" style="-fx-padding: 40;">
+<!--                <ImageView fitWidth="60" fitHeight="60">-->
+<!--                    <Image url="@/com/oop/stockflow/assets/logo-blue.png" />-->
+<!--                </ImageView>-->
+                <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Create your account" />
+                <Text style="-fx-fill: #666;" text="Join DataFlow and get started with your workspace" />
+
+                <!-- Form Fields -->
+                <VBox spacing="10" prefWidth="320">
+                    <Label text="Full Name" />
+                    <TextField fx:id="nameField" promptText="John Doe" />
+
+                    <Label text="Email Address" />
+                    <TextField fx:id="emailField" promptText="john@example.com" />
+
+                    <Label text="Password" />
+                    <PasswordField fx:id="passwordField" promptText="Enter your password" />
+
+                    <Label text="Confirm Password" />
+                    <PasswordField fx:id="confirmPasswordField" promptText="Re-enter your password" />
+
+                    <Button fx:id="registerButton" text="Sign Up" prefWidth="320"
+                            style="-fx-background-color: #1E5BE6; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+                    <Text style="-fx-fill: #888; -fx-font-size: 12px;" text="Or continue with" />
+
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button style="-fx-background-color: #fff; -fx-border-color: #ddd;" text="Google" />
+                        <Button style="-fx-background-color: #fff; -fx-border-color: #ddd;" text="Microsoft" />
+                    </HBox>
+                </VBox>
+
+                <HBox alignment="CENTER">
+                    <Text style="-fx-fill: #666;" text="Already have an account? " />
+                    <Hyperlink text="Sign in" />
+                </HBox>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>
