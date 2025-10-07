@@ -1,0 +1,135 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+
+' Entities (Tables)
+entity warehouses {
+  * **warehouse_id** (PK)
+  * name
+  * address
+  * max_capacity_volume_m3
+  * max_capacity_weight_kg
+  * manager_id <FK>
+}
+
+entity staff {
+  * **user_id** (PK)
+  --
+  * name
+  * email
+  * password
+  * warehouse_id (FK)
+}
+
+entity manager {
+  * **manager_id** (PK)
+  --
+  * name
+  * email
+  * company
+  * password
+}
+
+entity suppliers {
+  * **supplier_id** (PK)
+  --
+  * name
+  * address
+  * contact_info
+}
+
+entity products {
+  * **sku** (PK)
+  --
+  * name
+  * brand
+  * description
+  * purchase_price
+  * weight_per_unit_kg
+  * volume_per_unit_m3
+  * product_type
+  * reorder_point
+  * reorder_quantity
+  * units_per_case
+  * shelf_life_days
+  * days_to_alert_before_expiry
+  * sold_by_weight
+  * required_temp
+  * supplier_id (FK)
+}
+
+entity batches {
+  * **batch_id** (PK)
+  --
+  * product_sku (FK)
+  * batch_number
+  * expiry_date
+  * quantity
+}
+
+entity storage_locations {
+  * **location_id** (PK)
+  --
+  * location_code
+  * location_type
+  * status
+  * warehouse_id (FK)
+}
+
+entity stock_ledger {
+  * **ledger_id** (PK)
+  --
+  * product_sku (FK)
+  * location_id (FK)
+  * batch_id (FK)
+  * quantity
+}
+
+entity transactions {
+  * **transaction_id** (PK)
+  --
+  * user_id (FK)
+  * date
+  * transaction_type
+  * notes
+  * status
+  * supplier_id (FK)
+  * supplier_invoice_number
+  * delivery_order_number
+  * internal_request_id
+  * destination_address
+  * shipping_method
+  * tracking_number
+}
+
+entity transaction_details {
+  * **detail_id** (PK)
+  --
+  * transaction_id (FK)
+  * product_sku (FK)
+  * quantity
+}
+
+
+' Relationships
+warehouses ||--o{ staff
+warehouses ||--o{ storage_locations
+
+suppliers ||--o{ products
+suppliers ||--o{ transactions : "for inbound"
+
+products ||--o{ batches
+products ||--o{ transaction_details
+products ||--o{ stock_ledger
+
+storage_locations ||--o{ stock_ledger
+
+batches }o--o| stock_ledger : "(optional)"
+
+staff ||--o{ transactions
+
+manager ||--o{ warehouses
+
+transactions ||--o{ transaction_details
+@enduml
