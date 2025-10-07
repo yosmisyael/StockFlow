@@ -4,6 +4,7 @@ module com.oop.stockflow {
     requires java.sql;
     requires javafx.base;
     requires javafx.graphics;
+    requires jbcrypt;
 
 
     opens com.oop.stockflow to javafx.fxml;

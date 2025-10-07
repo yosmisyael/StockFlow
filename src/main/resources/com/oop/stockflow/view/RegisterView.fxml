@@ -130,9 +130,11 @@
                 <HBox alignment="CENTER_RIGHT">
                     <Hyperlink text="Forgot password?"/>
                 </HBox>
-                <Button fx:id="loginButton" maxWidth="Infinity"
+                <Button fx:id="registerButton" maxWidth="Infinity"
                         style="-fx-background-color: #1E5BE6; -fx-text-fill: white; -fx-font-weight: bold;"
-                        text="Sign In">
+                        text="Sign Up"
+                        onAction="#handleRegister"
+                >
                     <graphic>
                         <Group>
                             <SVGPath

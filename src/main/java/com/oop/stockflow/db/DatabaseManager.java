@@ -16,7 +16,7 @@ public class DatabaseManager {
                 connection = DriverManager.getConnection(URL);
                 System.out.println("[INFO] Connected to database.");
             } catch (SQLException e) {
-                System.out.println("[INFO] Failed to connect to database: " + e.getMessage());
+                System.out.println("[ERROR] Failed to connect to database: " + e.getMessage());
             }
         }
         return connection;
