@@ -77,7 +77,9 @@
                 </HBox>
                 <Button fx:id="loginButton" maxWidth="Infinity"
                         style="-fx-background-color: #1E5BE6; -fx-text-fill: white; -fx-font-weight: bold;"
-                        text="Sign In">
+                        text="Sign In"
+                        onAction="#handleLogin"
+                >
                     <graphic>
                         <Group>
                             <SVGPath
