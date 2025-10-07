@@ -41,6 +41,7 @@ dependencies {
 
     implementation("org.mindrot:jbcrypt:0.4")
     implementation("org.postgresql:postgresql:42.7.3")
+    implementation("io.github.cdimascio:java-dotenv:5.2.2")
 }
 
 tasks.withType<Test> {

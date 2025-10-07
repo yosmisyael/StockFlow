@@ -14,7 +14,6 @@ import java.io.IOException;
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        DatabaseManager.getConnection();
         StageManager stageManager = StageManager.getInstance();
         stageManager.init(stage);
         Scene loginScene = SceneManager.load(View.LOGIN);

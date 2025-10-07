@@ -3,22 +3,28 @@ package com.oop.stockflow.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class DatabaseManager {
-    private static final String URL = "jdbc:postgresql://localhost:5432/course_stockflow?user=postgres&password=root";
     private static Connection connection = null;
 
-    private DatabaseManager() {}
+    static {
+        try {
+            Dotenv dotenv = Dotenv.load();
+
+            String dbUrl = dotenv.get("DB_URL");
+            String user = dotenv.get("DB_USER");
+            String password = dotenv.get("DB_PASSWORD");
+
+            connection = DriverManager.getConnection(dbUrl, user, password);
+
+            System.out.println("[INFO] Connected to database.");
+        } catch (SQLException e) {
+            System.out.println("[ERROR] Unable to connect to database:  " + e.getMessage());
+        }
+    }
 
     public static Connection getConnection() {
-        if (connection == null) {
-            try {
-                connection = DriverManager.getConnection(URL);
-                System.out.println("[INFO] Connected to database.");
-            } catch (SQLException e) {
-                System.out.println("[ERROR] Failed to connect to database: " + e.getMessage());
-            }
-        }
         return connection;
     }
 }
