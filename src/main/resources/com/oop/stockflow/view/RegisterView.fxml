@@ -178,7 +178,7 @@
                     </Button>
                 </HBox>
             </VBox>
-            <HBox alignment="CENTER_LEFT">
+            <HBox alignment="CENTER">
                 <Text style="-fx-fill: #666;" text="Already have an account?"/>
                 <Hyperlink text="Sign in here" onAction="#goToLogin"/>
             </HBox>
