@@ -5,7 +5,8 @@ public enum View {
     REGISTER("RegisterView.fxml"),
     DASHBOARD("MainDashboardView.fxml"),
     PRODUCT_LIST("ProductListView.fxml"),
-    WAREHOUSE_LIST("WarehouseView.fxml");
+    WAREHOUSE_LIST("WarehouseView.fxml"),
+    WAREHOUSE_ADD("WarehouseCreate.fxml");
 
     private final String fxmlFile;
 
