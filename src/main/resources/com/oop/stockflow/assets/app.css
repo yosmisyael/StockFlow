@@ -199,8 +199,7 @@
 /* Warehouse Icons */
 .warehouse-icon-blue {
     -fx-background-color: #dbeafe;
-    -fx-background-radius: 8;
-    -fx-padding: 8;
+    -fx-background-radius: 100;
 }
 
 .warehouse-icon-green {
