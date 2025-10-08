@@ -29,24 +29,25 @@ public class LoginController {
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
-        String email = emailField.getText().trim();
-        String password = passwordField.getText().trim();
+        Scene dashboardScene = SceneManager.load(View.WAREHOUSE_LIST);
+        StageManager.getInstance().setScene(dashboardScene, "Warehouse List");
 
-        if (email.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Please fill in all fields!");
-            return;
-        }
-
-        boolean isAuthenticated = authRepo.login(email, password);
-
-        if (isAuthenticated) {
-            showAlert(Alert.AlertType.INFORMATION, "Login successful!");
-
-//            Scene dashboardScene = SceneManager.load(View.DASHBOARD);
-//            StageManager.getInstance().setScene(dashboardScene, "Dashboard");
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Invalid email or password!");
-        }
+//        String email = emailField.getText().trim();
+//        String password = passwordField.getText().trim();
+//
+//        if (email.isEmpty() || password.isEmpty()) {
+//            showAlert(Alert.AlertType.WARNING, "Please fill in all fields!");
+//            return;
+//        }
+//
+//        boolean isAuthenticated = authRepo.login(email, password);
+//
+//        if (isAuthenticated) {
+//            Scene dashboardScene = SceneManager.load(View.WAREHOUSE_LIST);
+//            StageManager.getInstance().setScene(dashboardScene, "Warehouse List");
+//        } else {
+//            showAlert(Alert.AlertType.ERROR, "Invalid email or password!");
+//        }
     }
 
     private void showAlert(Alert.AlertType type, String message) {

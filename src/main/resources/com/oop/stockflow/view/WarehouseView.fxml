@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@../assets/app.css"
+            styleClass="root">
+
+    <!-- Top Navigation Bar -->
+    <top>
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" spacing="20">
+            <padding>
+                <Insets top="16" right="24" bottom="16" left="24"/>
+            </padding>
+
+            <!-- Logo Section -->
+            <HBox alignment="CENTER_LEFT" spacing="12" HBox.hgrow="NEVER">
+                <Label text="📦" styleClass="logo-icon">
+                    <font>
+                        <Font size="24"/>
+                    </font>
+                </Label>
+                <VBox spacing="2">
+                    <Label text="StackFlow" styleClass="app-title">
+                        <font>
+                            <Font name="SF Pro Display Bold" size="18"/>
+                        </font>
+                    </Label>
+                    <Label text="Warehouse Management" styleClass="app-subtitle">
+                        <font>
+                            <Font size="11"/>
+                        </font>
+                    </Label>
+                </VBox>
+            </HBox>
+
+            <!-- Spacer -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Add Warehouse Button -->
+            <Button text="+ Add Warehouse" styleClass="add-button">
+                <font>
+                    <Font name="SF Pro Display Bold" size="13"/>
+                </font>
+            </Button>
+        </HBox>
+    </top>
+
+    <!-- Sidebar -->
+    <left>
+        <VBox styleClass="sidebar" spacing="8" minWidth="200" prefWidth="200">
+            <padding>
+                <Insets top="20" right="12" bottom="20" left="12"/>
+            </padding>
+
+            <!-- User Profile -->
+            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="user-profile">
+                <padding>
+                    <Insets top="12" right="12" bottom="12" left="12"/>
+                </padding>
+                <Label text="👤" styleClass="user-icon">
+                    <font>
+                        <Font size="24"/>
+                    </font>
+                </Label>
+                <VBox spacing="2">
+                    <Label text="Yanto" styleClass="user-name">
+                        <font>
+                            <Font name="SF Pro Display Bold" size="14"/>
+                        </font>
+                    </Label>
+                    <Label text="Manager" styleClass="user-role">
+                        <font>
+                            <Font size="11"/>
+                        </font>
+                    </Label>
+                </VBox>
+            </HBox>
+
+            <!-- Spacer to push logout to bottom -->
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <!-- Logout Button -->
+            <Button text="⎋ Logout" styleClass="logout-button" maxWidth="Infinity" alignment="CENTER_LEFT">
+                <padding>
+                    <Insets top="12" right="12" bottom="12" left="12"/>
+                </padding>
+            </Button>
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="content-scroll">
+            <VBox styleClass="main-content" spacing="24">
+                <padding>
+                    <Insets top="32" right="32" bottom="32" left="32"/>
+                </padding>
+
+                <!-- Header Section -->
+                <VBox spacing="8">
+                    <Label text="Warehouse Dashboard" styleClass="page-title">
+                        <font>
+                            <Font name="SF Pro Display Bold" size="28"/>
+                        </font>
+                    </Label>
+                    <Label text="Manage and monitor your warehouse locations" styleClass="page-subtitle">
+                        <font>
+                            <Font name="SF Pro Display Regular" size="14"/>
+                        </font>
+                    </Label>
+                </VBox>
+
+                <!-- Stats Cards Grid -->
+                <GridPane hgap="20" vgap="20" styleClass="stats-grid">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+
+                    <!-- Total Warehouses -->
+                    <HBox styleClass="stat-card" spacing="16" alignment="CENTER_LEFT" GridPane.columnIndex="0">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Total Warehouses" styleClass="stat-label">
+                                <font>
+                                    <Font size="13"/>
+                                </font>
+                            </Label>
+                            <Label text="8" styleClass="stat-value">
+                                <font>
+                                    <Font name="SF Pro Display Bold" size="32"/>
+                                </font>
+                            </Label>
+                        </VBox>
+                        <Label text="🏢" styleClass="stat-icon-blue">
+                            <font>
+                                <Font size="28"/>
+                            </font>
+                        </Label>
+                    </HBox>
+
+                    <!-- Total Staff -->
+                    <HBox styleClass="stat-card" spacing="16" alignment="CENTER_LEFT" GridPane.columnIndex="1">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Total Staff" styleClass="stat-label">
+                                <font>
+                                    <Font size="13"/>
+                                </font>
+                            </Label>
+                            <Label text="142" styleClass="stat-value">
+                                <font>
+                                    <Font name="SF Pro Display Bold" size="32"/>
+                                </font>
+                            </Label>
+                        </VBox>
+                        <Label text="👥" styleClass="stat-icon-green">
+                            <font>
+                                <Font size="28"/>
+                            </font>
+                        </Label>
+                    </HBox>
+
+                    <!-- Total Stock -->
+                    <HBox styleClass="stat-card" spacing="16" alignment="CENTER_LEFT" GridPane.columnIndex="2">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Total Stock" styleClass="stat-label">
+                                <font>
+                                    <Font size="13"/>
+                                </font>
+                            </Label>
+                            <Label text="24,567" styleClass="stat-value">
+                                <font>
+                                    <Font name="SF Pro Display Bold" size="32"/>
+                                </font>
+                            </Label>
+                        </VBox>
+                        <Label text="📊" styleClass="stat-icon-orange">
+                            <font>
+                                <Font size="28"/>
+                            </font>
+                        </Label>
+                    </HBox>
+
+                    <!-- Active Locations -->
+                    <HBox styleClass="stat-card" spacing="16" alignment="CENTER_LEFT" GridPane.columnIndex="3">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Active Locations" styleClass="stat-label">
+                                <font>
+                                    <Font size="13"/>
+                                </font>
+                            </Label>
+                            <Label text="7" styleClass="stat-value">
+                                <font>
+                                    <Font name="SF Pro Display Bold" size="32"/>
+                                </font>
+                            </Label>
+                        </VBox>
+                        <Label text="📍" styleClass="stat-icon-purple">
+                            <font>
+                                <Font size="28"/>
+                            </font>
+                        </Label>
+                    </HBox>
+                </GridPane>
+
+                <!-- Warehouse Cards Grid -->
+                <GridPane hgap="20" vgap="20" styleClass="warehouse-grid">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+
+                    <!-- Jakarta Central -->
+                    <VBox styleClass="warehouse-card" spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <padding>
+                            <Insets top="24" right="24" bottom="24" left="24"/>
+                        </padding>
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <Label text="🏢" styleClass="warehouse-icon-blue">
+                                <font>
+                                    <Font size="24"/>
+                                </font>
+                            </Label>
+                            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                                <Label text="Jakarta Central" styleClass="warehouse-name">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="16"/>
+                                    </font>
+                                </Label>
+                                <Label text="Jl. Sudirman No. 123" styleClass="warehouse-address">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <Label text="Active" styleClass="status-badge-active">
+                                <padding>
+                                    <Insets top="4" right="12" bottom="4" left="12"/>
+                                </padding>
+                                <font>
+                                    <Font size="11"/>
+                                </font>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="40" alignment="CENTER">
+                            <VBox spacing="4" alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label text="24" styleClass="warehouse-stat-value">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="32"/>
+                                    </font>
+                                </Label>
+                                <Label text="Staff" styleClass="warehouse-stat-label">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <VBox spacing="4" alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label text="4,523" styleClass="warehouse-stat-value">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="32"/>
+                                    </font>
+                                </Label>
+                                <Label text="Stock Items" styleClass="warehouse-stat-label">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                        </HBox>
+                        <Button text="View Details" styleClass="view-details-button" maxWidth="Infinity">
+                            <font>
+                                <Font name="SF Pro Display Bold" size="13"/>
+                            </font>
+                        </Button>
+                    </VBox>
+
+                    <!-- Bandung West -->
+                    <VBox styleClass="warehouse-card" spacing="20" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <padding>
+                            <Insets top="24" right="24" bottom="24" left="24"/>
+                        </padding>
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <Label text="🏢" styleClass="warehouse-icon-green">
+                                <font>
+                                    <Font size="24"/>
+                                </font>
+                            </Label>
+                            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                                <Label text="Bandung West" styleClass="warehouse-name">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="16"/>
+                                    </font>
+                                </Label>
+                                <Label text="Jl. Braga No. 45" styleClass="warehouse-address">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <Label text="Active" styleClass="status-badge-active">
+                                <padding>
+                                    <Insets top="4" right="12" bottom="4" left="12"/>
+                                </padding>
+                                <font>
+                                    <Font size="11"/>
+                                </font>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="40" alignment="CENTER">
+                            <VBox spacing="4" alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label text="18" styleClass="warehouse-stat-value">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="32"/>
+                                    </font>
+                                </Label>
+                                <Label text="Staff" styleClass="warehouse-stat-label">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <VBox spacing="4" alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label text="3,241" styleClass="warehouse-stat-value">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="32"/>
+                                    </font>
+                                </Label>
+                                <Label text="Stock Items" styleClass="warehouse-stat-label">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                        </HBox>
+                        <Button text="View Details" styleClass="view-details-button" maxWidth="Infinity">
+                            <font>
+                                <Font name="SF Pro Display Bold" size="13"/>
+                            </font>
+                        </Button>
+                    </VBox>
+
+                    <!-- Surabaya North -->
+                    <VBox styleClass="warehouse-card" spacing="20" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        <padding>
+                            <Insets top="24" right="24" bottom="24" left="24"/>
+                        </padding>
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <Label text="🏢" styleClass="warehouse-icon-orange">
+                                <font>
+                                    <Font size="24"/>
+                                </font>
+                            </Label>
+                            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                                <Label text="Surabaya North" styleClass="warehouse-name">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="16"/>
+                                    </font>
+                                </Label>
+                                <Label text="Jl. Pemuda No. 67" styleClass="warehouse-address">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <Label text="Active" styleClass="status-badge-active">
+                                <padding>
+                                    <Insets top="4" right="12" bottom="4" left="12"/>
+                                </padding>
+                                <font>
+                                    <Font size="11"/>
+                                </font>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="40" alignment="CENTER">
+                            <VBox spacing="4" alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label text="31" styleClass="warehouse-stat-value">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="32"/>
+                                    </font>
+                                </Label>
+                                <Label text="Staff" styleClass="warehouse-stat-label">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <VBox spacing="4" alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label text="5,789" styleClass="warehouse-stat-value">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="32"/>
+                                    </font>
+                                </Label>
+                                <Label text="Stock Items" styleClass="warehouse-stat-label">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                        </HBox>
+                        <Button text="View Details" styleClass="view-details-button" maxWidth="Infinity">
+                            <font>
+                                <Font name="SF Pro Display Bold" size="13"/>
+                            </font>
+                        </Button>
+                    </VBox>
+
+                    <!-- Medan Central -->
+                    <VBox styleClass="warehouse-card" spacing="20" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                        <padding>
+                            <Insets top="24" right="24" bottom="24" left="24"/>
+                        </padding>
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <Label text="🏢" styleClass="warehouse-icon-purple">
+                                <font>
+                                    <Font size="24"/>
+                                </font>
+                            </Label>
+                            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                                <Label text="Medan Central" styleClass="warehouse-name">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="16"/>
+                                    </font>
+                                </Label>
+                                <Label text="Jl. Gatot Subroto No. 89" styleClass="warehouse-address">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <Label text="Maintenance" styleClass="status-badge-maintenance">
+                                <padding>
+                                    <Insets top="4" right="12" bottom="4" left="12"/>
+                                </padding>
+                                <font>
+                                    <Font size="11"/>
+                                </font>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="40" alignment="CENTER">
+                            <VBox spacing="4" alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label text="15" styleClass="warehouse-stat-value">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="32"/>
+                                    </font>
+                                </Label>
+                                <Label text="Staff" styleClass="warehouse-stat-label">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <VBox spacing="4" alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label text="2,156" styleClass="warehouse-stat-value">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="32"/>
+                                    </font>
+                                </Label>
+                                <Label text="Stock Items" styleClass="warehouse-stat-label">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                        </HBox>
+                        <Button text="View Details" styleClass="view-details-button" maxWidth="Infinity">
+                            <font>
+                                <Font name="SF Pro Display Bold" size="13"/>
+                            </font>
+                        </Button>
+                    </VBox>
+
+                    <!-- Makassar South -->
+                    <VBox styleClass="warehouse-card" spacing="20" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <padding>
+                            <Insets top="24" right="24" bottom="24" left="24"/>
+                        </padding>
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <Label text="🏢" styleClass="warehouse-icon-red">
+                                <font>
+                                    <Font size="24"/>
+                                </font>
+                            </Label>
+                            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                                <Label text="Makassar South" styleClass="warehouse-name">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="16"/>
+                                    </font>
+                                </Label>
+                                <Label text="Jl. Sultan Hasanuddin No. 12" styleClass="warehouse-address">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <Label text="Active" styleClass="status-badge-active">
+                                <padding>
+                                    <Insets top="4" right="12" bottom="4" left="12"/>
+                                </padding>
+                                <font>
+                                    <Font size="11"/>
+                                </font>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="40" alignment="CENTER">
+                            <VBox spacing="4" alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label text="22" styleClass="warehouse-stat-value">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="32"/>
+                                    </font>
+                                </Label>
+                                <Label text="Staff" styleClass="warehouse-stat-label">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <VBox spacing="4" alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label text="3,678" styleClass="warehouse-stat-value">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="32"/>
+                                    </font>
+                                </Label>
+                                <Label text="Stock Items" styleClass="warehouse-stat-label">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                        </HBox>
+                        <Button text="View Details" styleClass="view-details-button" maxWidth="Infinity">
+                            <font>
+                                <Font name="SF Pro Display Bold" size="13"/>
+                            </font>
+                        </Button>
+                    </VBox>
+
+                    <!-- Semarang East -->
+                    <VBox styleClass="warehouse-card" spacing="20" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <padding>
+                            <Insets top="24" right="24" bottom="24" left="24"/>
+                        </padding>
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <Label text="🏢" styleClass="warehouse-icon-blue">
+                                <font>
+                                    <Font size="24"/>
+                                </font>
+                            </Label>
+                            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                                <Label text="Semarang East" styleClass="warehouse-name">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="16"/>
+                                    </font>
+                                </Label>
+                                <Label text="Jl. Pandanaran No. 34" styleClass="warehouse-address">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <Label text="Active" styleClass="status-badge-active">
+                                <padding>
+                                    <Insets top="4" right="12" bottom="4" left="12"/>
+                                </padding>
+                                <font>
+                                    <Font size="11"/>
+                                </font>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="40" alignment="CENTER">
+                            <VBox spacing="4" alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label text="19" styleClass="warehouse-stat-value">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="32"/>
+                                    </font>
+                                </Label>
+                                <Label text="Staff" styleClass="warehouse-stat-label">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <VBox spacing="4" alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label text="2,987" styleClass="warehouse-stat-value">
+                                    <font>
+                                        <Font name="SF Pro Display Bold" size="32"/>
+                                    </font>
+                                </Label>
+                                <Label text="Stock Items" styleClass="warehouse-stat-label">
+                                    <font>
+                                        <Font size="12"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+                        </HBox>
+                        <Button text="View Details" styleClass="view-details-button" maxWidth="Infinity">
+                            <font>
+                                <Font name="SF Pro Display Bold" size="13"/>
+                            </font>
+                        </Button>
+                    </VBox>
+                </GridPane>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
