@@ -50,7 +50,7 @@ public class WarehouseController implements Initializable {
 
         int col = 0;
         int row = 0;
-        int maxCols = 4; // 4 columns per row, same as your FXML grid
+        int maxCols = 4;
 
         for (Warehouse w : warehouses) {
             VBox card = createWarehouseCard(w);
@@ -75,14 +75,14 @@ public class WarehouseController implements Initializable {
         card.getStyleClass().add("warehouse-card");
         card.setPadding(new Insets(24));
 
-        // ========== TOP SECTION ==========
+        // Top sections
         // Left initials label
         Label initials = new Label(getInitials(w.getName()));
         initials.getStyleClass().add("warehouse-icon-blue");
         initials.setFont(Font.font("System Bold", 30));
         initials.setAlignment(Pos.CENTER);
         initials.setPadding(new Insets(0, 8, 0, 8));
-        initials.setStyle("-fx-background-radius: 10;"); // same as FXML inline style
+        initials.setStyle("-fx-background-radius: 10;");
 
         // Warehouse name and address
         Label nameLabel = new Label(w.getName());
@@ -96,7 +96,7 @@ public class WarehouseController implements Initializable {
         VBox infoBox = new VBox(2, nameLabel, addressLabel);
         HBox.setHgrow(infoBox, Priority.ALWAYS);
 
-        // Combine initials + info
+        // Combine initials and info
         HBox nameRow = new HBox(10, initials, infoBox);
         VBox.setVgrow(nameRow, Priority.NEVER);
 
@@ -106,14 +106,14 @@ public class WarehouseController implements Initializable {
         statusLabel.setPadding(new Insets(4, 12, 4, 12));
         statusLabel.setFont(Font.font(12));
         statusLabel.setStyle("-fx-background-radius: 32; -fx-font-size: 12;");
-        VBox.setMargin(statusLabel, new Insets(0, 0, 0, 60)); // mimic <VBox.margin>
+        VBox.setMargin(statusLabel, new Insets(0, 0, 0, 60));
 
         VBox topBox = new VBox(4, nameRow, statusLabel);
         HBox headerBox = new HBox(topBox);
         headerBox.setAlignment(Pos.CENTER_LEFT);
         headerBox.setFillHeight(false);
 
-        // ========== STATS SECTION ==========
+        // Stats Section
         VBox staffBox = new VBox(4,
                 styledLabel("24", 28, true, "warehouse-stat-value"),
                 styledLabel("Staff", 12, false, "warehouse-stat-label")
@@ -131,7 +131,7 @@ public class WarehouseController implements Initializable {
         HBox statsBox = new HBox(40, staffBox, stockBox);
         statsBox.setAlignment(Pos.CENTER);
 
-        // ========== BUTTON ==========
+        // Button
         Button viewBtn = new Button("View Details");
         viewBtn.getStyleClass().add("view-details-button");
         viewBtn.setFont(Font.font("System Bold", 16));

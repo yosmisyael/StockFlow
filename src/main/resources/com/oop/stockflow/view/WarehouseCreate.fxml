@@ -76,7 +76,17 @@
                     <HBox alignment="CENTER_LEFT">
                         <Label style="-fx-font-size: 28px; -fx-font-weight: bold;" text="Add New Warehouse" />
                         <Region HBox.hgrow="ALWAYS" />
-                        <Button style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 8 16; -fx-cursor: hand;" text="← Back to Warehouses" />
+                        <Button
+                                style="
+                                -fx-background-color: white;
+                                -fx-border-color: #d1d5db;
+                                -fx-border-radius: 6;
+                                -fx-background-radius: 6;
+                                -fx-padding: 8 16;
+                                -fx-cursor: hand;"
+                                text="← Back to Warehouses"
+                                onAction="#goToWarehouseList"
+                        />
                     </HBox>
                 </VBox>
 
@@ -200,15 +210,16 @@
                                     </fx:define>
 
                                     <!-- Active Status -->
-                                    <VBox spacing="8" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 16; -fx-cursor: hand;" HBox.hgrow="ALWAYS">
+                                    <VBox spacing="8"
+                                          style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 16; -fx-cursor: hand;"
+                                          HBox.hgrow="ALWAYS">
                                         <HBox alignment="CENTER_LEFT" spacing="10">
-                                            <RadioButton fx:id="activeStatus" selected="true">
-                                     <toggleGroup>
-                                     </toggleGroup></RadioButton>
-                                            <Circle radius="4" style="-fx-fill: #10b981;" />
-                                            <Label style="-fx-font-size: 13px; -fx-font-weight: 600;" text="Active" />
+                                            <RadioButton fx:id="activeStatus" toggleGroup="$statusToggleGroup" selected="true" />
+                                            <Circle radius="4" style="-fx-fill: #10b981;"/>
+                                            <Label style="-fx-font-size: 13px; -fx-font-weight: 600;" text="Active"/>
                                         </HBox>
-                                        <Label style="-fx-font-size: 12px; -fx-text-fill: #6b7280; -fx-padding: 0 0 0 34;" text="Fully operational" />
+                                        <Label style="-fx-font-size: 12px; -fx-text-fill: #6b7280; -fx-padding: 0 0 0 34;"
+                                               text="Fully operational"/>
                                     </VBox>
 
                                     <!-- Inactive Status -->

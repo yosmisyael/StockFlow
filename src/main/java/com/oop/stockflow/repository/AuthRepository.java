@@ -1,15 +1,14 @@
 package com.oop.stockflow.repository;
 
 import com.oop.stockflow.db.DatabaseManager;
+import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.UserType;
 import org.mindrot.jbcrypt.BCrypt;
-import org.w3c.dom.html.HTMLStyleElement;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 
 public class AuthRepository {
     private Connection conn;
@@ -22,49 +21,50 @@ public class AuthRepository {
         }
     }
 
-    public boolean login(String email, String password) {
-        String query = "SELECT id, password FROM manager WHERE email = ?";
+    public AuthenticatedUser login(String email, String password) {
+        String managerQuery = "SELECT id, name, password FROM manager WHERE email = ?";
+        try (PreparedStatement managerStmt = conn.prepareStatement(managerQuery)) {
+            managerStmt.setString(1, email);
+            ResultSet managerResult = managerStmt.executeQuery();
 
-        try {
-            PreparedStatement prepareStatement = conn.prepareStatement(query);
-
-            prepareStatement.setString(1, email);
-
-            ResultSet result = prepareStatement.executeQuery();
-
-            UserType userType = UserType.MANAGER;
-
-            // perform checking in staff records
-            if (!result.next()) {
-                query = "SELECT user_id AS id, password FROM staff WHERE email = ?";
-                prepareStatement = conn.prepareStatement(query);
-                prepareStatement.setString(1, email);
-                result = prepareStatement.executeQuery();
-                userType = UserType.STAFF;
-                System.out.println("staff login detected");
+            if (managerResult.next()) {
+                return validateAndCreateUser(managerResult, password, UserType.MANAGER);
             }
-
-            // validate password
-            long userId = result.getLong("id");
-
-            String hashedPassword = result.getString("password");
-
-            boolean isPasswordValid = BCrypt.checkpw(password, hashedPassword);
-
-            if (!isPasswordValid) {
-                return false;
-            }
-
-            String token = UUID.randomUUID().toString();
-
-            saveSession(userId, userType, token);
-
-            return true;
         } catch (SQLException e) {
-            System.err.println("[ERROR] " + e.getMessage());
-
-            return false;
+            System.err.println("[ERROR] Failed querying for manager: " + e.getMessage());
+            return null;
         }
+
+        String staffQuery = "SELECT user_id AS id, name, password FROM staff WHERE email = ?";
+        try (PreparedStatement staffStmt = conn.prepareStatement(staffQuery)) {
+            staffStmt.setString(1, email);
+            ResultSet staffResult = staffStmt.executeQuery();
+
+            if (staffResult.next()) {
+                return validateAndCreateUser(staffResult, password, UserType.STAFF);
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Failed querying for staff: " + e.getMessage());
+            return null;
+        }
+
+        return null;
+    }
+
+    /**
+     * Helper method to reduce code duplication.
+     * Checks password and creates an AuthenticatedUser if valid.
+     */
+    private AuthenticatedUser validateAndCreateUser(ResultSet rs, String plainPassword, UserType userType) throws SQLException {
+        String hashedPassword = rs.getString("password");
+
+        if (BCrypt.checkpw(plainPassword, hashedPassword)) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            return new AuthenticatedUser(id, name, userType);
+        }
+
+        return null;
     }
 
     private void saveSession(long userId, UserType userType, String token) throws SQLException {

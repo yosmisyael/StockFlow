@@ -4,13 +4,21 @@ public class Warehouse {
     private int id;
     private String name;
     private String address;
+    private String city;
+    private String state;
+    private String postalCode;
+    private WarehouseStatus status;
     private double maxCapacityVolume;
     private double maxCapacityWeight;
     private int manager_id;
 
-    public Warehouse(int id, String name, String address, double maxCapacityVolume, double maxCapacityWeight,  int manager_id) {
+    public Warehouse(int id, String name, String city, String state, String postalCode, String address, double maxCapacityVolume, double maxCapacityWeight,  String status, int manager_id) {
         this.id = id;
         this.name = name;
+        this.city = city;
+        this.state = state;
+        this.postalCode = postalCode;
+        this.status = WarehouseStatus.fromDbValue(status);
         this.address = address;
         this.maxCapacityVolume = maxCapacityVolume;
         this.maxCapacityWeight = maxCapacityWeight;

@@ -1,8 +1,10 @@
 package com.oop.stockflow.controller;
 
 import com.oop.stockflow.app.SceneManager;
+import com.oop.stockflow.app.SessionManager;
 import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
+import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.repository.AuthRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,25 +31,24 @@ public class LoginController {
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
-        Scene dashboardScene = SceneManager.load(View.WAREHOUSE_LIST);
-        StageManager.getInstance().setScene(dashboardScene, "Warehouse List");
+        String email = emailField.getText().trim();
+        String password = passwordField.getText().trim();
 
-//        String email = emailField.getText().trim();
-//        String password = passwordField.getText().trim();
-//
-//        if (email.isEmpty() || password.isEmpty()) {
-//            showAlert(Alert.AlertType.WARNING, "Please fill in all fields!");
-//            return;
-//        }
-//
-//        boolean isAuthenticated = authRepo.login(email, password);
-//
-//        if (isAuthenticated) {
-//            Scene dashboardScene = SceneManager.load(View.WAREHOUSE_LIST);
-//            StageManager.getInstance().setScene(dashboardScene, "Warehouse List");
-//        } else {
-//            showAlert(Alert.AlertType.ERROR, "Invalid email or password!");
-//        }
+        if (email.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Please fill in all fields!");
+            return;
+        }
+
+        AuthenticatedUser user = authRepo.login(email, password);
+
+        if (user != null) {
+            SessionManager.getInstance().startSession(user);
+
+            Scene dashboardScene = SceneManager.load(View.WAREHOUSE_LIST);
+            StageManager.getInstance().setScene(dashboardScene, "Warehouse List");
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Invalid email or password!");
+        }
     }
 
     private void showAlert(Alert.AlertType type, String message) {

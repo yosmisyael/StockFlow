@@ -1,8 +1,19 @@
 package com.oop.stockflow.controller;
 
+import com.oop.stockflow.app.SceneManager;
+import com.oop.stockflow.app.SessionManager;
+import com.oop.stockflow.app.StageManager;
+import com.oop.stockflow.app.View;
+import com.oop.stockflow.model.AuthenticatedUser;
+import com.oop.stockflow.model.UserType;
+import com.oop.stockflow.model.WarehouseStatus;
 import com.oop.stockflow.repository.WarehouseRepository;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+
+import java.io.IOException;
 
 public class WarehouseCreateController {
 
@@ -14,17 +25,20 @@ public class WarehouseCreateController {
     @FXML private TextField postalCodeField;
     @FXML private TextField storageCapacityKgField;
     @FXML private TextField storageCapacityM3Field;
-    @FXML private TextField numberOfStaffField;
 
     @FXML private RadioButton activeStatus;
     @FXML private RadioButton inactiveStatus;
     @FXML private RadioButton maintenanceStatus;
+    @FXML private ToggleGroup statusToggleGroup;
+
 
     private final WarehouseRepository warehouseRepository = new WarehouseRepository();
 
     @FXML
     private void initialize() {
-        // Optional initialization logic if needed
+        activeStatus.setUserData(WarehouseStatus.ACTIVE);
+        inactiveStatus.setUserData(WarehouseStatus.INACTIVE);
+        maintenanceStatus.setUserData(WarehouseStatus.MAINTENANCE);
     }
 
     @FXML
@@ -35,21 +49,35 @@ public class WarehouseCreateController {
         String city = cityField.getText().trim();
         String state = stateField.getText().trim();
         String postalCode = postalCodeField.getText().trim();
-
         int capacityKg = parseIntSafe(storageCapacityKgField.getText());
         int capacityM3 = parseIntSafe(storageCapacityM3Field.getText());
-
-        String status;
-        if (activeStatus.isSelected()) status = "Active";
-        else if (inactiveStatus.isSelected()) status = "Inactive";
-        else status = "Maintenance";
+        Toggle selectedToggle = statusToggleGroup.getSelectedToggle();
 
         if (name.isEmpty() || id.isEmpty() || address.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Validation Error", "Please fill in all required fields.");
             return;
         }
 
-        boolean success = warehouseRepository.insertWarehouse(name, address, capacityKg, capacityM3, 1);
+        if (selectedToggle == null) {
+            showAlert(Alert.AlertType.WARNING, "Validation Error", "Please select a warehouse status.");
+            return;
+        }
+
+        WarehouseStatus status = (WarehouseStatus) selectedToggle.getUserData();
+
+        AuthenticatedUser currentUser = SessionManager.getInstance().getCurrentUser();
+
+        if (currentUser == null) {
+            showAlert(Alert.AlertType.ERROR, "Authentication Error", "No user is logged in. Please log in again.");
+            return;
+        }
+
+        if (currentUser.getUserType() != UserType.MANAGER) {
+            showAlert(Alert.AlertType.ERROR, "Permission Denied", "Only managers can create new warehouses.");
+            return;
+        }
+
+        boolean success = warehouseRepository.insertWarehouse(name, address, city, state, postalCode, capacityKg, capacityM3, status, currentUser.getId());
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Success", "Warehouse registered successfully!");
             clearForm();
@@ -85,4 +113,11 @@ public class WarehouseCreateController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    @FXML
+    private void goToWarehouseList(ActionEvent event) throws IOException {
+        Scene registerScene = SceneManager.load(View.WAREHOUSE_LIST);
+        StageManager.getInstance().setScene(registerScene, "Warehouse List");
+    }
+
 }
