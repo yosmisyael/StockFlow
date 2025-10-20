@@ -1,0 +1,169 @@
+
+.total-staff-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 10, 0, 0, 2);
+}
+
+.card-label {
+    -fx-text-fill: #6b7280; /* Meniru .stat-label */
+}
+
+.total-staff-number {
+    -fx-text-fill: #111827; /* Meniru .stat-value */
+}
+
+.warehouse-label {
+    -fx-text-fill: #6b7280; /* Meniru .page-subtitle */
+}
+
+.status-text-active {
+    -fx-text-fill: #065f46; /* Meniru .status-active-text */
+    -fx-font-weight: bold;
+}
+
+.status-text-leave {
+    -fx-text-fill: #f59e0b; /* Meniru .warning-text */
+    -fx-font-weight: bold;
+}
+
+.staff-icon-large {
+    -fx-text-fill: #2563eb; /* Warna brand utama */
+}
+
+/* --- Tombol Add Staff --- */
+.add-staff-button {
+    -fx-background-color: #2563eb; /* Warna brand utama */
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-padding: 8 16;
+}
+
+.add-staff-button:hover {
+    -fx-background-color: #1d4ed8; /* Biru lebih gelap */
+}
+
+/* --- Kontainer Daftar Staff --- */
+.staff-list-container {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 10, 0, 0, 2);
+}
+
+.section-title {
+    -fx-text-fill: #111827; /* Meniru .card-title */
+}
+
+/* --- Kotak Pencarian --- */
+.search-box {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb; /* Meniru .time-filter */
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.search-icon {
+    -fx-text-fill: #6b7280;
+}
+
+.search-input {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-text-fill: #111827;
+}
+
+/* --- Tombol Filter --- */
+.filter-button {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-text-fill: #6b7280;
+    -fx-cursor: hand;
+}
+
+.filter-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+/* --- Item Staff (dalam daftar) --- */
+.staff-item {
+    -fx-background-color: white;
+    -fx-border-color: #f3f4f6; /* Garis pemisah abu-abu sangat muda */
+    -fx-border-width: 0 0 1 0; /* Hanya garis bawah */
+}
+
+.staff-item:hover {
+    -fx-background-color: #f9fafb; /* Latar hover abu-abu muda */
+}
+
+.staff-avatar {
+    -fx-background-color: #e5e7eb;
+    -fx-text-fill: #6b7280;
+    -fx-background-radius: 50; /* Lingkaran penuh */
+    -fx-padding: 8 12;
+    -fx-min-width: 48px;
+    -fx-min-height: 48px;
+    -fx-alignment: center;
+}
+
+.staff-name {
+    -fx-text-fill: #1f2937; /* Meniru .user-name */
+}
+
+.staff-detail {
+    -fx-text-fill: #6b7280; /* Meniru .app-subtitle */
+}
+
+/* --- Badge Status (dalam daftar) --- */
+.status-badge-active {
+    -fx-background-color: #d1fae5; /* Latar hijau */
+    -fx-text-fill: #065f46; /* Teks hijau tua */
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+}
+
+.status-badge-leave {
+    -fx-background-color: #fef3c7; /* Latar kuning */
+    -fx-text-fill: #92400e; /* Teks kuning tua/coklat */
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+}
+
+/* --- Tombol Menu (tiga titik) --- */
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6b7280;
+    -fx-background-radius: 50; /* Lingkaran */
+    -fx-cursor: hand;
+}
+
+.menu-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+/* --- Pagination --- */
+.pagination-info {
+    -fx-text-fill: #6b7280;
+}
+
+.pagination-button {
+    -fx-background-color: white;
+    -fx-text-fill: #6b7280;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-padding: 6 12 6 12;
+}
+
+.pagination-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.pagination-button-active {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+    -fx-border-color: #bfdbfe;
+}

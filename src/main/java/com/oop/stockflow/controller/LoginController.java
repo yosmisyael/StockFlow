@@ -28,23 +28,25 @@ public class LoginController {
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
-        String email = emailField.getText().trim();
-        String password = passwordField.getText().trim();
-
-        if (email.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Please fill in all fields!");
-            return;
-        }
-
-        AuthenticatedUser user = authRepo.login(email, password);
-
-        if (user != null) {
-            SessionManager.getInstance().startSession(user);
-            StageManager.getInstance().navigate(View.WAREHOUSE_LIST, "Warehouse List");
-
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Invalid email or password!");
-        }
+        StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
+//        String email = emailField.getText().trim();
+//        String password = passwordField.getText().trim();
+//
+//
+//        if (email.isEmpty() || password.isEmpty()) {
+//            showAlert(Alert.AlertType.WARNING, "Please fill in all fields!");
+//            return;
+//        }
+//
+//        AuthenticatedUser user = authRepo.login(email, password);
+//
+//        if (user != null) {
+//            SessionManager.getInstance().startSession(user);
+//            StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
+//
+//        } else {
+//            showAlert(Alert.AlertType.ERROR, "Invalid email or password!");
+//        }
     }
 
     private void showAlert(Alert.AlertType type, String message) {

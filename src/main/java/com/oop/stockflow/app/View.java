@@ -3,10 +3,11 @@ package com.oop.stockflow.app;
 public enum View {
     LOGIN("LoginView.fxml"),
     REGISTER("RegisterView.fxml"),
-    DASHBOARD("MainDashboardView.fxml"),
-    PRODUCT_LIST("ProductListView.fxml"),
-    WAREHOUSE_LIST("WarehouseView.fxml"),
-    WAREHOUSE_ADD("WarehouseCreate.fxml"),
+    PRODUCT_INDEX("ProductListView.fxml"),
+    WAREHOUSE_INDEX("WarehouseView.fxml"),
+    WAREHOUSE_CREATE("WarehouseCreate.fxml"),
+    STAFF_INDEX("StaffIndex.fxml"),
+    STAFF_CREATE("StaffCreate.fxml"),
     WAREHOUSE_DASHBOARD("WarehouseDashboard.fxml"),;
 
     private final String fxmlFile;

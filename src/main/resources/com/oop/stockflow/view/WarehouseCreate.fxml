@@ -92,6 +92,7 @@
 
                 <!-- Form Card -->
                 <VBox style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e5e7eb; -fx-border-width: 1;">
+
                     <padding>
                         <Insets bottom="30" left="30" right="30" top="30" />
                     </padding>

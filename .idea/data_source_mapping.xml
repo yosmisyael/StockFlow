@@ -2,6 +2,7 @@
 <project version="4">
   <component name="DataSourcePerFileMappings">
     <file url="file://$PROJECT_DIR$/src/main/Docs/schema.sql" value="fae0e1a4-f0a9-41b0-ae41-69374efd7a72" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/oop/stockflow/repository/StaffRepository.java" value="fae0e1a4-f0a9-41b0-ae41-69374efd7a72" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/oop/stockflow/repository/WarehouseRepository.java" value="fae0e1a4-f0a9-41b0-ae41-69374efd7a72" />
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/fae0e1a4-f0a9-41b0-ae41-69374efd7a72/console.sql" value="fae0e1a4-f0a9-41b0-ae41-69374efd7a72" />
   </component>

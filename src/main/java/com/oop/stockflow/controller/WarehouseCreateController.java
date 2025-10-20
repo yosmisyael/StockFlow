@@ -77,7 +77,7 @@ public class WarehouseCreateController {
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Success", "Warehouse registered successfully!");
             clearForm();
-            StageManager.getInstance().navigate(View.WAREHOUSE_LIST, "Warehouse List");
+            StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to register warehouse.");
         }
@@ -112,7 +112,7 @@ public class WarehouseCreateController {
 
     @FXML
     private void goToWarehouseList(ActionEvent event) throws IOException {
-        StageManager.getInstance().navigate(View.WAREHOUSE_LIST, "Warehouse List");
+        StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
     }
 
 }

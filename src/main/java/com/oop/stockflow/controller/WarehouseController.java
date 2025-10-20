@@ -54,7 +54,7 @@ public class WarehouseController implements Initializable {
 
     @FXML
     private void goToAddWarehouse(ActionEvent event) throws IOException {
-        Parent root = SceneManager.loadFxml(View.WAREHOUSE_ADD);
+        Parent root = SceneManager.loadFxml(View.WAREHOUSE_CREATE);
         Stage stage = StageManager.getInstance().getMainStage();
         Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
         StageManager.getInstance().setScene(scene, "Add Warehouse");

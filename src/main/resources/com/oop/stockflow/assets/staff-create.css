@@ -1,0 +1,124 @@
+/* --- Breadcrumbs --- */
+.breadcrumbs {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 6;
+    -fx-padding: 8 12;
+}
+.breadcrumb-item {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 13;
+}
+.breadcrumb-separator {
+    -fx-text-fill: #9ca3af;
+}
+.breadcrumb-active {
+    -fx-text-fill: #1f2937;
+    -fx-font-weight: 500;
+}
+
+/* --- Form Card --- */
+.form-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 10, 0, 0, 2);
+}
+.form-title {
+    -fx-text-fill: #111827;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+.form-subtitle {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 14px;
+}
+
+/* --- Form Inputs --- */
+.form-label {
+    -fx-text-fill: #374151;
+    -fx-font-size: 13px;
+    -fx-font-weight: 500;
+}
+
+.input-field-container {
+    -fx-background-color: white;
+    -fx-background-radius: 6;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+}
+
+.input-field-container:focused {
+    -fx-border-color: #2563eb;
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.25), 5, 0, 0, 1);
+}
+
+.input-field-icon {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 16px;
+}
+
+.input-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 6 0;
+    -fx-font-size: 14px;
+    -fx-text-fill: #111827;
+}
+
+.password-toggle {
+    -fx-cursor: hand;
+}
+
+.form-hint {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 12px;
+    -fx-padding: 0 4px;
+}
+
+/* --- Form Buttons --- */
+.button-primary {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.button-primary:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+.button-secondary {
+    -fx-background-color: white;
+    -fx-text-fill: #374151;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+.button-secondary:hover {
+    -fx-background-color: #f9fafb;
+}
+
+/* --- Tips Box --- */
+.tips-box {
+    -fx-background-color: #eff6ff;
+    -fx-background-radius: 8;
+    -fx-border-color: #93c5fd;
+    -fx-border-width: 1;
+}
+.tips-icon {
+    -fx-font-size: 16px;
+}
+.tips-title {
+    -fx-text-fill: #1e40af;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.tips-list-item {
+    -fx-text-fill: #1d4ed8;
+    -fx-font-size: 13px;
+}
