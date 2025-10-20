@@ -93,7 +93,7 @@
                     </font>
                 </Text>
             </VBox>
-            <VBox prefWidth="300" spacing="10">
+            <VBox spacing="10">
                 <Label text="Email Address"/>
                 <TextField fx:id="emailField" promptText="john@example.com">
                     <padding>

@@ -287,12 +287,3 @@
     -fx-background-color: transparent;
     -fx-padding: 0;
 }
-
-/* Responsive Grid Column Constraints */
-.stats-grid {
-    -fx-column-constraints: repeat(4, minmax(150, 1fr));
-}
-
-.warehouse-grid {
-    -fx-column-constraints: repeat(3, minmax(280, 1fr));
-}

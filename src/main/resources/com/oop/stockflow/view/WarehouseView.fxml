@@ -74,12 +74,12 @@
                     </font>
                 </Label>
                 <VBox>
-                    <Label styleClass="user-name" text="Yanto">
+                    <Label fx:id="userNameLabel" styleClass="user-name" text="Yanto">
                         <font>
                             <Font name="System Bold" size="16.0" />
                         </font>
                     </Label>
-                    <Label style="-fx-background-radius: 24;" styleClass="user-role" text="Manager">
+                    <Label fx:id="userRole" style="-fx-background-radius: 24;" styleClass="user-role" text="Manager">
                         <font>
                             <Font size="13.0" />
                         </font>
@@ -124,10 +124,10 @@
                 <!-- Stats Cards Grid -->
                 <GridPane hgap="20" styleClass="stats-grid" vgap="20">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="ALWAYS" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints minWidth="150" hgrow="ALWAYS" />
+                        <ColumnConstraints minWidth="150" hgrow="ALWAYS" />
+                        <ColumnConstraints minWidth="150" hgrow="ALWAYS" />
+                        <ColumnConstraints minWidth="150" hgrow="ALWAYS" />
                     </columnConstraints>
 
                     <!-- Total Warehouses -->
@@ -233,10 +233,10 @@
                 <!-- Warehouse Cards Grid -->
                 <GridPane hgap="20" styleClass="warehouse-grid" vgap="20" fx:id="warehouseContainer">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="ALWAYS" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints minWidth="280" hgrow="ALWAYS" />
+                        <ColumnConstraints minWidth="280" hgrow="ALWAYS" />
+                        <ColumnConstraints minWidth="280" hgrow="ALWAYS" />
+                        <ColumnConstraints minWidth="280" hgrow="ALWAYS" />
                     </columnConstraints>
 
                     <!-- here is each warehouse card should be rendered -->

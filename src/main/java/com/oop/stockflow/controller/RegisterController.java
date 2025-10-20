@@ -7,10 +7,12 @@ import com.oop.stockflow.repository.ManagerRepository;
 import com.oop.stockflow.utils.PasswordUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -24,8 +26,7 @@ public class RegisterController {
 
     @FXML
     private void goToLogin(ActionEvent event) throws IOException {
-        Scene registerScene = SceneManager.load(View.LOGIN);
-        StageManager.getInstance().setScene(registerScene, "Login");
+        StageManager.getInstance().navigateTo(View.LOGIN, "Login");
     }
 
     @FXML
@@ -70,7 +71,8 @@ public class RegisterController {
         boolean success = managerRepo.registerManager(name, email, company, hashedPassword);
 
         if (success) {
-            showAlert(Alert.AlertType.INFORMATION, "Registration successful!");
+            showAlert(Alert.AlertType.INFORMATION, "Registration successful! Now, please login with your account.");
+            StageManager.getInstance().navigateTo(View.LOGIN, "Login");
         } else {
             showAlert(Alert.AlertType.ERROR, "Failed to register. Try again.");
         }

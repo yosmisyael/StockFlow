@@ -1,5 +1,7 @@
 package com.oop.stockflow.app;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -14,11 +16,6 @@ public class StageManager {
 
         this.mainStage.setTitle(title);
         this.mainStage.setScene(scene);
-        this.mainStage.centerOnScreen();
-        this.mainStage.setMinWidth(1280);
-        this.mainStage.setMinHeight(800);
-        this.mainStage.setResizable(true);
-        this.mainStage.show();
     }
 
     public static StageManager getInstance() {
@@ -31,10 +28,31 @@ public class StageManager {
     public void init(Stage stage) {
         if (this.mainStage == null) {
             this.mainStage = stage;
+            this.mainStage.setMinHeight(800);
+            this.mainStage.setMinWidth(1200);
+            this.mainStage.setResizable(true);
+            this.mainStage.setMaximized(true);
         }
     }
 
     public Stage getMainStage() {
         return this.mainStage;
+    }
+
+    public void navigateTo(View view, String title) {
+        try {
+            Parent root = SceneManager.loadFxml(view);
+
+            if (this.mainStage == null) {
+                throw new IllegalStateException("[ERROR] StageManager is not initialized.");
+            }
+
+            Scene scene = new Scene(root, this.mainStage.getWidth(), this.mainStage.getHeight());
+
+            this.setScene(scene, title);
+
+        } catch (Exception e) {
+            System.out.println("[ERROR] " + e.getMessage());
+        }
     }
 }

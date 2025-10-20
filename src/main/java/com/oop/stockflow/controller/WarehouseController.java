@@ -1,8 +1,10 @@
 package com.oop.stockflow.controller;
 
 import com.oop.stockflow.app.SceneManager;
+import com.oop.stockflow.app.SessionManager;
 import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
+import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.Warehouse;
 import com.oop.stockflow.repository.WarehouseRepository;
 import javafx.event.ActionEvent;
@@ -10,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,12 +31,23 @@ import java.util.ResourceBundle;
 public class WarehouseController implements Initializable {
     @FXML
     private GridPane warehouseContainer;
+    @FXML
+    private Label userNameLabel;
+    @FXML
+    private Label userRole;
 
-    private WarehouseRepository warehouseRepository;
+
+
+    final private WarehouseRepository warehouseRepository;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadWarehouses();
+        AuthenticatedUser user = SessionManager.getInstance().getCurrentUser();
+        if (user != null) {
+            userNameLabel.setText(user.getName());
+            userRole.setText(user.getUserType().getDbValue());
+        }
     }
 
     public WarehouseController() {
@@ -41,8 +56,11 @@ public class WarehouseController implements Initializable {
 
     @FXML
     private void goToAddWarehouse(ActionEvent event) throws IOException {
-        Scene registerScene = SceneManager.load(View.WAREHOUSE_ADD);
-        StageManager.getInstance().setScene(registerScene, "Add Warehouse");
+        Parent root = SceneManager.loadFxml(View.WAREHOUSE_ADD);
+        Stage stage = StageManager.getInstance().getMainStage();
+        Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+        StageManager.getInstance().setScene(scene, "Add Warehouse");
+
     }
 
     private void loadWarehouses() {

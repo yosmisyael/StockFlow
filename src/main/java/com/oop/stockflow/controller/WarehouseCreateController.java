@@ -10,15 +10,16 @@ import com.oop.stockflow.model.WarehouseStatus;
 import com.oop.stockflow.repository.WarehouseRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class WarehouseCreateController {
 
     @FXML private TextField warehouseNameField;
-    @FXML private TextField warehouseIdField;
     @FXML private TextArea addressField;
     @FXML private TextField cityField;
     @FXML private TextField stateField;
@@ -44,7 +45,6 @@ public class WarehouseCreateController {
     @FXML
     private void onRegisterWarehouse() {
         String name = warehouseNameField.getText().trim();
-        String id = warehouseIdField.getText().trim();
         String address = addressField.getText().trim();
         String city = cityField.getText().trim();
         String state = stateField.getText().trim();
@@ -53,7 +53,7 @@ public class WarehouseCreateController {
         int capacityM3 = parseIntSafe(storageCapacityM3Field.getText());
         Toggle selectedToggle = statusToggleGroup.getSelectedToggle();
 
-        if (name.isEmpty() || id.isEmpty() || address.isEmpty()) {
+        if (name.isEmpty() || address.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Validation Error", "Please fill in all required fields.");
             return;
         }
@@ -81,6 +81,7 @@ public class WarehouseCreateController {
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Success", "Warehouse registered successfully!");
             clearForm();
+            StageManager.getInstance().navigateTo(View.WAREHOUSE_LIST, "Warehouse List");
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to register warehouse.");
         }
@@ -96,7 +97,6 @@ public class WarehouseCreateController {
 
     private void clearForm() {
         warehouseNameField.clear();
-        warehouseIdField.clear();
         addressField.clear();
         cityField.clear();
         stateField.clear();
@@ -116,8 +116,7 @@ public class WarehouseCreateController {
 
     @FXML
     private void goToWarehouseList(ActionEvent event) throws IOException {
-        Scene registerScene = SceneManager.load(View.WAREHOUSE_LIST);
-        StageManager.getInstance().setScene(registerScene, "Warehouse List");
+        StageManager.getInstance().navigateTo(View.WAREHOUSE_LIST, "Warehouse List");
     }
 
 }

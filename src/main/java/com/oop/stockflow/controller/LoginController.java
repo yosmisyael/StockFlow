@@ -8,10 +8,12 @@ import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.repository.AuthRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -25,8 +27,7 @@ public class LoginController {
 
     @FXML
     private void goToRegister(ActionEvent event) throws IOException {
-        Scene registerScene = SceneManager.load(View.REGISTER);
-        StageManager.getInstance().setScene(registerScene, "Register");
+        StageManager.getInstance().navigateTo(View.REGISTER, "Register");
     }
 
     @FXML
@@ -43,9 +44,8 @@ public class LoginController {
 
         if (user != null) {
             SessionManager.getInstance().startSession(user);
+            StageManager.getInstance().navigateTo(View.WAREHOUSE_LIST, "Warehouse List");
 
-            Scene dashboardScene = SceneManager.load(View.WAREHOUSE_LIST);
-            StageManager.getInstance().setScene(dashboardScene, "Warehouse List");
         } else {
             showAlert(Alert.AlertType.ERROR, "Invalid email or password!");
         }
