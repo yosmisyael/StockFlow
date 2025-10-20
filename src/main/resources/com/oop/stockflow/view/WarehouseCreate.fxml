@@ -59,7 +59,7 @@
 
     <!-- Main Content -->
     <center>
-        <ScrollPane>
+        <ScrollPane fitToWidth="true">
             <VBox spacing="20" style="-fx-background-color: #f5f5f5;">
                 <padding>
                     <Insets bottom="30" left="40" right="40" top="30" />
@@ -128,10 +128,6 @@
                                 <VBox spacing="8" HBox.hgrow="ALWAYS">
                                     <Label style="-fx-font-size: 13px; -fx-font-weight: 500;" text="Warehouse Name *" />
                                     <TextField fx:id="warehouseNameField" promptText="Enter warehouse name" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10 12; -fx-font-size: 13px;" />
-                                </VBox>
-                                <VBox spacing="8" HBox.hgrow="ALWAYS">
-                                    <Label style="-fx-font-size: 13px; -fx-font-weight: 500;" text="Warehouse ID *" />
-                                    <TextField fx:id="warehouseIdField" promptText="WH-001" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10 12; -fx-font-size: 13px;" />
                                 </VBox>
                             </HBox>
                         </VBox>
