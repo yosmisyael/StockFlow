@@ -48,10 +48,10 @@ public class WarehouseRepository {
                 Warehouse w = new Warehouse(
                         rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getString("address"),
                         rs.getString("city"),
                         rs.getString("state"),
                         rs.getString("postal_code"),
+                        rs.getString("address"),
                         rs.getDouble("max_capacity_volume_m3"),
                         rs.getDouble("max_capacity_weight_kg"),
                         rs.getString("status"),

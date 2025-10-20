@@ -36,8 +36,6 @@ public class WarehouseController implements Initializable {
     @FXML
     private Label userRole;
 
-
-
     final private WarehouseRepository warehouseRepository;
 
     @Override
@@ -87,7 +85,7 @@ public class WarehouseController implements Initializable {
         }
     }
 
-    private VBox createWarehouseCard(Warehouse w) {
+    private VBox createWarehouseCard(Warehouse warehouse) {
         // Outer card
         VBox card = new VBox(20);
         card.getStyleClass().add("warehouse-card");
@@ -95,7 +93,7 @@ public class WarehouseController implements Initializable {
 
         // Top sections
         // Left initials label
-        Label initials = new Label(getInitials(w.getName()));
+        Label initials = new Label(getInitials(warehouse.getName()));
         initials.getStyleClass().add("warehouse-icon-blue");
         initials.setFont(Font.font("System Bold", 30));
         initials.setAlignment(Pos.CENTER);
@@ -103,11 +101,11 @@ public class WarehouseController implements Initializable {
         initials.setStyle("-fx-background-radius: 10;");
 
         // Warehouse name and address
-        Label nameLabel = new Label(w.getName());
+        Label nameLabel = new Label(warehouse.getName());
         nameLabel.getStyleClass().add("warehouse-name");
         nameLabel.setFont(Font.font("System Bold", 20));
 
-        Label addressLabel = new Label(w.getAddress());
+        Label addressLabel = new Label(warehouse.getAddress());
         addressLabel.getStyleClass().add("warehouse-address");
         addressLabel.setFont(Font.font(16));
 
@@ -154,6 +152,14 @@ public class WarehouseController implements Initializable {
         viewBtn.getStyleClass().add("view-details-button");
         viewBtn.setFont(Font.font("System Bold", 16));
         viewBtn.setMaxWidth(Double.MAX_VALUE);
+
+        viewBtn.setOnAction(event -> {
+            StageManager.getInstance().navigateWithData(
+                    View.WAREHOUSE_DASHBOARD,
+                    "Warehouse Dashboard of " + warehouse.getName(),
+                    (WarehouseDashboardController controller) -> controller.setWarehouse(warehouse)
+            );
+        });
 
         // Combine all
         card.getChildren().addAll(headerBox, statsBox, viewBtn);

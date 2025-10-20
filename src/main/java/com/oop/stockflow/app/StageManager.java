@@ -5,6 +5,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.function.Consumer;
+
 public class StageManager {
     private static StageManager instance;
     private Stage mainStage;
@@ -39,7 +41,7 @@ public class StageManager {
         return this.mainStage;
     }
 
-    public void navigateTo(View view, String title) {
+    public void navigate(View view, String title) {
         try {
             Parent root = SceneManager.loadFxml(view);
 
@@ -51,6 +53,21 @@ public class StageManager {
 
             this.setScene(scene, title);
 
+        } catch (Exception e) {
+            System.out.println("[ERROR] " + e.getMessage());
+        }
+    }
+
+    public <T> void navigateWithData(View view, String title, Consumer<T> controllerConsumer) {
+        try {
+            FXMLLoader loader = SceneManager.getLoader(view);
+            Parent root = loader.load();
+
+            T controller = loader.getController();
+            controllerConsumer.accept(controller);
+
+            Scene scene = new Scene(root, this.mainStage.getWidth(), this.mainStage.getHeight());
+            setScene(scene, title);
         } catch (Exception e) {
             System.out.println("[ERROR] " + e.getMessage());
         }

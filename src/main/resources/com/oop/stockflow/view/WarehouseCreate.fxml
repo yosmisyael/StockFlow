@@ -245,7 +245,7 @@
 
                         <!-- Action Buttons -->
                         <HBox alignment="CENTER_RIGHT" spacing="15">
-                            <Button style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10 24; -fx-font-size: 13px; -fx-font-weight: 500; -fx-cursor: hand; -fx-text-fill: #374151;" text="Cancel" />
+                            <Button style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10 24; -fx-font-size: 13px; -fx-font-weight: 500; -fx-cursor: hand; -fx-text-fill: #374151;" text="Cancel" onAction="#goToWarehouseList" />
                             <Button style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10 24; -fx-font-size: 13px; -fx-font-weight: 500; -fx-cursor: hand;" text="+ Register Warehouse" onAction="#onRegisterWarehouse"/>
                         </HBox>
                     </VBox>

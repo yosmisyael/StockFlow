@@ -12,7 +12,7 @@ public class Warehouse {
     private double maxCapacityWeight;
     private int manager_id;
 
-    public Warehouse(int id, String name, String city, String state, String postalCode, String address, double maxCapacityVolume, double maxCapacityWeight,  String status, int manager_id) {
+    public Warehouse(int id, String name, String city, String state, String postalCode, String address, double maxCapacityVolume, double maxCapacityWeight, String status, int manager_id) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -23,6 +23,38 @@ public class Warehouse {
         this.maxCapacityVolume = maxCapacityVolume;
         this.maxCapacityWeight = maxCapacityWeight;
         this.manager_id = manager_id;
+    }
+
+    public WarehouseStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(WarehouseStatus status) {
+        this.status = status;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getName() {

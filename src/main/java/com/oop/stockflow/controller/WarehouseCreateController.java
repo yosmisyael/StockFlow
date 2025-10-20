@@ -1,6 +1,5 @@
 package com.oop.stockflow.controller;
 
-import com.oop.stockflow.app.SceneManager;
 import com.oop.stockflow.app.SessionManager;
 import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
@@ -10,10 +9,7 @@ import com.oop.stockflow.model.WarehouseStatus;
 import com.oop.stockflow.repository.WarehouseRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -81,7 +77,7 @@ public class WarehouseCreateController {
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Success", "Warehouse registered successfully!");
             clearForm();
-            StageManager.getInstance().navigateTo(View.WAREHOUSE_LIST, "Warehouse List");
+            StageManager.getInstance().navigate(View.WAREHOUSE_LIST, "Warehouse List");
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to register warehouse.");
         }
@@ -116,7 +112,7 @@ public class WarehouseCreateController {
 
     @FXML
     private void goToWarehouseList(ActionEvent event) throws IOException {
-        StageManager.getInstance().navigateTo(View.WAREHOUSE_LIST, "Warehouse List");
+        StageManager.getInstance().navigate(View.WAREHOUSE_LIST, "Warehouse List");
     }
 
 }
