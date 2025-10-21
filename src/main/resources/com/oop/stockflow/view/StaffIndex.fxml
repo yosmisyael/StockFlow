@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="root" stylesheets="@../assets/warehouse-dashboard.css, @../assets/staff-index.css" xmlns="http://javafx.com/javafx/17.0.12"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.StaffIndexController">
+<BorderPane styleClass="root" stylesheets="@../assets/warehouse-dashboard.css, @../assets/staff-index.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.StaffIndexController">
 
     <!-- Top Navigation Bar -->
     <top>
@@ -43,23 +50,23 @@
 
             <!-- Notification Bell -->
             <StackPane styleClass="notification-bell">
-                <Label text="🔔" styleClass="bell-icon">
+                <Label styleClass="bell-icon" text="🔔">
                     <font>
                         <Font size="24" />
                     </font>
                 </Label>
-                <Label text="3" styleClass="notification-badge">
+                <Label styleClass="notification-badge" text="3">
                     <font>
                         <Font name="System Bold" size="10" />
                     </font>
                     <StackPane.margin>
-                        <Insets top="-8" right="-8" />
+                        <Insets right="-8" top="-8" />
                     </StackPane.margin>
                 </Label>
             </StackPane>
 
             <!-- Date -->
-            <Label text="Today: Dec 15, 2024" styleClass="date-label">
+            <Label styleClass="date-label" text="Today: Dec 15, 2024">
                 <font>
                     <Font size="14" />
                 </font>
@@ -105,7 +112,7 @@
                 </padding>
 
                 <!-- Dashboard -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📊  Dashboard" onAction="#goToDashboard">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" onAction="#goToDashboard" styleClass="nav-button" text="📊  Dashboard">
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12" />
                     </padding>
@@ -192,49 +199,35 @@
 
                     <HBox alignment="CENTER_LEFT">
                         <VBox spacing="8" HBox.hgrow="ALWAYS">
-                            <Label text="Total Staff" styleClass="card-label">
+                            <Label styleClass="card-label" text="Total Staff">
                                 <font>
                                     <Font size="14" />
                                 </font>
                             </Label>
-                            <Label fx:id="totalStaffLabel" text="24" styleClass="total-staff-number">
+                            <Label fx:id="totalStaffLabel" styleClass="total-staff-number" text="24">
                                 <font>
                                     <Font name="System Bold" size="48" />
                                 </font>
                             </Label>
-                            <Label fx:id="warehouseLabel" text="Staff aktif di Warehouse Jakarta" styleClass="warehouse-label">
+                            <Label fx:id="warehouseLabel" styleClass="warehouse-label" text="Staff aktif di Warehouse Jakarta">
                                 <font>
                                     <Font size="14" />
                                 </font>
                             </Label>
-                            <HBox spacing="16" alignment="CENTER_LEFT">
-                                <HBox spacing="6" alignment="CENTER">
-                                    <Circle radius="5" fill="#10b981" />
-                                    <Label fx:id="activeStaffLabel" text="22 Aktif" styleClass="status-text-active">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                </HBox>
-                                <HBox spacing="6" alignment="CENTER">
-                                    <Circle radius="5" fill="#f59e0b" />
-                                    <Label fx:id="leaveStaffLabel" text="2 Cuti" styleClass="status-text-leave">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="16">
+                                <HBox alignment="CENTER" spacing="6" />
+                                <HBox alignment="CENTER" spacing="6" />
                             </HBox>
                         </VBox>
 
                         <!-- Icon and Add Button -->
-                        <VBox spacing="16" alignment="TOP_RIGHT">
-                            <Label text="👥" styleClass="staff-icon-large">
+                        <VBox alignment="TOP_RIGHT" spacing="16">
+                            <Label styleClass="staff-icon-large" text="👥">
                                 <font>
                                     <Font size="48" />
                                 </font>
                             </Label>
-                            <Button text="+ Add Staff" styleClass="add-staff-button" onAction="#goToCreateStaff">
+                            <Button onAction="#goToCreateStaff" styleClass="add-staff-button" text="+ Add Staff">
                                 <font>
                                     <Font name="System Bold" size="14" />
                                 </font>
@@ -251,7 +244,7 @@
 
                     <!-- Header with Search and Filter -->
                     <HBox alignment="CENTER_LEFT" spacing="16">
-                        <Label text="Daftar Staff" styleClass="section-title">
+                        <Label styleClass="section-title" text="Daftar Staff">
                             <font>
                                 <Font name="System Bold" size="20" />
                             </font>
@@ -260,16 +253,16 @@
                         <Region HBox.hgrow="ALWAYS" />
 
                         <!-- Search Box -->
-                        <HBox spacing="8" alignment="CENTER_LEFT" styleClass="search-box">
+                        <HBox alignment="CENTER_LEFT" spacing="8" styleClass="search-box">
                             <padding>
-                                <Insets top="8" right="12" bottom="8" left="12" />
+                                <Insets bottom="8" left="12" right="12" top="8" />
                             </padding>
-                            <Label text="🔍" styleClass="search-icon">
+                            <Label styleClass="search-icon" text="🔍">
                                 <font>
                                     <Font size="16" />
                                 </font>
                             </Label>
-                            <TextField fx:id="searchField" promptText="Cari staff..." styleClass="search-input" prefWidth="250">
+                            <TextField fx:id="searchField" prefWidth="250" promptText="Cari staff..." styleClass="search-input">
                                 <font>
                                     <Font size="14" />
                                 </font>
@@ -277,18 +270,18 @@
                         </HBox>
 
                         <!-- Filter Button -->
-                        <Button text="⚙" styleClass="filter-button">
+                        <Button styleClass="filter-button" text="⚙">
                             <font>
                                 <Font size="20" />
                             </font>
                             <padding>
-                                <Insets top="8" right="12" bottom="8" left="12" />
+                                <Insets bottom="8" left="12" right="12" top="8" />
                             </padding>
                         </Button>
                     </HBox>
 
                     <!-- Staff List -->
-                    <VBox spacing="12" fx:id="staffListContainer">
+                    <VBox fx:id="staffListContainer" spacing="12">
                         <!-- Staff Item 1 -->
 <!--                        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="staff-item">-->
 <!--                            <padding>-->
@@ -344,7 +337,7 @@
 
                     <!-- Pagination Footer -->
                     <HBox alignment="CENTER" spacing="20">
-                        <Label text="Menampilkan 1-6 dari 24 staff" styleClass="pagination-info">
+                        <Label styleClass="pagination-info" text="Menampilkan 1-6 dari 24 staff">
                             <font>
                                 <Font size="13" />
                             </font>
@@ -352,33 +345,33 @@
 
                         <Region HBox.hgrow="ALWAYS" />
 
-                        <HBox spacing="8" alignment="CENTER">
-                            <Button text="‹" styleClass="pagination-button">
+                        <HBox alignment="CENTER" spacing="8">
+                            <Button styleClass="pagination-button" text="‹">
                                 <font>
                                     <Font size="16" />
                                 </font>
                             </Button>
-                            <Button text="1" styleClass="pagination-button, pagination-button-active">
+                            <Button styleClass="pagination-button, pagination-button-active" text="1">
                                 <font>
                                     <Font name="System Bold" size="14" />
                                 </font>
                             </Button>
-                            <Button text="2" styleClass="pagination-button">
+                            <Button styleClass="pagination-button" text="2">
                                 <font>
                                     <Font size="14" />
                                 </font>
                             </Button>
-                            <Button text="3" styleClass="pagination-button">
+                            <Button styleClass="pagination-button" text="3">
                                 <font>
                                     <Font size="14" />
                                 </font>
                             </Button>
-                            <Button text="4" styleClass="pagination-button">
+                            <Button styleClass="pagination-button" text="4">
                                 <font>
                                     <Font size="14" />
                                 </font>
                             </Button>
-                            <Button text="›" styleClass="pagination-button">
+                            <Button styleClass="pagination-button" text="›">
                                 <font>
                                     <Font size="16" />
                                 </font>

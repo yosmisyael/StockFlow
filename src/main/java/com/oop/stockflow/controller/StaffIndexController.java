@@ -8,15 +8,20 @@ import com.oop.stockflow.repository.StaffRepository;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
+import java.util.Optional;
 
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
+
+import static com.oop.stockflow.app.View.STAFF_CREATE;
 
 public class StaffIndexController {
     private Warehouse warehouse;
@@ -29,7 +34,7 @@ public class StaffIndexController {
     @FXML
     private void goToCreateStaff() {
         StageManager.getInstance().navigateWithData(
-                View.STAFF_CREATE,
+                STAFF_CREATE,
                 "Add Warehouse " + warehouse.getId() + " Staff",
                 (StaffCreateController controller) -> { controller.setWarehouseId(warehouse); }
         );
@@ -70,57 +75,86 @@ public class StaffIndexController {
         HBox card = new HBox();
         card.setAlignment(Pos.CENTER_LEFT);
         card.setSpacing(16);
-        card.getStyleClass().add("staff-item"); // Style dari FXML/CSS
-        card.setPadding(new javafx.geometry.Insets(16, 16, 16, 16));
+        card.getStyleClass().add("staff-item");
+        card.setPadding(new Insets(16, 16, 16, 16));
 
         // Avatar
         Label avatarLabel = new Label("👤");
         avatarLabel.getStyleClass().add("staff-avatar");
         avatarLabel.setFont(Font.font(32));
 
-        // Info Staff (Nama, ID, Email/Username)
+        // staff info
         Label nameLabel = new Label(staff.getName());
         nameLabel.getStyleClass().add("staff-name");
         nameLabel.setFont(Font.font("System Bold", 16));
-
-        // Format ID Staff (misal: STF001)
         String formattedId = String.format("STF%03d", staff.getId());
         Label idLabel = new Label("ID: " + formattedId);
         idLabel.getStyleClass().add("staff-detail");
         idLabel.setFont(Font.font(13));
-
-        Label emailLabel = new Label("Email: " + staff.getEmail()); // Repo Anda pakai email
+        Label emailLabel = new Label("Email: " + staff.getEmail());
         emailLabel.getStyleClass().add("staff-detail");
         emailLabel.setFont(Font.font(13));
+        HBox detailBox = new HBox(16, idLabel, emailLabel);
+        VBox infoBox = new VBox(4, nameLabel, detailBox);
+        HBox.setHgrow(infoBox, Priority.ALWAYS);
 
-        HBox detailBox = new HBox(16, idLabel, emailLabel); // Spasi antara ID dan Email
-        VBox infoBox = new VBox(4, nameLabel, detailBox); // Spasi antara Nama dan Detail
-        HBox.setHgrow(infoBox, Priority.ALWAYS); // Membuat infoBox mengisi ruang
+        // edit button
+        Button editButton = new Button("Edit");
+        editButton.getStyleClass().add("action-button-edit");
+        editButton.setOnAction(event -> handleEditStaff(staff));
 
-        // Status Badge (Contoh, Anda perlu logika status dari DB)
-        // Repo Anda saat ini tidak mengambil status, perlu ditambahkan jika mau
-        // String status = staff.getStatus(); // Asumsi ada getStatus() di model
-        String status = "Aktif"; // Placeholder
-        Label statusLabel = new Label(status);
-        if ("Aktif".equalsIgnoreCase(status)) {
-            statusLabel.getStyleClass().add("status-badge-active");
-        } else {
-            statusLabel.getStyleClass().add("status-badge-leave"); // Atau status lain
-        }
-        statusLabel.setPadding(new Insets(6, 16, 6, 16));
-        statusLabel.setFont(Font.font("System Bold", 12));
+        // delete button
+        Button deleteButton = new Button("Delete");
+        deleteButton.getStyleClass().add("action-button-delete");
+        deleteButton.setOnAction(event -> handleDeleteStaff(staff));
 
-        // Menu Button
-        Button menuButton = new Button("⋮");
-        menuButton.getStyleClass().add("menu-button");
-        menuButton.setFont(Font.font(20));
-        // Tambahkan aksi untuk menuButton jika perlu
-        // menuButton.setOnAction(e -> handleStaffMenu(staff));
+        // grouping buttons
+        HBox actionButtons = new HBox(8, editButton, deleteButton);
+        actionButtons.setAlignment(Pos.CENTER_LEFT);
 
-        // Gabungkan semua komponen ke dalam kartu HBox
-        card.getChildren().addAll(avatarLabel, infoBox, statusLabel, menuButton);
+        card.getChildren().addAll(avatarLabel, infoBox, actionButtons);
 
         return card;
+    }
+
+    private void handleEditStaff(Staff staff) {
+        StageManager.getInstance().navigateWithData(
+            View.STAFF_EDIT,
+        "Edit Staff Information",
+            (StaffEditController controller) -> { controller.initData(warehouse, staff);}
+        );
+    }
+
+    private void handleDeleteStaff(Staff staff) {
+        System.out.println("Delete staff clicked for: " + staff.getName() + " (ID: " + staff.getId() + ")");
+
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Confirm Deletion");
+        confirmation.setHeaderText("Delete Staff Account?");
+        confirmation.setContentText("Are you sure you want to delete the staff account for '" + staff.getName() + "'? This action cannot be undone.");
+
+        Optional<ButtonType> result = confirmation.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            boolean deleted = staffRepository.deleteStaff(staff.getId());
+            if (deleted) {
+                // rerender staff list
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Staff account for '" + staff.getName() + "' has been deleted.");
+                loadStaffList(this.warehouse.getId());
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete staff account.");
+            }
+        } else {
+            System.out.println("Deletion cancelled for staff ID: " + staff.getId());
+        }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     public void initData(Warehouse warehouse) {

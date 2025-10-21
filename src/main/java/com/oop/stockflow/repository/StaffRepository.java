@@ -96,18 +96,72 @@ public class StaffRepository {
         return null;
     }
 
-    public boolean updateStaff(Staff staff) {
-        String sql = "UPDATE staff SET name = ?, email = ?, warehouse_id = ? WHERE id = ?";
+    /**
+     * Mengupdate detail staf (nama, email, dan/atau password) secara opsional.
+     * Kolom warehouse_id TIDAK diubah oleh method ini.
+     *
+     * @param staffId            ID staf yang akan diupdate.
+     * @param newName            Nama baru, atau null jika tidak ingin mengubah nama.
+     * @param newEmail           Email baru, atau null jika tidak ingin mengubah email.
+     * @param newPlainTextPassword Password baru (plain text), atau null/kosong jika tidak ingin mengubah password.
+     * @return true jika update berhasil (atau tidak ada yang diupdate), false jika gagal.
+     */
+    public boolean updateStaffDetails(int staffId, String newName, String newEmail, String newPlainTextPassword) {
+        StringBuilder sqlBuilder = new StringBuilder("UPDATE staff SET ");
+        List<Object> params = new ArrayList<>();
+        boolean needsComma = false;
+
+        // check name field update
+        if (newName != null) {
+            sqlBuilder.append("name = ?");
+            params.add(newName);
+            needsComma = true;
+        }
+
+        // check email field update
+        if (newEmail != null) {
+            if (needsComma) {
+                sqlBuilder.append(", ");
+            }
+            sqlBuilder.append("email = ?");
+            params.add(newEmail);
+            needsComma = true;
+        }
+
+        // check password field update
+        if (newPlainTextPassword != null && !newPlainTextPassword.isEmpty()) {
+            if (needsComma) {
+                sqlBuilder.append(", ");
+            }
+            String hashedPassword = BCrypt.hashpw(newPlainTextPassword, BCrypt.gensalt());
+            sqlBuilder.append("password = ?");
+            params.add(hashedPassword);
+            needsComma = true;
+        }
+
+        // check if no update required
+        if (params.isEmpty()) {
+            System.out.println("[INFO] Tidak ada field yang diupdate untuk staff ID: " + staffId);
+            return true;
+        }
+
+        // where clause
+        sqlBuilder.append(" WHERE id = ?");
+        params.add(staffId);
+
+        String finalSql = sqlBuilder.toString();
+        System.out.println("[INFO] Executing SQL: " + finalSql);
 
         try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(finalSql)) {
 
-            stmt.setString(1, staff.getName());
-            stmt.setString(2, staff.getEmail());
-            stmt.setInt(3, staff.getWarehouseId());
-            stmt.setInt(4, staff.getId());
+            for (int i = 0; i < params.size(); i++) {
+                stmt.setObject(i + 1, params.get(i));
+            }
 
-            return stmt.executeUpdate() > 0;
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+
         } catch (SQLException e) {
             System.err.println("[ERROR] " + e.getMessage());
             e.printStackTrace();

@@ -1,9 +1,18 @@
 package com.oop.stockflow.model;
 
 public class User {
-    private String name;
-    private String email;
-    private String password;
+    protected int id;
+    protected String name;
+    protected String email;
+    protected String password;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -12,7 +21,6 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getEmail() {
         return email;

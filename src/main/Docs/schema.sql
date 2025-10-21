@@ -2,26 +2,20 @@
 -- PostgreSQL Database Schema for StockFlow
 -- =========================================================
 
--- Drop tables in reverse order of dependency (for reruns)
-DROP TABLE IF EXISTS transaction_details CASCADE;
 DROP TABLE IF EXISTS transactions CASCADE;
-DROP TABLE IF EXISTS stock_ledger CASCADE;
-DROP TABLE IF EXISTS storage_locations CASCADE;
-DROP TABLE IF EXISTS batches CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
-DROP TABLE IF EXISTS suppliers CASCADE;
 DROP TABLE IF EXISTS staff CASCADE;
 DROP TABLE IF EXISTS warehouses CASCADE;
 DROP TABLE IF EXISTS manager CASCADE;
 DROP TABLE IF EXISTS sessions CASCADE;
-DROP TYPE user_role;
-DROP TYPE warehouse_status;
+DROP TYPE IF EXISTS user_role;
+DROP TYPE IF EXISTS warehouse_status;
+DROP TYPE IF EXISTS product_type;
+DROP TYPE IF EXISTS transaction_type;
 
-SELECT * FROM warehouses;
+CREATE TYPE user_role AS ENUM ('manager', 'staff');
 
--- =========================================================
 -- Manager Table
--- =========================================================
 CREATE TABLE manager
 (
     id       BIGSERIAL PRIMARY KEY,
@@ -31,10 +25,9 @@ CREATE TABLE manager
     password VARCHAR(255)        NOT NULL
 );
 
--- =========================================================
 -- Warehouses Table
--- =========================================================
 CREATE TYPE warehouse_status AS ENUM ('active', 'inactive', 'maintenance');
+
 CREATE TABLE warehouses
 (
     id                     BIGSERIAL PRIMARY KEY,
@@ -50,9 +43,7 @@ CREATE TABLE warehouses
                                                 ON UPDATE CASCADE ON DELETE SET NULL
 );
 
--- =========================================================
 -- Staff Table
--- =========================================================
 CREATE TABLE staff
 (
     id           BIGSERIAL PRIMARY KEY,
@@ -63,20 +54,21 @@ CREATE TABLE staff
                                          ON UPDATE CASCADE ON DELETE SET NULL
 );
 
--- =========================================================
--- Suppliers Table
--- =========================================================
-CREATE TABLE suppliers
+-- Sessions Table
+CREATE TABLE sessions
 (
-    id           BIGSERIAL PRIMARY KEY,
-    name         VARCHAR(100) NOT NULL,
-    address      TEXT,
-    contact_info TEXT
+    session_id BIGSERIAL PRIMARY KEY,
+    user_id    BIGINT              NOT NULL,
+    user_type  user_role           NOT NULL,
+    token      VARCHAR(255) UNIQUE NOT NULL
 );
 
--- =========================================================
+CREATE TYPE product_type AS ENUM (
+    'dry good',
+    'fresh'
+    );
+
 -- Products Table
--- =========================================================
 CREATE TABLE products
 (
     sku                         VARCHAR(50) PRIMARY KEY,
@@ -86,126 +78,43 @@ CREATE TABLE products
     purchase_price              NUMERIC(12, 2),
     weight_per_unit_kg          NUMERIC(10, 3),
     volume_per_unit_m3          NUMERIC(10, 3),
-    product_type                VARCHAR(50),
+    quantity                    INT     DEFAULT 0,
+    -- inheritance
+    product_type                product_type,
+    -- dry good product
     reorder_point               INTEGER DEFAULT 0,
     reorder_quantity            INTEGER DEFAULT 0,
     units_per_case              INTEGER,
-    shelf_life_days             INTEGER,
-    days_to_alert_before_expiry INTEGER,
-    sold_by_weight              BOOLEAN DEFAULT FALSE,
+    -- fresh product
     required_temp               NUMERIC(5, 2),
-    supplier_id                 BIGINT       REFERENCES suppliers (id)
-                                                 ON UPDATE CASCADE ON DELETE SET NULL
+    days_to_alert_before_expiry INTEGER
 );
 
--- =========================================================
--- Batches Table
--- =========================================================
-CREATE TABLE batches
-(
-    batch_id     BIGSERIAL PRIMARY KEY,
-    product_sku  VARCHAR(50) REFERENCES products (sku)
-        ON UPDATE CASCADE ON DELETE CASCADE,
-    batch_number VARCHAR(100),
-    expiry_date  DATE,
-    quantity     INTEGER CHECK (quantity >= 0)
-);
 
--- =========================================================
--- Storage Locations Table
--- =========================================================
-CREATE TABLE storage_locations
+CREATE TYPE transaction_type AS ENUM (
+    'inbound',
+    'outbound'
+    );
+
+CREATE TYPE shipping_method AS ENUM (
+    'standard ground',
+    'express air',
+    'sea freight'
+    );
+
+-- Transactions Table
+CREATE TABLE transactions
 (
-    location_id   BIGSERIAL PRIMARY KEY,
-    location_code VARCHAR(50) UNIQUE NOT NULL,
-    location_type VARCHAR(50),
-    status        VARCHAR(30) DEFAULT 'available',
-    warehouse_id  BIGINT REFERENCES warehouses (id)
+    id                  BIGSERIAL PRIMARY KEY,
+    user_id             BIGINT           REFERENCES staff (id)
+                                             ON UPDATE CASCADE ON DELETE SET NULL,
+    date                TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    transaction_type    transaction_type NOT NULL,
+    destination_address TEXT             NULL,
+    shipping_method     shipping_method  NOT NULL,
+    product_sku         VARCHAR(50) REFERENCES products (sku)
         ON UPDATE CASCADE ON DELETE CASCADE
 );
 
--- =========================================================
--- Stock Ledger Table
--- =========================================================
-CREATE TABLE stock_ledger
-(
-    id          BIGSERIAL PRIMARY KEY,
-    product_sku VARCHAR(50) REFERENCES products (sku)
-        ON UPDATE CASCADE ON DELETE CASCADE,
-    location_id BIGINT REFERENCES storage_locations (location_id)
-        ON UPDATE CASCADE ON DELETE CASCADE,
-    batch_id    BIGINT REFERENCES batches (batch_id)
-                           ON UPDATE CASCADE ON DELETE SET NULL,
-    quantity    INTEGER CHECK (quantity >= 0)
-);
-
--- =========================================================
--- Transactions Table
--- =========================================================
-CREATE TABLE transactions
-(
-    id                      BIGSERIAL PRIMARY KEY,
-    user_id                 BIGINT      REFERENCES staff (id)
-                                            ON UPDATE CASCADE ON DELETE SET NULL,
-    supplier_id             BIGINT      REFERENCES suppliers (id)
-                                            ON UPDATE CASCADE ON DELETE SET NULL,
-    date                    TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
-    transaction_type        VARCHAR(50) NOT NULL CHECK (transaction_type IN ('inbound', 'outbound', 'internal')),
-    notes                   TEXT,
-    status                  VARCHAR(30) DEFAULT 'pending',
-    supplier_invoice_number VARCHAR(100),
-    delivery_order_number   VARCHAR(100),
-    internal_request_id     VARCHAR(100),
-    destination_address     TEXT,
-    shipping_method         VARCHAR(50),
-    tracking_number         VARCHAR(100)
-);
-
--- =========================================================
--- Transaction Details Table
--- =========================================================
-CREATE TABLE transaction_details
-(
-    id             BIGSERIAL PRIMARY KEY,
-    transaction_id BIGINT REFERENCES transactions (id)
-        ON UPDATE CASCADE ON DELETE CASCADE,
-    product_sku    VARCHAR(50) REFERENCES products (sku)
-        ON UPDATE CASCADE ON DELETE CASCADE,
-    quantity       INTEGER NOT NULL CHECK (quantity > 0)
-);
-
--- =========================================================
 -- Indexes for Faster Lookup
--- =========================================================
-CREATE INDEX idx_products_supplier ON products (supplier_id);
-CREATE INDEX idx_batches_product ON batches (product_sku);
-CREATE INDEX idx_stockledger_product ON stock_ledger (product_sku);
-CREATE INDEX idx_stockledger_location ON stock_ledger (location_id);
-CREATE INDEX idx_transactiondetails_transaction ON transaction_details (transaction_id);
-CREATE INDEX idx_transactiondetails_product ON transaction_details (product_sku);
 CREATE INDEX idx_transactions_user ON transactions (user_id);
-
--- =========================================================
--- Example Integrity Rules
--- =========================================================
--- (Optional) Prevent duplicate product-supplier pairs
-ALTER TABLE products
-    ADD CONSTRAINT unique_supplier_product UNIQUE (supplier_id, name);
-
--- (Optional) Prevent same product in multiple batches with identical batch_number
-ALTER TABLE batches
-    ADD CONSTRAINT unique_product_batch UNIQUE (product_sku, batch_number);
-
-
--- sessions table
-CREATE TYPE user_role AS ENUM ('manager', 'staff');
-
-CREATE TABLE sessions
-(
-    session_id BIGSERIAL PRIMARY KEY,
-    user_id    BIGINT              NOT NULL,
-    user_type  user_role           NOT NULL,
-    token      VARCHAR(255) UNIQUE NOT NULL
-);
-
-SELECT * FROM manager;
