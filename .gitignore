@@ -42,3 +42,15 @@ bin/
 .DS_Store
 
 .env
+
+src/main/Docs/*.html
+src/main/Docs/*.svg
+src/main/Docs/*.js
+src/main/Docs/*.css
+src/main/Docs/element-list
+src/main/Docs/com.oop.stockflow
+src/main/Docs/index-files
+src/main/Docs/legal
+src/main/Docs/resources
+src/main/Docs/script-dir
+
