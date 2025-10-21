@@ -7,7 +7,8 @@ module com.oop.stockflow {
     requires jbcrypt;
     requires jdk.xml.dom;
     requires java.dotenv;
-
+    requires com.zaxxer.hikari;
+    requires java.desktop;
 
     opens com.oop.stockflow to javafx.fxml;
     exports com.oop.stockflow;
