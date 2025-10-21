@@ -2,32 +2,52 @@ package com.oop.stockflow.controller;
 
 import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
+import com.oop.stockflow.model.Warehouse;
+import com.oop.stockflow.repository.StaffRepository;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.util.regex.Pattern;
+
 public class StaffCreateController {
+    private Warehouse warehouse;
+
+    private final StaffRepository staffRepository = StaffRepository.getInstance();
+
+    @FXML
+    private TextField name;
+    @FXML
+    private TextField email;
     @FXML
     private Label userNameLabel;
     @FXML
     private Label userRole;
     @FXML
-    private TextField fullNameField;
+    private TextField nameField;
     @FXML
-    private TextField usernameField;
+    private TextField emailField;
     @FXML
     private PasswordField passwordField;
 
-
     @FXML
     private void goToDashboard() {
-        StageManager.getInstance().navigate(View.WAREHOUSE_DASHBOARD, "Dashboard");
+        StageManager.getInstance().navigateWithData(
+                View.WAREHOUSE_DASHBOARD,
+                "Dashboard",
+                (WarehouseDashboardController controller) -> controller.setWarehouse(warehouse)
+        );
     }
 
     @FXML
     private void goToStaffMenu() {
-        StageManager.getInstance().navigate(View.STAFF_INDEX, "Staff Management");
+        StageManager.getInstance().navigateWithData(
+            View.STAFF_INDEX,
+            "Staff Management",
+            (StaffIndexController controller) -> { controller.initData(warehouse); }
+        );
     }
 
     @FXML
@@ -37,11 +57,59 @@ public class StaffCreateController {
 
     @FXML
     private void handleCreateStaff() {
+        String name = nameField.getText().trim();
+        String email = emailField.getText().trim();
+        String password = passwordField.getText().trim();
 
+        // input not empty validation
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Input Error", "All fields are required. Please fill them all.");
+            return;
+        }
+
+        // email validation
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        if (!Pattern.matches(emailRegex, email)) {
+            showAlert(Alert.AlertType.WARNING, "Input Error", "Email address format is invalid. Please enter a valid email (e.g., example@domain.com).");
+            return;
+        }
+
+        // password validation
+        if (password.length() < 8) {
+            showAlert(Alert.AlertType.WARNING, "Input Error", "Password is too short. It must be at least 8 characters long.");
+            return;
+        }
+
+        // check warehouse id exists
+        if (warehouse.getId() <= 0) {
+            showAlert(Alert.AlertType.ERROR, "System Error", "Warehouse ID is missing. Please go back and try again.");
+            return;
+        }
+
+        boolean success = staffRepository.createStaff(name, email, password, this.warehouse.getId());
+
+        if (success) {
+            showAlert(Alert.AlertType.INFORMATION, "Success", "A new staff account has been created successfully!");
+            goToStaffMenu();
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to create staff account. The username might already exist.");
+        }
     }
 
     @FXML
     private void handleLogout() {
         StageManager.getInstance().navigate(View.STAFF_INDEX, "Warehouse Staff");
+    }
+
+    public void setWarehouseId(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

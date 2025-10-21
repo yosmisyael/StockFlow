@@ -9,17 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WarehouseRepository {
-
-    private final Connection connection;
-
-    public WarehouseRepository() {
-        this.connection = DatabaseManager.getConnection();
-    }
-
     public boolean insertWarehouse(String name, String address, String city, String state, String postalCode, int storageCapacityKgField, int storageCapacityM3Field, WarehouseStatus status, int manager_id) {
         String sql = "INSERT INTO warehouses (name, address, city, state, postal_code, max_capacity_volume_m3, max_capacity_weight_kg, status, manager_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?::warehouse_status, ?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
             stmt.setString(1, name);
             stmt.setString(2, address);
             stmt.setString(3, city);
@@ -41,7 +34,7 @@ public class WarehouseRepository {
         List<Warehouse> warehouses = new ArrayList<>();
         String query = "SELECT * FROM warehouses";
 
-        try (Statement stmt = connection.createStatement();
+        try (Statement stmt = DatabaseManager.getConnection().createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {

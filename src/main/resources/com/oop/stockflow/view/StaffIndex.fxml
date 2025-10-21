@@ -105,7 +105,7 @@
                 </padding>
 
                 <!-- Dashboard -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📊  Dashboard">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📊  Dashboard" onAction="#goToDashboard">
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12" />
                     </padding>
@@ -290,276 +290,56 @@
                     <!-- Staff List -->
                     <VBox spacing="12" fx:id="staffListContainer">
                         <!-- Staff Item 1 -->
-                        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="staff-item">
-                            <padding>
-                                <Insets bottom="16" left="16" right="16" top="16" />
-                            </padding>
+<!--                        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="staff-item">-->
+<!--                            <padding>-->
+<!--                                <Insets bottom="16" left="16" right="16" top="16" />-->
+<!--                            </padding>-->
 
-                            <!-- Avatar -->
-                            <Label text="👤" styleClass="staff-avatar">
-                                <font>
-                                    <Font size="32" />
-                                </font>
-                            </Label>
+<!--                            &lt;!&ndash; Avatar &ndash;&gt;-->
+<!--                            <Label text="👤" styleClass="staff-avatar">-->
+<!--                                <font>-->
+<!--                                    <Font size="32" />-->
+<!--                                </font>-->
+<!--                            </Label>-->
 
-                            <!-- Staff Info -->
-                            <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                <Label text="Ahmad Rizki" styleClass="staff-name">
-                                    <font>
-                                        <Font name="System Bold" size="16" />
-                                    </font>
-                                </Label>
-                                <HBox spacing="16">
-                                    <Label text="ID: STF001" styleClass="staff-detail">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                    <Label text="Username: ahmad.rizki" styleClass="staff-detail">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                </HBox>
-                            </VBox>
+<!--                            &lt;!&ndash; Staff Info &ndash;&gt;-->
+<!--                            <VBox spacing="4" HBox.hgrow="ALWAYS">-->
+<!--                                <Label text="Ahmad Rizki" styleClass="staff-name">-->
+<!--                                    <font>-->
+<!--                                        <Font name="System Bold" size="16" />-->
+<!--                                    </font>-->
+<!--                                </Label>-->
+<!--                                <HBox spacing="16">-->
+<!--                                    <Label text="ID: STF001" styleClass="staff-detail">-->
+<!--                                        <font>-->
+<!--                                            <Font size="13" />-->
+<!--                                        </font>-->
+<!--                                    </Label>-->
+<!--                                    <Label text="Username: ahmad.rizki" styleClass="staff-detail">-->
+<!--                                        <font>-->
+<!--                                            <Font size="13" />-->
+<!--                                        </font>-->
+<!--                                    </Label>-->
+<!--                                </HBox>-->
+<!--                            </VBox>-->
 
-                            <!-- Status Badge -->
-                            <Label text="Aktif" styleClass="status-badge-active">
-                                <padding>
-                                    <Insets top="6" right="16" bottom="6" left="16" />
-                                </padding>
-                                <font>
-                                    <Font name="System Bold" size="12" />
-                                </font>
-                            </Label>
+<!--                            &lt;!&ndash; Status Badge &ndash;&gt;-->
+<!--                            <Label text="Aktif" styleClass="status-badge-active">-->
+<!--                                <padding>-->
+<!--                                    <Insets top="6" right="16" bottom="6" left="16" />-->
+<!--                                </padding>-->
+<!--                                <font>-->
+<!--                                    <Font name="System Bold" size="12" />-->
+<!--                                </font>-->
+<!--                            </Label>-->
 
-                            <!-- Menu Button -->
-                            <Button text="⋮" styleClass="menu-button">
-                                <font>
-                                    <Font size="20" />
-                                </font>
-                            </Button>
-                        </HBox>
-
-                        <!-- Staff Item 2 -->
-                        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="staff-item">
-                            <padding>
-                                <Insets bottom="16" left="16" right="16" top="16" />
-                            </padding>
-                            <Label text="👤" styleClass="staff-avatar">
-                                <font>
-                                    <Font size="32" />
-                                </font>
-                            </Label>
-                            <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                <Label text="Sari Dewi" styleClass="staff-name">
-                                    <font>
-                                        <Font name="System Bold" size="16" />
-                                    </font>
-                                </Label>
-                                <HBox spacing="16">
-                                    <Label text="ID: STF002" styleClass="staff-detail">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                    <Label text="Username: sari.dewi" styleClass="staff-detail">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                </HBox>
-                            </VBox>
-                            <Label text="Aktif" styleClass="status-badge-active">
-                                <padding>
-                                    <Insets top="6" right="16" bottom="6" left="16" />
-                                </padding>
-                                <font>
-                                    <Font name="System Bold" size="12" />
-                                </font>
-                            </Label>
-                            <Button text="⋮" styleClass="menu-button">
-                                <font>
-                                    <Font size="20" />
-                                </font>
-                            </Button>
-                        </HBox>
-
-                        <!-- Staff Item 3 - On Leave -->
-                        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="staff-item">
-                            <padding>
-                                <Insets bottom="16" left="16" right="16" top="16" />
-                            </padding>
-                            <Label text="👤" styleClass="staff-avatar">
-                                <font>
-                                    <Font size="32" />
-                                </font>
-                            </Label>
-                            <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                <Label text="Budi Santoso" styleClass="staff-name">
-                                    <font>
-                                        <Font name="System Bold" size="16" />
-                                    </font>
-                                </Label>
-                                <HBox spacing="16">
-                                    <Label text="ID: STF003" styleClass="staff-detail">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                    <Label text="Username: budi.santoso" styleClass="staff-detail">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                </HBox>
-                            </VBox>
-                            <Label text="Cuti" styleClass="status-badge-leave">
-                                <padding>
-                                    <Insets top="6" right="16" bottom="6" left="16" />
-                                </padding>
-                                <font>
-                                    <Font name="System Bold" size="12" />
-                                </font>
-                            </Label>
-                            <Button text="⋮" styleClass="menu-button">
-                                <font>
-                                    <Font size="20" />
-                                </font>
-                            </Button>
-                        </HBox>
-
-                        <!-- Staff Item 4 -->
-                        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="staff-item">
-                            <padding>
-                                <Insets bottom="16" left="16" right="16" top="16" />
-                            </padding>
-                            <Label text="👤" styleClass="staff-avatar">
-                                <font>
-                                    <Font size="32" />
-                                </font>
-                            </Label>
-                            <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                <Label text="Maya Putri" styleClass="staff-name">
-                                    <font>
-                                        <Font name="System Bold" size="16" />
-                                    </font>
-                                </Label>
-                                <HBox spacing="16">
-                                    <Label text="ID: STF004" styleClass="staff-detail">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                    <Label text="Username: maya.putri" styleClass="staff-detail">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                </HBox>
-                            </VBox>
-                            <Label text="Aktif" styleClass="status-badge-active">
-                                <padding>
-                                    <Insets top="6" right="16" bottom="6" left="16" />
-                                </padding>
-                                <font>
-                                    <Font name="System Bold" size="12" />
-                                </font>
-                            </Label>
-                            <Button text="⋮" styleClass="menu-button">
-                                <font>
-                                    <Font size="20" />
-                                </font>
-                            </Button>
-                        </HBox>
-
-                        <!-- Staff Item 5 -->
-                        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="staff-item">
-                            <padding>
-                                <Insets bottom="16" left="16" right="16" top="16" />
-                            </padding>
-                            <Label text="👤" styleClass="staff-avatar">
-                                <font>
-                                    <Font size="32" />
-                                </font>
-                            </Label>
-                            <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                <Label text="Eko Prasetyo" styleClass="staff-name">
-                                    <font>
-                                        <Font name="System Bold" size="16" />
-                                    </font>
-                                </Label>
-                                <HBox spacing="16">
-                                    <Label text="ID: STF005" styleClass="staff-detail">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                    <Label text="Username: eko.prasetyo" styleClass="staff-detail">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                </HBox>
-                            </VBox>
-                            <Label text="Aktif" styleClass="status-badge-active">
-                                <padding>
-                                    <Insets top="6" right="16" bottom="6" left="16" />
-                                </padding>
-                                <font>
-                                    <Font name="System Bold" size="12" />
-                                </font>
-                            </Label>
-                            <Button text="⋮" styleClass="menu-button">
-                                <font>
-                                    <Font size="20" />
-                                </font>
-                            </Button>
-                        </HBox>
-
-                        <!-- Staff Item 6 -->
-                        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="staff-item">
-                            <padding>
-                                <Insets bottom="16" left="16" right="16" top="16" />
-                            </padding>
-                            <Label text="👤" styleClass="staff-avatar">
-                                <font>
-                                    <Font size="32" />
-                                </font>
-                            </Label>
-                            <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                <Label text="Rina Sari" styleClass="staff-name">
-                                    <font>
-                                        <Font name="System Bold" size="16" />
-                                    </font>
-                                </Label>
-                                <HBox spacing="16">
-                                    <Label text="ID: STF006" styleClass="staff-detail">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                    <Label text="Username: rina.sari" styleClass="staff-detail">
-                                        <font>
-                                            <Font size="13" />
-                                        </font>
-                                    </Label>
-                                </HBox>
-                            </VBox>
-                            <Label text="Aktif" styleClass="status-badge-active">
-                                <padding>
-                                    <Insets top="6" right="16" bottom="6" left="16" />
-                                </padding>
-                                <font>
-                                    <Font name="System Bold" size="12" />
-                                </font>
-                            </Label>
-                            <Button text="⋮" styleClass="menu-button">
-                                <font>
-                                    <Font size="20" />
-                                </font>
-                            </Button>
-                        </HBox>
+<!--                            &lt;!&ndash; Menu Button &ndash;&gt;-->
+<!--                            <Button text="⋮" styleClass="menu-button">-->
+<!--                                <font>-->
+<!--                                    <Font size="20" />-->
+<!--                                </font>-->
+<!--                            </Button>-->
+<!--                        </HBox>-->
                     </VBox>
 
                     <!-- Pagination Footer -->

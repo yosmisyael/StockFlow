@@ -2,7 +2,7 @@ package com.oop.stockflow.repository;
 
 import com.oop.stockflow.db.DatabaseManager;
 import com.oop.stockflow.model.Staff;
-import org.mindrot.jbcrypt.BCrypt; // <-- Pastikan Anda memiliki library BCrypt
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,31 +12,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StaffRepository {
+    private static StaffRepository instance;
 
-    // Constructor kosong (sesuai pola perbaikan)
-    public StaffRepository() {
+    private StaffRepository() {}
+
+    public static StaffRepository getInstance() {
+        if (instance == null) {
+            instance = new StaffRepository();
+        }
+        return instance;
     }
 
-    /**
-     * Membuat staf baru di database.
-     * Method ini secara otomatis mengenkripsi password.
-     */
-    public boolean createStaff(String fullName, String username, String plainPassword, int warehouseId) {
-        String hashedPassword = BCrypt.hashpw(plainPassword, BCrypt.gensalt());
+    public boolean createStaff(String name, String email, String password, int warehouseId) {
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-        String sql = "INSERT INTO staff (name, email, password, warehouse_id) VALUES (?, ?, ?, 'Aktif')";
+        String sql = "INSERT INTO staff (name, email, password, warehouse_id) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, fullName);
-            stmt.setString(2, username);
+            stmt.setString(1, name);
+            stmt.setString(2, email);
             stmt.setString(3, hashedPassword);
             stmt.setInt(4, warehouseId);
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.err.println("[ERROR] Gagal membuat staf: " + e.getMessage());
+            System.err.println("[ERROR] " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -54,17 +56,16 @@ public class StaffRepository {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     Staff staff = new Staff(
-                            rs.getInt("id"),
-                            rs.getString("full_name"),
-                            rs.getString("username"),
-                            rs.getString("status"),
-                            rs.getInt("warehouse_id")
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getInt("warehouse_id")
                     );
                     staffList.add(staff);
                 }
             }
         } catch (SQLException e) {
-            System.err.println("[ERROR] Gagal mengambil daftar staf: " + e.getMessage());
+            System.err.println("[ERROR] " + e.getMessage());
             e.printStackTrace();
         }
         return staffList;
@@ -82,18 +83,17 @@ public class StaffRepository {
                 if (rs.next()) {
                     return new Staff(
                             rs.getInt("id"),
-                            rs.getString("full_name"),
-                            rs.getString("username"),
-                            rs.getString("status"),
+                            rs.getString("name"),
+                            rs.getString("email"),
                             rs.getInt("warehouse_id")
                     );
                 }
             }
         } catch (SQLException e) {
-            System.err.println("[ERROR] Gagal mengambil detail staf: " + e.getMessage());
+            System.err.println("[ERROR] " + e.getMessage());
             e.printStackTrace();
         }
-        return null; // Mengembalikan null jika tidak ditemukan
+        return null;
     }
 
     public boolean updateStaff(Staff staff) {
@@ -109,7 +109,7 @@ public class StaffRepository {
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.err.println("[ERROR] Gagal mengupdate staf: " + e.getMessage());
+            System.err.println("[ERROR] " + e.getMessage());
             e.printStackTrace();
             return false;
         }

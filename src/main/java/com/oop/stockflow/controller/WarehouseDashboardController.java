@@ -63,6 +63,10 @@ public class WarehouseDashboardController implements Initializable {
 
     @FXML
     private void goToStaffMenu() {
-        StageManager.getInstance().navigate(View.STAFF_INDEX, "Staff Management");
+        StageManager.getInstance().navigateWithData(
+            View.STAFF_INDEX,
+            "Warehouse " + warehouse.getId() + " Staff Management",
+            (StaffIndexController controller) -> { controller.initData(warehouse); }
+        );
     }
 }

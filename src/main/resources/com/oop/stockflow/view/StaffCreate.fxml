@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="root" stylesheets="@../assets/warehouse-dashboard.css, @../assets/staff-create.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.StaffCreateController">
+<BorderPane styleClass="root" stylesheets="@../assets/warehouse-dashboard.css, @../assets/staff-create.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.StaffCreateController">
 
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
@@ -84,7 +84,7 @@
                 </padding>
 
                 <!-- Dashboard -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📊  Dashboard">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" onAction="#goToDashboard" styleClass="nav-button" text="📊  Dashboard">
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12" />
                     </padding>
@@ -165,7 +165,10 @@
                      <font>
                         <Font name="System Bold" size="28.0" />
                      </font></Label>
-                        <Label styleClass="page-subtitle" text="Manage staff accounts and permissions" />
+                        <Label style="-fx-font-size: 14;" styleClass="page-subtitle" text="Manage staff accounts and permissions">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                     </VBox>
                 </VBox>
 
@@ -185,7 +188,7 @@
                             <padding>
                                 <Insets bottom="8" left="12" right="12" top="8" />
                             </padding>
-                            <TextField fx:id="fullNameField" promptText="Enter staff full name" styleClass="input-field" HBox.hgrow="ALWAYS" />
+                            <TextField fx:id="nameField" promptText="Enter staff full name" styleClass="input-field" HBox.hgrow="ALWAYS" />
                         </HBox>
                     </VBox>
 
@@ -196,7 +199,7 @@
                                 <Insets bottom="8" left="12" right="12" top="8" />
                             </padding>
 <!--                            <Label styleClass="input-field-icon" text="@" />-->
-                            <TextField fx:id="usernameField" promptText="Enter email" styleClass="input-field" HBox.hgrow="ALWAYS" />
+                            <TextField fx:id="emailField" promptText="Enter email" styleClass="input-field" HBox.hgrow="ALWAYS" />
                         </HBox>
                         <Label styleClass="form-hint" text="Username must be unique and contain only letters, numbers, and underscores." />
                     </VBox>
@@ -237,6 +240,9 @@
                     </VBox>
                 </VBox>
             </VBox>
+         <padding>
+            <Insets bottom="30.0" />
+         </padding>
         </ScrollPane>
     </center>
 </BorderPane>
