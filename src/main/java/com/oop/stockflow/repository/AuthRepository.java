@@ -23,7 +23,7 @@ public class AuthRepository {
     }
 
     public AuthenticatedUser login(String email, String password) {
-        String managerQuery = "SELECT id, name, password FROM manager WHERE email = ?";
+        String managerQuery = "SELECT id, name, password FROM managers WHERE email = ?";
         try (PreparedStatement managerStmt = conn.prepareStatement(managerQuery)) {
             managerStmt.setString(1, email);
             ResultSet managerResult = managerStmt.executeQuery();

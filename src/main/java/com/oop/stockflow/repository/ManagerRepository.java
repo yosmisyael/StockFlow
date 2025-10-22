@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class ManagerRepository {
     public boolean registerManager(String name, String email, String company, String password) {
-        String sql = "INSERT INTO manager (name, email, company, password) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO managers (name, email, company, password) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
