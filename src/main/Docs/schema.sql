@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS transactions CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS staff CASCADE;
 DROP TABLE IF EXISTS warehouses CASCADE;
-DROP TABLE IF EXISTS manager CASCADE;
+DROP TABLE IF EXISTS managers CASCADE;
 DROP TABLE IF EXISTS sessions CASCADE;
 DROP TYPE IF EXISTS user_role;
 DROP TYPE IF EXISTS warehouse_status;
@@ -17,7 +17,7 @@ DROP TYPE IF EXISTS transaction_status;
 CREATE TYPE user_role AS ENUM ('manager', 'staff');
 
 -- Manager Table
-CREATE TABLE manager
+CREATE TABLE managers
 (
     id       BIGSERIAL PRIMARY KEY,
     name     VARCHAR(100)        NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE warehouses
     status                 warehouse_status NOT NULL,
     max_capacity_volume_m3 NUMERIC(12, 2),
     max_capacity_weight_kg NUMERIC(12, 2),
-    manager_id             BIGINT           REFERENCES manager (id)
+    manager_id             BIGINT           REFERENCES managers (id)
                                                 ON UPDATE CASCADE ON DELETE SET NULL
 );
 
