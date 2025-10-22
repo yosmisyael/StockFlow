@@ -1,9 +1,4 @@
-/* ================================================================== */
-/* ==       STYLES UNTUK TRANSACTION TABLE VIEW                  == */
-/* ================================================================== */
-
 /* --- Container TableView --- */
-/* Menghapus border default dan mengatur background agar transparan */
 .transaction-table-view {
     -fx-background-color: transparent;
     -fx-border-color: transparent; /* Hapus border luar */
@@ -13,7 +8,6 @@
 }
 
 /* --- Header Tabel --- */
-/* Memberi background abu-abu muda pada area header */
 .transaction-table-view .column-header-background {
     -fx-background-color: #f9fafb; /* Abu-abu sangat muda */
     -fx-border-color: #e5e7eb; /* Garis bawah header */
@@ -22,44 +16,43 @@
 
 /* Style untuk label di dalam header */
 .transaction-table-view .column-header {
-    -fx-background-color: transparent; /* Header transparan di atas background */
-    -fx-padding: 12 15 12 15; /* Padding atas/bawah 12, kiri/kanan 15 */
+    -fx-background-color: transparent;
+    -fx-padding: 12 15 12 15;
 }
 
 .transaction-table-view .column-header .label {
-    -fx-text-fill: #6b7280; /* Teks abu-abu */
+    -fx-text-fill: #6b7280;
     -fx-font-size: 12px;
-    -fx-font-weight: 600; /* Sedikit tebal */
-    -fx-alignment: CENTER_LEFT; /* Rata kiri (kecuali status/aksi) */
+    -fx-font-weight: 600;
+    -fx-alignment: CENTER_LEFT;
 }
 
 /* --- Baris Tabel --- */
 .transaction-table-view .table-row-cell {
-    -fx-background-color: white; /* Latar belakang baris putih */
-    -fx-border-color: #f3f4f6; /* Garis pemisah abu-abu muda */
-    -fx-border-width: 0 0 1 0; /* Hanya garis bawah antar baris */
-    -fx-padding: 0; /* Hapus padding default baris */
+    -fx-background-color: white;
+    -fx-border-color: #f3f4f6;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 0;
 }
 
 /* Efek hover pada baris */
 .transaction-table-view .table-row-cell:hover {
-    -fx-background-color: #f9fafb; /* Abu-abu sangat muda saat hover */
+    -fx-background-color: #f9fafb;
 }
 
 /* Efek saat baris dipilih (opsional) */
 .transaction-table-view .table-row-cell:selected {
-    -fx-background-color: #eff6ff; /* Biru muda saat dipilih */
+    -fx-background-color: #eff6ff;
 }
 
 /* --- Sel Tabel --- */
 .transaction-table-view .table-cell {
-    -fx-padding: 14 15 14 15; /* Padding vertikal 14, horizontal 15 */
-    -fx-border-color: transparent; /* Hapus border default antar sel */
+    -fx-padding: 14 15 14 15;
+    -fx-border-color: transparent;
     -fx-font-size: 13px;
-    -fx-text-fill: #374151; /* Teks abu-abu tua */
+    -fx-text-fill: #374151;
 }
 
-/* --- Placeholder (saat tabel kosong) --- */
 .transaction-table-view .placeholder {
     -fx-background-color: white;
 }
@@ -68,8 +61,6 @@
     -fx-text-fill: #9ca3af; /* Teks abu-abu muda */
 }
 
-/* --- Penyesuaian Style Kolom Spesifik (jika perlu) --- */
-/* Misalnya, membuat teks status dan aksi rata tengah */
 .transaction-table-view .status-column .table-cell {
     -fx-alignment: CENTER;
 }
@@ -77,7 +68,6 @@
     -fx-alignment: CENTER;
 }
 
-/* Style untuk badge status (sudah diatur via setStyle di controller, tapi bisa juga di sini) */
 .status-badge {
     -fx-padding: 4 12;
     -fx-background-radius: 12;
@@ -99,7 +89,6 @@
     -fx-text-fill: #991b1b;
 }
 
-/* Style untuk tombol aksi (sudah diatur via setStyle di controller, tapi bisa juga di sini) */
 .action-button {
     -fx-font-size: 12px;
     -fx-padding: 6 16;

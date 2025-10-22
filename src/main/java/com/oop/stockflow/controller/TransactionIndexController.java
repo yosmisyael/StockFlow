@@ -6,51 +6,69 @@ import com.oop.stockflow.app.View;
 import com.oop.stockflow.model.*;
 import com.oop.stockflow.repository.ProductRepository;
 import com.oop.stockflow.repository.TransactionRepository;
+import com.oop.stockflow.utils.DateTimeUtils;
+import com.oop.stockflow.utils.StringUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import org.kordamp.ikonli.javafx.FontIcon;
 
-import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
-public class TransactionIndexController implements Initializable {
+public class TransactionIndexController {
     @FXML
     private Label nameLabel;
     @FXML
     private Label roleLabel;
+    @FXML
+    private Label initialLabel;
+    @FXML
+    private Label dateLabel;
 
     // Navigation buttons
     @FXML
     private Button transactionsListBtn;
 
     // Stats labels
-    @FXML private Label pendingLabel;
-    @FXML private Label committedLabel;
-    @FXML private Label inboundLabel;
-    @FXML private Label outboundLabel;
+    @FXML
+    private Label pendingLabel;
+    @FXML
+    private Label committedLabel;
+    @FXML
+    private Label inboundLabel;
+    @FXML
+    private Label outboundLabel;
 
     // Table and columns
-    @FXML private TableView<Transaction> transactionsTable;
-    @FXML private TableColumn<Transaction, Integer> skuColumn;
-    @FXML private TableColumn<Transaction, String> productNameColumn;
-    @FXML private TableColumn<Transaction, String> brandColumn;
-    @FXML private TableColumn<Transaction, Timestamp> dateColumn;
-    @FXML private TableColumn<Transaction, TransactionStatus> statusColumn;
-    @FXML private TableColumn<Transaction, Void> actionsColumn;
+    @FXML
+    private TableView<Transaction> transactionsTable;
+    @FXML
+    private TableColumn<Transaction, Integer> idColumn;
+    @FXML
+    private TableColumn<Transaction, String> productNameColumn;
+    @FXML
+    private TableColumn<Transaction, String> brandColumn;
+    @FXML
+    private TableColumn<Transaction, Timestamp> dateColumn;
+    @FXML
+    private TableColumn<Transaction, TransactionStatus> statusColumn;
+    @FXML
+    private TableColumn<Transaction, TransactionType> typeColumn;
+    @FXML
+    private TableColumn<Transaction, Void> actionsColumn;
 
-    // === Data & Repositories ===
+    // data and repositories
     private Warehouse currentWarehouse;
-    private ObservableList<Transaction> allTransactionsList = FXCollections.observableArrayList();;
+    private ObservableList<Transaction> allTransactionsList = FXCollections.observableArrayList();
+    ;
     private AuthenticatedUser currentUser;
     private final TransactionRepository transactionRepository = TransactionRepository.getInstance();
     private final ProductRepository productRepository = ProductRepository.getInstance();
@@ -61,10 +79,7 @@ public class TransactionIndexController implements Initializable {
         loadSessionData();
         setupTableColumns();
         loadTransactions();
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+        loadPageContext();
     }
 
     /**
@@ -75,8 +90,8 @@ public class TransactionIndexController implements Initializable {
         if (currentUser == null) {
             System.err.println("Error: No authenticated user found!");
         } else {
-             nameLabel.setText(currentUser.getName());
-             roleLabel.setText(currentUser.getUserType().getDbValue());
+            nameLabel.setText(currentUser.getName());
+            roleLabel.setText(currentUser.getUserType().getDbValue());
         }
     }
 
@@ -121,7 +136,9 @@ public class TransactionIndexController implements Initializable {
         updateStatisticsDisplay(pendingCount, committedCount, inboundCount, outboundCount);
     }
 
-    /** Helper untuk update label statistik */
+    /**
+     * Helper untuk update label statistik
+     */
     private void updateStatisticsDisplay(long pending, long committed, long inbound, long outbound) {
         pendingLabel.setText(String.valueOf(pending));
         committedLabel.setText(String.valueOf(committed));
@@ -134,9 +151,8 @@ public class TransactionIndexController implements Initializable {
      * Mengatur CellValueFactory dan CellFactory untuk kolom tabel.
      */
     private void setupTableColumns() {
-        skuColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        // --- Product Name Column ---
         productNameColumn.setCellValueFactory(cellData -> {
             Transaction transaction = cellData.getValue();
             int sku = transaction.getSku();
@@ -151,11 +167,10 @@ public class TransactionIndexController implements Initializable {
             return new SimpleStringProperty(brand != null ? brand : "N/A");
         });
 
-        // --- Date Column ---
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateColumn.setCellFactory(column -> new TableCell<Transaction, Timestamp>() {
-            // Format tanggal sesuai keinginan Anda
             private final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy HH:mm");
+
             @Override
             protected void updateItem(Timestamp item, boolean empty) {
                 super.updateItem(item, empty);
@@ -163,7 +178,6 @@ public class TransactionIndexController implements Initializable {
             }
         });
 
-        // --- Status Column ---
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         statusColumn.setCellFactory(column -> new TableCell<Transaction, TransactionStatus>() {
             @Override
@@ -172,7 +186,7 @@ public class TransactionIndexController implements Initializable {
                 if (empty || status == null) {
                     setGraphic(null);
                     setText(null);
-                    setStyle(""); // Hapus style
+                    setStyle("");
                 } else {
                     Label statusLabel = new Label(status.getDbValue().substring(0, 1).toUpperCase() + status.getDbValue().substring(1)); // Capitalize
                     statusLabel.setStyle(getStatusStyle(status));
@@ -184,11 +198,30 @@ public class TransactionIndexController implements Initializable {
             }
         });
 
-        // --- Actions Column ---
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        typeColumn.setCellFactory(column -> new TableCell<Transaction, TransactionType>() {
+            @Override
+            protected void updateItem(TransactionType item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                    setStyle("");
+                } else {
+                    setText(item.getDbValue().substring(0, 1).toUpperCase() + item.getDbValue().substring(1));
+                    FontIcon icon = new FontIcon(item == TransactionType.INBOUND ? "fas-arrow-down" : "fas-arrow-up");
+                    icon.setIconSize(14);
+                    setGraphic(icon);
+                    setStyle(item == TransactionType.INBOUND ? "-fx-text-fill: green;" : "-fx-text-fill: blue;");
+                }
+            }
+        });
+
         actionsColumn.setCellFactory(column -> new TableCell<Transaction, Void>() {
             private final Button detailBtn = new Button("Detail");
             private final Button updateBtn = new Button("Update");
             private final HBox actionBox = new HBox(8, detailBtn, updateBtn);
+
             {
                 actionBox.setAlignment(Pos.CENTER);
                 detailBtn.getStyleClass().add("action-button-show");
@@ -227,10 +260,14 @@ public class TransactionIndexController implements Initializable {
     private String getStatusStyle(TransactionStatus status) {
         String baseStyle = "-fx-padding: 4 12; -fx-background-radius: 12; -fx-font-size: 12px; -fx-font-weight: 600;";
         switch (status) {
-            case COMMITTED: return baseStyle + "-fx-background-color: #d1fae5; -fx-text-fill: #065f46;"; // Hijau
-            case PENDING:   return baseStyle + "-fx-background-color: #fef3c7; -fx-text-fill: #92400e;"; // Kuning
-            case VOIDED:    return baseStyle + "-fx-background-color: #fee2e2; -fx-text-fill: #991b1b;"; // Merah
-            default:        return baseStyle + "-fx-background-color: #f3f4f6; -fx-text-fill: #374151;"; // Abu-abu
+            case COMMITTED:
+                return baseStyle + "-fx-background-color: #d1fae5; -fx-text-fill: #065f46;"; // Hijau
+            case PENDING:
+                return baseStyle + "-fx-background-color: #fef3c7; -fx-text-fill: #92400e;"; // Kuning
+            case VOIDED:
+                return baseStyle + "-fx-background-color: #fee2e2; -fx-text-fill: #991b1b;"; // Merah
+            default:
+                return baseStyle + "-fx-background-color: #f3f4f6; -fx-text-fill: #374151;"; // Abu-abu
         }
     }
 
@@ -259,11 +296,11 @@ public class TransactionIndexController implements Initializable {
 
     @FXML
     private void goToOutboundTransaction() {
-         StageManager.getInstance().navigateWithData(
-                 View.TRANSACTION_CREATE_OUTBOUND,
-                 "New Outbound Transaction",
-                 (OutboundTransactionController controller) -> controller.initData(currentWarehouse, currentUser)
-         );
+        StageManager.getInstance().navigateWithData(
+                View.TRANSACTION_CREATE_OUTBOUND,
+                "New Outbound Transaction",
+                (OutboundTransactionController controller) -> controller.initData(currentWarehouse, currentUser)
+        );
     }
 
     @FXML
@@ -284,8 +321,11 @@ public class TransactionIndexController implements Initializable {
     }
 
     private void handleDetailAction(Transaction transaction) {
-        System.out.println("Viewing details for Transaction ID: " + transaction.getSku());
-        showTransactionDetailsDialog(transaction);
+        StageManager.getInstance().navigateWithData(
+                View.TRANSACTION_SHOW,
+                "Transaction Detail for ID" + transaction.getId(),
+                (TransactionShowController controller) -> { controller.initData(currentWarehouse, currentUser, transaction); }
+        );
     }
 
     private void handleUpdateAction(Transaction transaction) {
@@ -294,9 +334,6 @@ public class TransactionIndexController implements Initializable {
             return;
         }
         showUpdateStatusDialog(transaction);
-    }
-
-    private void showTransactionDetailsDialog(Transaction transaction) {
     }
 
     private void showUpdateStatusDialog(Transaction transaction) {
@@ -329,5 +366,10 @@ public class TransactionIndexController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void loadPageContext() {
+        dateLabel.setText(DateTimeUtils.getCurrentDate());
+        initialLabel.setText(StringUtils.getInitial(currentUser.getName()));
     }
 }

@@ -8,6 +8,7 @@ public abstract class Transaction {
     protected int staffId;
     protected Date date;
     protected int quantity;
+    protected TransactionType type;
     protected TransactionStatus status;
     protected ShippingType shippingType;
 
@@ -17,6 +18,14 @@ public abstract class Transaction {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public TransactionType getType() {
+        return type;
+    }
+
+    public void  setType(TransactionType type) {
+        this.type = type;
     }
 
     public int getQuantity() {

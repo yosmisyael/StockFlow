@@ -10,21 +10,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class AuthRepository {
-    private Connection conn;
+    private static AuthRepository instance;
+    private AuthRepository() {}
 
-    public AuthRepository() {
-        try {
-            conn =  DatabaseManager.getConnection();
-        } catch (Exception e) {
-            System.out.println("[ERROR] " + e.getMessage());
+    public static AuthRepository getInstance() {
+        if (instance == null) {
+            instance = new AuthRepository();
         }
+        return instance;
     }
 
     public AuthenticatedUser login(String email, String password) {
         String managerQuery = "SELECT id, name, password FROM managers WHERE email = ?";
-        try (PreparedStatement managerStmt = conn.prepareStatement(managerQuery)) {
+        try (PreparedStatement managerStmt = DatabaseManager.getConnection().prepareStatement(managerQuery)) {
             managerStmt.setString(1, email);
             ResultSet managerResult = managerStmt.executeQuery();
 
@@ -37,7 +38,7 @@ public class AuthRepository {
         }
 
         String staffQuery = "SELECT id, name, password FROM staff WHERE email = ?";
-        try (PreparedStatement staffStmt = conn.prepareStatement(staffQuery)) {
+        try (PreparedStatement staffStmt = DatabaseManager.getConnection().prepareStatement(staffQuery)) {
             staffStmt.setString(1, email);
             ResultSet staffResult = staffStmt.executeQuery();
 
@@ -68,12 +69,49 @@ public class AuthRepository {
         return null;
     }
 
-    private void saveSession(long userId, TransactionType userType, String token) throws SQLException {
+    /**
+     * Generates a unique session token and saves the session details to the database.
+     *
+     * @param userId   The ID of the user (Manager or Staff).
+     * @param userType The type of the user (MANAGER or STAFF).
+     * @return The generated session token if successful, otherwise null.
+     * @throws SQLException If a database access error occurs.
+     */
+    public boolean saveSession(long userId, UserType userType) { // Changed return type
+        String token = UUID.randomUUID().toString(); // Generate token here
         String query = "INSERT INTO sessions (user_id, user_type, token) VALUES (?, ?::user_role, ?)";
-        PreparedStatement stmt = conn.prepareStatement(query);
-        stmt.setLong(1, userId);
-        stmt.setString(2, userType.getDbValue());
-        stmt.setString(3, token);
-        stmt.executeUpdate();
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setLong(1, userId);
+            stmt.setString(2, userType.getDbValue());
+            stmt.setString(3, token);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Failed to save session: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Deletes a session from the database based on the session token.
+     * Typically called during logout.
+     *
+     * @param userId The session token to delete.
+     * @return true if the session was successfully deleted, false otherwise.
+     * @throws SQLException If a database access error occurs.
+     */
+    public boolean deleteSession(long userId) { // Parameter changed to long userId
+        String query = "DELETE FROM sessions WHERE user_id = ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setLong(1, userId);
+            // executeUpdate returns the number of rows affected
+            return stmt.executeUpdate() > 0; // Returns true if at least one session was deleted
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Failed to delete session for user ID " + userId + ": " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 }

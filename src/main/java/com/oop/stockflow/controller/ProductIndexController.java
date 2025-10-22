@@ -7,7 +7,6 @@ import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.Product;
 import com.oop.stockflow.model.Warehouse;
 import com.oop.stockflow.repository.ProductRepository;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -143,13 +142,9 @@ public class ProductIndexController implements Initializable {
      * Memuat data produk dari repositori dan menampilkannya di tabel.
      */
     private void loadProductData() {
-        System.out.println("Loading product data...");
-        // TODO: Implementasikan getAllProducts() atau getProductsByWarehouse(id)
-        //       di ProductRepository Anda.
-        List<Product> productsFromDb = productRepository.getAllProducts();
+        List<Product> productsFromDb = productRepository.getAllProductsByWarehouseId(currentWarehouse.getId());
         productList.setAll(productsFromDb);
         productsTable.refresh();
-        System.out.println("Loaded " + productList.size() + " products.");
     }
 
     // action handlers

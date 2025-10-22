@@ -5,6 +5,8 @@ import com.oop.stockflow.app.View;
 import com.oop.stockflow.model.*;
 import com.oop.stockflow.repository.ProductRepository;
 import com.oop.stockflow.repository.TransactionRepository;
+import com.oop.stockflow.utils.DateTimeUtils;
+import com.oop.stockflow.utils.StringUtils;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +21,10 @@ public class InboundTransactionsController {
     // sidebar fields
     @FXML private Label nameLabel;
     @FXML private Label roleLabel;
+    @FXML
+    private Label dateLabel;
+    @FXML
+    private Label initialLabel;
 
     @FXML private Button btnTransactionsList;
     @FXML private Button btnInbound;
@@ -42,6 +48,7 @@ public class InboundTransactionsController {
         currentUser = user;
         currentWarehouse = warehouse;
         loadUserData();
+        loadPageContext();
         populateComboBoxes();
         dateTransaction.setValue(LocalDate.now());
         cmbStatus.getSelectionModel().select(TransactionStatus.PENDING);
@@ -50,6 +57,7 @@ public class InboundTransactionsController {
 
     private void loadUserData() {
         nameLabel.setText(currentUser.getName());
+        roleLabel.setText(currentUser.getUserType().getDbValue());
     }
 
 
@@ -58,8 +66,7 @@ public class InboundTransactionsController {
      */
     private void populateComboBoxes() {
         try {
-            // Fetch products from the repository
-            List<Product> products = productRepository.getAllProducts();
+            List<Product> products = productRepository.getAllProductsByWarehouseId(currentWarehouse.getId());
             cmbProductSku.setItems(FXCollections.observableArrayList(products));
 
             // Set how Product objects are displayed in the ComboBox
@@ -103,7 +110,7 @@ public class InboundTransactionsController {
      * Validates input and calls the repository to save the inbound transaction.
      */
     @FXML
-    private void createTransaction(ActionEvent event) {
+    private void createTransaction() {
         Product selectedProduct = cmbProductSku.getValue();
         String quantityStr = txtQuantity.getText();
         ShippingType selectedShipping = cmbShippingMethod.getValue();
@@ -131,8 +138,6 @@ public class InboundTransactionsController {
         Timestamp timestamp = Timestamp.valueOf(selectedDate.atStartOfDay());
         int productSku = selectedProduct.getSku();
 
-        System.out.println("Creating Inbound Transaction:");
-        System.out.println("  SKU: " + productSku + ", Qty: " + quantity + ", Date: " + timestamp + ", Ship: " + selectedShipping + ", Status: " + selectedStatus);
 
         boolean success = transactionRepository.createInboundTransaction(
                 currentUser.getId(),
@@ -229,5 +234,10 @@ public class InboundTransactionsController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void loadPageContext() {
+        dateLabel.setText(DateTimeUtils.getCurrentDate());
+        initialLabel.setText(StringUtils.getInitial(currentUser.getName()));
     }
 }

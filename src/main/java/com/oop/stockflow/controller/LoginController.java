@@ -24,7 +24,7 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
-    private final AuthRepository authRepo = new AuthRepository();
+    private final AuthRepository authRepo = AuthRepository.getInstance();
 
     @FXML
     private void goToRegister(ActionEvent event) throws IOException {
@@ -33,7 +33,6 @@ public class LoginController {
 
     @FXML
     private void handleLogin() throws IOException {
-//        StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
         String email = emailField.getText().trim();
         String password = passwordField.getText().trim();
 
@@ -44,9 +43,9 @@ public class LoginController {
         }
 
         AuthenticatedUser user = authRepo.login(email, password);
+        SessionManager.getInstance().startSession(user);
 
         if (user != null) {
-            SessionManager.getInstance().startSession(user);
             if (user.getUserType() ==  UserType.STAFF) {
                 Staff staff = StaffRepository.getInstance().getStaffById(user.getId());
                 Warehouse warehouse = WarehouseRepository.getInstance().getWarehouseById(staff.getWarehouseId());

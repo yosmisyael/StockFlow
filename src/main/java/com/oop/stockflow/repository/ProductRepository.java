@@ -85,30 +85,33 @@ public class ProductRepository {
     }
 
     /**
-     * Retrieves all products from the database.
+     * Retrieves all products belonging to a specific warehouse from the database.
      *
+     * @param warehouseId The ID of the warehouse whose products to retrieve.
      * @return A List of Product objects (instantiated as DryGoodProduct or FreshProduct).
      */
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProductsByWarehouseId(int warehouseId) {
         List<Product> products = new ArrayList<>();
-        // Select all relevant columns
         String sql = "SELECT sku, name, brand, description, purchase_price, weight_per_unit_kg, " +
                 "volume_per_unit_m3, quantity, product_type, reorder_point, reorder_quantity, " +
                 "units_per_case, required_temp, days_to_alert_before_expiry, warehouse_id " +
-                "FROM products ORDER BY name";
+                "FROM products WHERE warehouse_id = ? ORDER BY name";
 
         try (Connection conn = DatabaseManager.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            while (rs.next()) {
-                Product product = mapResultSetToProduct(rs);
-                if (product != null) {
-                    products.add(product);
+            stmt.setInt(1, warehouseId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Product product = mapResultSetToProduct(rs);
+                    if (product != null) {
+                        products.add(product);
+                    }
                 }
             }
         } catch (SQLException e) {
-            System.err.println("[ERROR] " + e.getMessage());
+            System.err.println("[ERROR] "  + e.getMessage());
             e.printStackTrace();
         }
         return products;
@@ -124,7 +127,7 @@ public class ProductRepository {
     public Product getProductBySku(int sku) {
         String sql = "SELECT sku, name, brand, description, purchase_price, weight_per_unit_kg, " +
                 "volume_per_unit_m3, quantity, product_type, reorder_point, reorder_quantity, " +
-                "units_per_case, required_temp, days_to_alert_before_expiry " +
+                "units_per_case, required_temp, days_to_alert_before_expiry, warehouse_id " +
                 "FROM products WHERE sku = ?";
 
         try (Connection conn = DatabaseManager.getConnection();
@@ -200,7 +203,6 @@ public class ProductRepository {
             return false;
         }
     }
-
 
     /**
      * Helper method to map a ResultSet row to the correct Product subclass.

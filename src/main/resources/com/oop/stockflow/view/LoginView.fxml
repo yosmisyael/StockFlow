@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.SVGPath?>
 
-<AnchorPane stylesheets="@../assets/app.css" xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.LoginController">
-    <HBox maxHeight="Infinity" maxWidth="Infinity" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
-          AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-        <!-- LEFT SECTION -->
-        <VBox alignment="CENTER" spacing="20" style="-fx-background-color: #1E5BE6; -fx-text-fill: white;"
-              HBox.hgrow="ALWAYS">
-            <Text fill="white" style="-fx-font-size: 28px; -fx-font-weight: bold;" text="Welcome Back!">
-                <font>
-                    <Font name="SF Pro Display Regular" size="24.0"/>
-                </font>
-            </Text>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+<GridPane
+        stylesheets="@../assets/app.css" xmlns="http://javafx.com/javafx/17.0.12"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.oop.stockflow.controller.LoginController"
+>
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50" hgrow="ALWAYS" />
+        <ColumnConstraints percentWidth="50" hgrow="ALWAYS" />
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints vgrow="ALWAYS" />
+    </rowConstraints>
+
+    <StackPane
+            GridPane.columnIndex="0"
+            style="-fx-background-color: linear-gradient(to bottom right, #1E5BE6, #0044CC);"
+            maxWidth="Infinity"
+            maxHeight="Infinity"
+            GridPane.hgrow="ALWAYS"
+            GridPane.vgrow="ALWAYS"
+    >
+        <VBox alignment="CENTER" spacing="20">
+            <Text fill="white" style="-fx-font-size: 28px; -fx-font-weight: bold;" text="Welcome to"/>
             <Group>
-                <SVGPath
-                        content="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-80 92L160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11Zm200-528 77-44-237-137-78 45 238 136Zm-160 93 78-45-237-137-78 45 237 137Z"
-                        fill="#e3e3e3" scaleX="0.1" scaleY="0.1"/>
+                <SVGPath content="M30 0C34.4183 0 38 3.58172 38 8V32C38 36.4183 34.4183 40 30 40H8C3.58172 40 0 36.4183 0 32V8C0 3.58172 3.58172 0 8 0H30Z" fill="#2563EB" scaleX="3" scaleY="3" />
+                <SVGPath content="M7.75 27.4063V16.2723C7.75 15.3512 8.30898 14.525 9.16328 14.184L18.5816 10.4188C18.8488 10.3098 19.1477 10.3098 19.4184 10.4188L28.8367 14.184C29.691 14.525 30.25 15.3547 30.25 16.2723V27.4063C30.25 27.8739 29.8738 28.25 29.4062 28.25H27.7188C27.2512 28.25 26.875 27.8739 26.875 27.4063V18.125C26.875 17.5028 26.3723 17 25.75 17H12.25C11.6277 17 11.125 17.5028 11.125 18.125V27.4063C11.125 27.8739 10.7488 28.25 10.2812 28.25H8.59375C8.12617 28.25 7.75 27.8739 7.75 27.4063ZM24.9062 28.25H13.0938C12.6262 28.25 12.25 27.8739 12.25 27.4063V25.4375H25.75V27.4063C25.75 27.8739 25.3738 28.25 24.9062 28.25ZM12.25 24.3125V22.0625H25.75V24.3125H12.25ZM12.25 20.9375V18.125H25.75V20.9375H12.25Z" fill="white" scaleX="3" scaleY="3" />
             </Group>
             <Text fill="white" style="-fx-font-size: 22px; -fx-font-weight: bold;" text="StockFlow"/>
             <Text fill="white"
@@ -31,26 +42,51 @@
                   text="Take complete control of your warehouse. We turn complex inventory management into a simple, seamless process."
                   textAlignment="CENTER" wrappingWidth="300"
             />
-            <HBox.margin>
-                <Insets/>
-            </HBox.margin>
-            <padding>
-                <Insets left="20.0" right="20.0"/>
-            </padding>
+            <HBox maxWidth="Infinity" alignment="CENTER" spacing="50">
+                <VBox alignment="CENTER">
+                    <Group>
+                        <SVGPath fill="#e3e3e3" content="M320-414v-306h120v306l-60-56-60 56Zm200 60v-526h120v406L520-354ZM120-216v-344h120v224L120-216Zm0 98 258-258 142 122 224-224h-64v-80h200v200h-80v-64L524-146 382-268 232-118H120Z"
+                                 scaleY="0.05" scaleX="0.05"
+                        />
+                    </Group>
+                    <Text fill="white" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Analytics"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Group>
+                        <SVGPath scaleY="0.05" scaleX="0.05" fill="#e3e3e3" content="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-84q97-30 162-118.5T718-480H480v-315l-240 90v207q0 7 2 18h238v316Z"
+                        />
+                    </Group>
+                    <Text fill="white" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Security"/>
+                </VBox>
+                <VBox alignment="CENTER">
+                    <Group>
+                        <SVGPath scaleY="0.05" scaleX="0.05" fill="#e3e3e3" content="M610-760q-21 0-35.5-14.5T560-810q0-21 14.5-35.5T610-860q21 0 35.5 14.5T660-810q0 21-14.5 35.5T610-760Zm0 660q-21 0-35.5-14.5T560-150q0-21 14.5-35.5T610-200q21 0 35.5 14.5T660-150q0 21-14.5 35.5T610-100Zm160-520q-21 0-35.5-14.5T720-670q0-21 14.5-35.5T770-720q21 0 35.5 14.5T820-670q0 21-14.5 35.5T770-620Zm0 380q-21 0-35.5-14.5T720-290q0-21 14.5-35.5T770-340q21 0 35.5 14.5T820-290q0 21-14.5 35.5T770-240Zm60-190q-21 0-35.5-14.5T780-480q0-21 14.5-35.5T830-530q21 0 35.5 14.5T880-480q0 21-14.5 35.5T830-430ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880v80q-134 0-227 93t-93 227q0 134 93 227t227 93v80Zm0-320q-33 0-56.5-23.5T400-480q0-5 .5-10.5T403-501l-83-83 56-56 83 83q4-1 21-3 33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Z"
+                        />
+                    </Group>
+                    <Text fill="white" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Realtime"/>
+                </VBox>
+            </HBox>
         </VBox>
+    </StackPane>
 
-        <!-- RIGHT SECTION -->
-        <VBox alignment="CENTER" spacing="20" style="-fx-background-color: #F9FAFB;" HBox.hgrow="ALWAYS">
+    <StackPane
+            GridPane.columnIndex="1"
+            maxWidth="Infinity"
+            maxHeight="Infinity"
+            GridPane.hgrow="ALWAYS"
+            GridPane.vgrow="ALWAYS"
+    >
+        <VBox alignment="CENTER" spacing="10">
             <VBox alignment="CENTER" spacing="10">
-                <ImageView fitHeight="60" fitWidth="60">
-                    <!--                    <Image url="@/com/oop/stockflow/view/" />-->
-                </ImageView>
+                <!--                <ImageView fitHeight="60" fitWidth="60">-->
+                <!--                    <Image url="@/com/oop/stockflow/view/" />-->
+                <!--                </ImageView>-->
                 <Text style="-fx-font-size: 28px; -fx-font-weight: bold;" text="Sign In">
                     <font>
                         <Font name="SF Pro Display Regular" size="24.0"/>
                     </font>
                 </Text>
-                <Text style="-fx-fill: #666;" text="Enter your credentials to access your account">
+                <Text style="-fx-fill: #666;" text="Login to your account to start using StackFlow">
                     <font>
                         <Font name="SF Pro Display Regular" size="16.0"/>
                     </font>
@@ -75,9 +111,9 @@
                 <HBox alignment="CENTER_RIGHT">
                     <Hyperlink text="Forgot password?"/>
                 </HBox>
-                <Button fx:id="loginButton" maxWidth="Infinity"
+                <Button maxWidth="Infinity"
                         style="-fx-background-color: #1E5BE6; -fx-text-fill: white; -fx-font-weight: bold;"
-                        text="Sign In"
+                        text="Login"
                         onAction="#handleLogin"
                 >
                     <graphic>
@@ -124,8 +160,8 @@
                 </HBox>
             </VBox>
             <HBox alignment="CENTER">
-                <Text style="-fx-fill: #666;" text="Don't have an account?"/>
-                <Hyperlink text="Sign up for free" onAction="#goToRegister"/>
+                <Text style="-fx-fill: #666;" text="Didn't have an account yet?"/>
+                <Hyperlink text="Sign in here" onAction="#goToRegister"/>
             </HBox>
             <HBox.margin>
                 <Insets/>
@@ -134,5 +170,5 @@
                 <Insets bottom="20.0" left="40.0" right="40.0"/>
             </padding>
         </VBox>
-    </HBox>
-</AnchorPane>
+    </StackPane>
+</GridPane>

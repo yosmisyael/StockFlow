@@ -5,7 +5,7 @@ import java.util.Date;
 public class OutboundTransaction extends Transaction {
     private String destinationAddress;
 
-    public OutboundTransaction(int id, int sku, int staffId, int quantity, Date date, ShippingType shippingType, TransactionStatus status, String destinationAddress) {
+    public OutboundTransaction(int id, int sku, int staffId, int quantity, Date date, ShippingType shippingType, TransactionStatus status, String destinationAddress, TransactionType type) {
         this.id = id;
         this.shippingType = shippingType;
         this.status = status;
@@ -14,6 +14,7 @@ public class OutboundTransaction extends Transaction {
         this.staffId = staffId;
         this.sku = sku;
         this.destinationAddress = destinationAddress;
+        this.type = type;
     }
 
     public String getDestinationAddress() {

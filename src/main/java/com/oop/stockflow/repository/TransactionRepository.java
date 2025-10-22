@@ -43,18 +43,19 @@ public class TransactionRepository {
 
     public boolean createOutboundTransaction(int staffId, Timestamp date, String destinationAddress,
                                              ShippingType shippingMethod,
-                                             int quantity, TransactionStatus initialStatus) {
-        String sql = "INSERT INTO transactions (user_id, date, transaction_type, destination_address, shipping_method, quantity, status) " +
-                "VALUES (?, ?, 'outbound'::transaction_type, ?, ?::shipping_method, ?,  ?::transaction_status)";
+                                             int quantity, int productSku, TransactionStatus initialStatus) {
+        String sql = "INSERT INTO transactions (user_id, date, transaction_type, destination_address, shipping_method, quantity, product_sku, status) " +
+                "VALUES (?, ?, 'outbound'::transaction_type, ?, ?::shipping_method, ?, ?, ?::transaction_status)";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, staffId);
             stmt.setTimestamp(2, date);
-            stmt.setString(4, destinationAddress);
-            stmt.setString(5, shippingMethod.getDbValue());
-            stmt.setInt(6, quantity);
+            stmt.setString(3, destinationAddress);
+            stmt.setString(4, shippingMethod.getDbValue());
+            stmt.setInt(5, quantity);
+            stmt.setInt(6, productSku);
             stmt.setString(7, initialStatus.getDbValue());
 
             return stmt.executeUpdate() > 0;
@@ -149,9 +150,9 @@ public class TransactionRepository {
         }
 
         if (type == TransactionType.INBOUND) {
-            return new InboundTransaction(id, productSku, staffId, quantity, date, shippingType, status);
+            return new InboundTransaction(id, productSku, staffId, quantity, date, shippingType, status, TransactionType.INBOUND);
         } else if (type == TransactionType.OUTBOUND) {
-            return new OutboundTransaction(id, productSku, staffId, quantity, date, shippingType, status, destAddress);
+            return new OutboundTransaction(id, productSku, staffId, quantity, date, shippingType, status, destAddress, TransactionType.OUTBOUND);
         } else {
             System.err.println("Warning: Unknown transaction type found in DB: " + typeString);
             return null;

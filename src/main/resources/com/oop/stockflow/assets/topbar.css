@@ -41,6 +41,7 @@
 /* Date and Status */
 .date-label {
     -fx-text-fill: #6b7280;
+    -fx-end-margin: 10px;
 }
 
 .status-active-badge {

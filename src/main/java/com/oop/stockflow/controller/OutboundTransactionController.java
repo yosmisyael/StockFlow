@@ -5,15 +5,23 @@ import com.oop.stockflow.app.View;
 import com.oop.stockflow.model.*;
 import com.oop.stockflow.repository.ProductRepository;
 import com.oop.stockflow.repository.TransactionRepository;
+import com.oop.stockflow.utils.DateTimeUtils;
+import com.oop.stockflow.utils.StringUtils;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
+
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
 
 public class OutboundTransactionController {
     @FXML
     private Label nameLabel;
+    @FXML
+    private Label roleLabel;
     @FXML
     private ComboBox<Product> productSKUCombo;
     @FXML
@@ -26,6 +34,10 @@ public class OutboundTransactionController {
     private ComboBox<TransactionStatus> statusCombo;
     @FXML
     private TextArea destinationAddressArea;
+    @FXML
+    private Label dateLabel;
+    @FXML
+    private Label initialLabel;
 
     private final TransactionRepository transactionRepository = TransactionRepository.getInstance();
     private final ProductRepository productRepository = ProductRepository.getInstance();
@@ -36,6 +48,7 @@ public class OutboundTransactionController {
         this.currentWarehouse = warehouse;
         this.currentUser = user;
         loadUserData();
+        loadPageContext();
         populateComboBoxes();
         transactionDatePicker.setValue(LocalDate.now());
         addInputValidationListeners();
@@ -46,26 +59,33 @@ public class OutboundTransactionController {
      */
     private void loadUserData() {
         nameLabel.setText(currentUser.getName());
+        roleLabel.setText(currentUser.getUserType().getDbValue());
     }
 
     /**
      * Populates ComboBoxes (Product SKU, Shipping Method, Status) with data.
      */
     private void populateComboBoxes() {
-        // Example: Fetch products from ProductRepository
-        // List<Product> products = productRepository.getAvailableProducts(currentWarehouseId); // Method needed
-        // productSKUCombo.setItems(FXCollections.observableArrayList(products));
-        // You'll need a way to display Product objects nicely (e.g., using setConverter)
-        productSKUCombo.setItems(FXCollections.observableArrayList( /* Add sample Product objects or fetch real ones */));
+         // populate products combo box
+         List<Product> products = productRepository.getAllProductsByWarehouseId(currentWarehouse.getId());
+         productSKUCombo.setItems(FXCollections.observableArrayList(products));
+         productSKUCombo.setConverter(new StringConverter<Product>() {
+             @Override
+             public String toString(Product product) {
+                 return (product == null) ? null  :  product.getName() + " (SKU: " + product.getSku() + ")";
+             }
 
-        // --- Shipping Method ---
+             @Override
+             public Product fromString(String s) {
+                 return null;
+             }
+         });
+
+         // populate shipping method combo box
         shippingMethodCombo.setItems(FXCollections.observableArrayList(ShippingType.values()));
-        // Optional: Set default selection
-        // shippingMethodCombo.getSelectionModel().selectFirst();
-
-        // --- Status ---
+        shippingMethodCombo.getSelectionModel().selectFirst();
+         // populate status combo box
         statusCombo.setItems(FXCollections.observableArrayList(TransactionStatus.values()));
-        // Set default status, e.g., PENDING
         statusCombo.getSelectionModel().select(TransactionStatus.PENDING);
     }
 
@@ -73,9 +93,8 @@ public class OutboundTransactionController {
      * Adds listeners for input validation (e.g., numeric quantity).
      */
     private void addInputValidationListeners() {
-        // Example: Ensure quantity is numeric
         quantityField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) { // Allow only digits
+            if (!newValue.matches("\\d*")) {
                 quantityField.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
@@ -91,7 +110,6 @@ public class OutboundTransactionController {
     private void handleCreateTransaction(ActionEvent event) {
         System.out.println("handleCreateTransaction called");
 
-        // --- 1. Get Data from Form ---
         Product selectedProduct = productSKUCombo.getValue();
         String quantityStr = quantityField.getText();
         ShippingType selectedShippingMethod = shippingMethodCombo.getValue();
@@ -99,7 +117,7 @@ public class OutboundTransactionController {
         TransactionStatus selectedStatus = statusCombo.getValue();
         String destinationAddress = destinationAddressArea.getText().trim();
 
-        // --- 2. Basic Validation ---
+        // validations
         if (selectedProduct == null || quantityStr.isEmpty() || selectedShippingMethod == null || selectedDate == null || selectedStatus == null || destinationAddress.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Input Error", "Please fill in all required fields.");
             return;
@@ -117,43 +135,29 @@ public class OutboundTransactionController {
             return;
         }
 
-        // --- 3. (Optional) More Advanced Validation ---
-        // Check if stock is available for the selected product and quantity
-        // boolean stockAvailable = checkStockAvailability(selectedProduct.getSku(), quantity);
-        // if (!stockAvailable) {
-        //     showAlert(Alert.AlertType.ERROR, "Stock Error", "Insufficient stock for product: " + selectedProduct.getName());
-        //     return;
-        // }
+         // stock validation
+         boolean stockAvailable = checkStockAvailability(selectedProduct.getSku(), quantity);
+         if (!stockAvailable) {
+             showAlert(Alert.AlertType.ERROR, "Stock Error", "Insufficient stock for product: " + selectedProduct.getName());
+             return;
+         }
 
-
-        // --- 4. Call Repository to Create Transaction ---
-        System.out.println("Attempting to create outbound transaction:");
-        System.out.println("  Product: " + selectedProduct.getClass());
-        System.out.println("  Quantity: " + quantity);
-        System.out.println("  Shipping: " + selectedShippingMethod);
-        System.out.println("  Date: " + selectedDate);
-        System.out.println("  Status: " + selectedStatus);
-        System.out.println("  Address: " + destinationAddress);
         // Assuming current user and warehouse ID are available
-        // Timestamp timestamp = Timestamp.valueOf(selectedDate.atStartOfDay());
-        // boolean success = transactionRepository.createOutboundTransaction(
-        //         currentUser.getId(),
-        //         timestamp,
-        //         destinationAddress,
-        //         selectedShippingMethod,
-        //         selectedProduct.getSku(), // Pass SKU string
-        //         quantity,
-        //         selectedStatus
-        // );
+        Timestamp timestamp = Timestamp.valueOf(selectedDate.atStartOfDay());
+        boolean success = transactionRepository.createOutboundTransaction(
+             currentUser.getId(),
+             timestamp,
+             destinationAddress,
+             selectedShippingMethod,
+             quantity,
+             selectedProduct.getSku(),
+             selectedStatus
+        );
 
-        boolean success = true; // Placeholder for repository call result
-
-        // --- 5. Show Feedback and Navigate/Clear ---
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Success", "Outbound transaction created successfully!");
             clearForm();
-            // Optionally navigate back to the list
-            // navigateToTransactionsList(event);
+            goToTransactionIndex();
         } else {
             showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to create outbound transaction.");
         }
@@ -217,6 +221,10 @@ public class OutboundTransactionController {
     }
 
     // helper methods
+    private boolean checkStockAvailability(int availableStock, int demand) {
+        return availableStock >= demand;
+    }
+
     /**
      * Clears all input fields in the form.
      */
@@ -235,8 +243,13 @@ public class OutboundTransactionController {
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
-        alert.setHeaderText(null); // No header text
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void loadPageContext() {
+        dateLabel.setText(DateTimeUtils.getCurrentDate());
+        initialLabel.setText(StringUtils.getInitial(currentUser.getName()));
     }
 }

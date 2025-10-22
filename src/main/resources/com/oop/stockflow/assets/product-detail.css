@@ -1,0 +1,209 @@
+/* product-information.css - Product Information Page Styles */
+
+/* Root and Base */
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 1 0 0;
+}
+
+/* Profile Section */
+.sidebar-profile {
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 0 1 0;
+}
+
+.profile-avatar {
+    -fx-background-color: #2563eb;
+    -fx-background-radius: 50;
+    -fx-pref-width: 80;
+    -fx-pref-height: 80;
+    -fx-min-width: 80;
+    -fx-min-height: 80;
+    -fx-max-width: 80;
+    -fx-max-height: 80;
+}
+
+.profile-initials {
+    -fx-text-fill: white;
+}
+
+.profile-role {
+    -fx-text-fill: #2563eb;
+}
+
+/* Navigation Menu */
+.nav-menu {
+    -fx-background-color: transparent;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #4b5563;
+    -fx-border-color: transparent;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.nav-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.nav-button-active {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+}
+
+/* Main Content */
+.content-scroll {
+    -fx-background-color: transparent;
+}
+
+.content-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.main-content {
+    -fx-background-color: transparent;
+}
+
+/* Page Headers */
+.page-title {
+    -fx-text-fill: #111827;
+}
+
+.page-subtitle {
+    -fx-text-fill: #6b7280;
+}
+
+/* Back Button */
+.back-button {
+    -fx-background-color: white;
+    -fx-text-fill: #374151;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.back-button:hover {
+    -fx-background-color: #f9fafb;
+    -fx-border-color: #9ca3af;
+}
+
+.back-button:pressed {
+    -fx-background-color: #f3f4f6;
+}
+
+/* Information Cards */
+.info-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+}
+
+/* Card Headers */
+.card-icon {
+    -fx-text-fill: #4b5563;
+}
+
+.card-icon-blue {
+    -fx-background-color: #dbeafe;
+    -fx-background-radius: 6;
+    -fx-padding: 4 8;
+}
+
+.card-title {
+    -fx-text-fill: #111827;
+}
+
+/* Field Labels and Values */
+.field-label {
+    -fx-text-fill: #6b7280;
+}
+
+.field-value {
+    -fx-text-fill: #111827;
+}
+
+.field-description {
+    -fx-text-fill: #4b5563;
+    -fx-line-spacing: 2;
+}
+
+/* Value Styling */
+.value-bold {
+    -fx-text-fill: #111827;
+}
+
+.value-warning {
+    -fx-text-fill: #d97706;
+}
+
+/* Price Badge */
+.price-badge {
+    -fx-background-color: #d1fae5;
+    -fx-text-fill: #065f46;
+    -fx-background-radius: 8;
+}
+
+/* Temperature Badge */
+.temperature-badge {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+    -fx-background-radius: 6;
+}
+
+/* Expiry Badge */
+.expiry-badge {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #92400e;
+    -fx-background-radius: 6;
+}
+
+/* Scrollbar Styling */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-height: 8;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #d1d5db;
+    -fx-background-radius: 4;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #9ca3af;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* Focus Removal */
+.button:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-background-insets: 0;
+}

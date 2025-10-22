@@ -14,6 +14,7 @@ public enum View {
     STAFF_EDIT("StaffEdit.fxml"),
     STAFF_SETTINGS("StaffSettings.fxml"),
     TRANSACTION_INDEX("TransactionIndex.fxml"),
+    TRANSACTION_SHOW("TransactionShow.fxml"),
     TRANSACTION_CREATE_OUTBOUND("OutboundTransaction.fxml"),
     TRANSACTION_CREATE_INBOUND("InboundTransaction.fxml"),
     WAREHOUSE_DASHBOARD("WarehouseDashboard.fxml");

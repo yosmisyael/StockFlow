@@ -3,7 +3,7 @@ package com.oop.stockflow.model;
 import java.util.Date;
 
 public class InboundTransaction extends Transaction {
-    public InboundTransaction(int id, int sku, int staffId, int quantity, Date date, ShippingType shippingType, TransactionStatus status) {
+    public InboundTransaction(int id, int sku, int staffId, int quantity, Date date, ShippingType shippingType, TransactionStatus status, TransactionType type) {
         this.id = id;
         this.shippingType = shippingType;
         this.status = status;
@@ -11,5 +11,6 @@ public class InboundTransaction extends Transaction {
         this.date = date;
         this.staffId = staffId;
         this.sku = sku;
+        this.type = type;
     }
 }
