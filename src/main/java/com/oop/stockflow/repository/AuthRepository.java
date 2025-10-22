@@ -2,6 +2,7 @@ package com.oop.stockflow.repository;
 
 import com.oop.stockflow.db.DatabaseManager;
 import com.oop.stockflow.model.AuthenticatedUser;
+import com.oop.stockflow.model.TransactionType;
 import com.oop.stockflow.model.UserType;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -35,7 +36,7 @@ public class AuthRepository {
             return null;
         }
 
-        String staffQuery = "SELECT user_id AS id, name, password FROM staff WHERE email = ?";
+        String staffQuery = "SELECT id, name, password FROM staff WHERE email = ?";
         try (PreparedStatement staffStmt = conn.prepareStatement(staffQuery)) {
             staffStmt.setString(1, email);
             ResultSet staffResult = staffStmt.executeQuery();
@@ -67,7 +68,7 @@ public class AuthRepository {
         return null;
     }
 
-    private void saveSession(long userId, UserType userType, String token) throws SQLException {
+    private void saveSession(long userId, TransactionType userType, String token) throws SQLException {
         String query = "INSERT INTO sessions (user_id, user_type, token) VALUES (?, ?::user_role, ?)";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setLong(1, userId);
