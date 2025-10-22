@@ -12,6 +12,7 @@ DROP TYPE IF EXISTS user_role;
 DROP TYPE IF EXISTS warehouse_status;
 DROP TYPE IF EXISTS product_type;
 DROP TYPE IF EXISTS transaction_type;
+DROP TYPE IF EXISTS transaction_status;
 
 CREATE TYPE user_role AS ENUM ('manager', 'staff');
 
@@ -102,6 +103,12 @@ CREATE TYPE shipping_method AS ENUM (
     'sea freight'
     );
 
+CREATE TYPE transaction_status AS ENUM (
+    'voided',
+    'committed',
+    'pending'
+    );
+
 -- Transactions Table
 CREATE TABLE transactions
 (
@@ -113,7 +120,9 @@ CREATE TABLE transactions
     destination_address TEXT             NULL,
     shipping_method     shipping_method  NOT NULL,
     product_sku         VARCHAR(50) REFERENCES products (sku)
-        ON UPDATE CASCADE ON DELETE CASCADE
+        ON UPDATE CASCADE ON DELETE CASCADE NOT NULL,
+    quantity            INT NOT NULL DEFAULT 0,
+    status              transaction_status NOT NULL
 );
 
 -- Indexes for Faster Lookup
