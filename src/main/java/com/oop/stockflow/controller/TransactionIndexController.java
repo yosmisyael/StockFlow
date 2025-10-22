@@ -41,7 +41,7 @@ public class TransactionIndexController implements Initializable {
 
     // Table and columns
     @FXML private TableView<Transaction> transactionsTable;
-    @FXML private TableColumn<Transaction, String> skuColumn;
+    @FXML private TableColumn<Transaction, Integer> skuColumn;
     @FXML private TableColumn<Transaction, String> productNameColumn;
     @FXML private TableColumn<Transaction, String> brandColumn;
     @FXML private TableColumn<Transaction, Timestamp> dateColumn;
@@ -134,7 +134,7 @@ public class TransactionIndexController implements Initializable {
      * Mengatur CellValueFactory dan CellFactory untuk kolom tabel.
      */
     private void setupTableColumns() {
-        skuColumn.setCellValueFactory(new PropertyValueFactory<>("productSku"));
+        skuColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         // --- Product Name Column ---
         productNameColumn.setCellValueFactory(cellData -> {
@@ -147,13 +147,12 @@ public class TransactionIndexController implements Initializable {
         brandColumn.setCellValueFactory(cellData -> {
             Transaction transaction = cellData.getValue();
             int sku = transaction.getSku();
-            // Panggil method baru di ProductRepository
             String brand = productRepository.getProductBrandBySku(sku);
-            return new SimpleStringProperty(brand != null ? brand : "N/A"); // Tampilkan N/A jika null
+            return new SimpleStringProperty(brand != null ? brand : "N/A");
         });
 
         // --- Date Column ---
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date")); // Mengambil Timestamp
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateColumn.setCellFactory(column -> new TableCell<Transaction, Timestamp>() {
             // Format tanggal sesuai keinginan Anda
             private final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy HH:mm");
@@ -190,10 +189,9 @@ public class TransactionIndexController implements Initializable {
             private final Button detailBtn = new Button("Detail");
             private final Button updateBtn = new Button("Update");
             private final HBox actionBox = new HBox(8, detailBtn, updateBtn);
-
             {
                 actionBox.setAlignment(Pos.CENTER);
-                detailBtn.getStyleClass().add("action-button-detail");
+                detailBtn.getStyleClass().add("action-button-show");
                 updateBtn.getStyleClass().add("action-button-edit");
 
                 detailBtn.setOnAction(event -> {
@@ -291,7 +289,6 @@ public class TransactionIndexController implements Initializable {
     }
 
     private void handleUpdateAction(Transaction transaction) {
-        System.out.println("Updating Transaction ID: " + transaction.getSku());
         if (transaction.getStatus() != TransactionStatus.PENDING) {
             showAlert(Alert.AlertType.WARNING, "Update Not Allowed", "Only 'Pending' transactions can have their status updated.");
             return;
@@ -299,9 +296,7 @@ public class TransactionIndexController implements Initializable {
         showUpdateStatusDialog(transaction);
     }
 
-    // ==================== Dialogs ====================
     private void showTransactionDetailsDialog(Transaction transaction) {
-        System.out.println("Showing Transaction details for Transaction ID: " + transaction.getSku());
     }
 
     private void showUpdateStatusDialog(Transaction transaction) {
@@ -317,7 +312,7 @@ public class TransactionIndexController implements Initializable {
         Optional<TransactionStatus> result = dialog.showAndWait();
 
         result.ifPresent(newStatus -> {
-            boolean success = transactionRepository.updateTransactionStatus(transaction.getSku(), newStatus);
+            boolean success = transactionRepository.updateTransactionStatus(transaction.getId(), newStatus);
             if (success) {
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Transaction status updated to " + newStatus.getDbValue() + ".");
                 refreshTable();

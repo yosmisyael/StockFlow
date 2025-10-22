@@ -1,7 +1,9 @@
 package com.oop.stockflow.controller;
 
+import com.oop.stockflow.app.SessionManager;
 import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
+import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.Staff;
 import com.oop.stockflow.model.Warehouse;
 import com.oop.stockflow.repository.StaffRepository;
@@ -24,19 +26,27 @@ import javafx.scene.text.Font;
 import static com.oop.stockflow.app.View.STAFF_CREATE;
 
 public class StaffIndexController {
-    private Warehouse warehouse;
+    private Warehouse currentWarehouse;
+    private AuthenticatedUser currentUser;
 
     private final StaffRepository staffRepository =  StaffRepository.getInstance();
 
     @FXML
     private VBox staffListContainer;
 
+    public void initData(Warehouse warehouse, AuthenticatedUser user) {
+        this.currentWarehouse = warehouse;
+        this.currentUser = user;
+        loadStaffList(warehouse.getId());
+    }
+
+    // navigations
     @FXML
     private void goToCreateStaff() {
         StageManager.getInstance().navigateWithData(
                 STAFF_CREATE,
-                "Add Warehouse " + warehouse.getId() + " Staff",
-                (StaffCreateController controller) -> { controller.setWarehouseId(warehouse); }
+                "Add Warehouse " + currentWarehouse.getId() + " Staff",
+                (StaffCreateController controller) -> { controller.setWarehouseId(currentWarehouse); }
         );
     }
 
@@ -44,8 +54,20 @@ public class StaffIndexController {
     private void goToDashboard() {
         StageManager.getInstance().navigateWithData(
                 View.WAREHOUSE_DASHBOARD,
-                "Warehouse " + warehouse + " Dashboard",
-                (WarehouseDashboardController controller) -> { controller.setWarehouse(warehouse); }
+                "Warehouse " + currentWarehouse + " Dashboard",
+                (WarehouseDashboardController controller) -> { controller.initData(currentWarehouse, currentUser); }
+        );
+    }
+
+    @FXML
+    private void goToProductIndex() {
+        currentUser = SessionManager.getInstance().getCurrentUser();
+        StageManager.getInstance().navigateWithData(
+                View.PRODUCT_INDEX,
+                "Warehouse " + currentWarehouse.getId() + " Product Management",
+                (ProductIndexController controller) -> {
+                    controller.initData(currentWarehouse, currentUser);
+                }
         );
     }
 
@@ -121,13 +143,11 @@ public class StaffIndexController {
         StageManager.getInstance().navigateWithData(
             View.STAFF_EDIT,
         "Edit Staff Information",
-            (StaffEditController controller) -> { controller.initData(warehouse, staff);}
+            (StaffEditController controller) -> { controller.initData(currentWarehouse, currentUser, staff);}
         );
     }
 
     private void handleDeleteStaff(Staff staff) {
-        System.out.println("Delete staff clicked for: " + staff.getName() + " (ID: " + staff.getId() + ")");
-
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
         confirmation.setTitle("Confirm Deletion");
         confirmation.setHeaderText("Delete Staff Account?");
@@ -140,7 +160,7 @@ public class StaffIndexController {
             if (deleted) {
                 // rerender staff list
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Staff account for '" + staff.getName() + "' has been deleted.");
-                loadStaffList(this.warehouse.getId());
+                loadStaffList(this.currentWarehouse.getId());
             } else {
                 showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete staff account.");
             }
@@ -155,10 +175,5 @@ public class StaffIndexController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    public void initData(Warehouse warehouse) {
-        this.warehouse = warehouse;
-        loadStaffList(warehouse.getId());
     }
 }

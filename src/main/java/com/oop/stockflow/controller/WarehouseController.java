@@ -24,11 +24,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class WarehouseController implements Initializable {
+public class WarehouseController {
     @FXML
     private GridPane warehouseContainer;
     @FXML
@@ -38,14 +36,13 @@ public class WarehouseController implements Initializable {
 
     final private WarehouseRepository warehouseRepository;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    private AuthenticatedUser currentUser;
+
+    public void initData(AuthenticatedUser user) {
+        currentUser = user;
         loadWarehouses();
-        AuthenticatedUser user = SessionManager.getInstance().getCurrentUser();
-        if (user != null) {
-            userNameLabel.setText(user.getName());
-            userRole.setText(user.getUserType().getDbValue());
-        }
+        userNameLabel.setText(user.getName());
+        userRole.setText(user.getUserType().getDbValue());
     }
 
     public WarehouseController() {
@@ -54,10 +51,7 @@ public class WarehouseController implements Initializable {
 
     @FXML
     private void goToAddWarehouse(ActionEvent event) throws IOException {
-        Parent root = SceneManager.loadFxml(View.WAREHOUSE_CREATE);
-        Stage stage = StageManager.getInstance().getMainStage();
-        Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
-        StageManager.getInstance().setScene(scene, "Add Warehouse");
+        StageManager.getInstance().navigate(View.WAREHOUSE_CREATE, "Add Warehouse");
 
     }
 
@@ -157,7 +151,7 @@ public class WarehouseController implements Initializable {
             StageManager.getInstance().navigateWithData(
                     View.WAREHOUSE_DASHBOARD,
                     "Warehouse Dashboard of " + warehouse.getName(),
-                    (WarehouseDashboardController controller) -> controller.setWarehouse(warehouse)
+                    (WarehouseDashboardController controller) -> controller.initData(warehouse, currentUser)
             );
         });
 

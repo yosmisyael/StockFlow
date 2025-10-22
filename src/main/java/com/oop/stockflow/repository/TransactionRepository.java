@@ -122,7 +122,7 @@ public class TransactionRepository {
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.err.println("[ERROR] Gagal mengupdate status transaksi: " + e.getMessage());
+            System.err.println("[ERROR] " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -135,7 +135,7 @@ public class TransactionRepository {
         String typeString = rs.getString("transaction_type");
         String destAddress = rs.getString("destination_address");
         String shippingString = rs.getString("shipping_method");
-        String productSku = rs.getString("product_sku");
+        int productSku = rs.getInt("product_sku");
         int quantity = rs.getInt("quantity");
         String statusString = rs.getString("status");
 
@@ -149,9 +149,9 @@ public class TransactionRepository {
         }
 
         if (type == TransactionType.INBOUND) {
-            return new InboundTransaction(id, staffId, quantity, date, shippingType, status);
+            return new InboundTransaction(id, productSku, staffId, quantity, date, shippingType, status);
         } else if (type == TransactionType.OUTBOUND) {
-            return new OutboundTransaction(id, staffId, quantity, date, shippingType, status, destAddress);
+            return new OutboundTransaction(id, productSku, staffId, quantity, date, shippingType, status, destAddress);
         } else {
             System.err.println("Warning: Unknown transaction type found in DB: " + typeString);
             return null;

@@ -18,9 +18,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-public class StaffEditController implements Initializable {
+public class StaffEditController {
     private Staff staffToEdit;
     private Warehouse currentWarehouse;
+    private AuthenticatedUser currentUser;
 
     private StaffRepository staffRepository = StaffRepository.getInstance();
 
@@ -30,24 +31,20 @@ public class StaffEditController implements Initializable {
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        loadUserData();
-    }
-
-    public void initData(Warehouse warehouse, Staff staff) {
+    public void initData(Warehouse warehouse, AuthenticatedUser user, Staff staff) {
         this.currentWarehouse = warehouse;
+        this.currentUser = user;
         this.staffToEdit = staff;
 
         if (staffToEdit == null) {
             showAlert(Alert.AlertType.ERROR, "Error", "Staff data not received. Cannot edit.");
-            // Mungkin navigasi kembali
             handleCancel();
             return;
         }
 
         // Isi form dengan data yang ada
         populateForm();
+        loadUserData();
     }
 
     /**
@@ -135,7 +132,7 @@ public class StaffEditController implements Initializable {
         StageManager.getInstance().navigateWithData(
             View.WAREHOUSE_DASHBOARD,
             "Dashboard",
-            (WarehouseDashboardController controller) -> { controller.setWarehouse(currentWarehouse); }
+            (WarehouseDashboardController controller) -> { controller.initData(currentWarehouse, currentUser); }
         );
     }
 
@@ -144,7 +141,19 @@ public class StaffEditController implements Initializable {
         StageManager.getInstance().navigateWithData(
                 View.STAFF_INDEX,
                 "Staff Management",
-                (StaffIndexController controller) -> { controller.initData(currentWarehouse); }
+                (StaffIndexController controller) -> { controller.initData(currentWarehouse, currentUser); }
+        );
+    }
+
+    @FXML
+    private void goToProductIndex() {
+        currentUser = SessionManager.getInstance().getCurrentUser();
+        StageManager.getInstance().navigateWithData(
+                View.PRODUCT_INDEX,
+                "Warehouse " + currentWarehouse.getId() + " Product Management",
+                (ProductIndexController controller) -> {
+                    controller.initData(currentWarehouse, currentUser);
+                }
         );
     }
 

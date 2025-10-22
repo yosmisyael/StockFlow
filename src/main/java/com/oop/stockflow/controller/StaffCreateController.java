@@ -1,7 +1,9 @@
 package com.oop.stockflow.controller;
 
+import com.oop.stockflow.app.SessionManager;
 import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
+import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.Warehouse;
 import com.oop.stockflow.repository.StaffRepository;
 import javafx.fxml.FXML;
@@ -13,7 +15,8 @@ import javafx.scene.control.TextField;
 import java.util.regex.Pattern;
 
 public class StaffCreateController {
-    private Warehouse warehouse;
+    private Warehouse currentWarehouse;
+    private AuthenticatedUser currentUser;
 
     private final StaffRepository staffRepository = StaffRepository.getInstance();
 
@@ -37,7 +40,7 @@ public class StaffCreateController {
         StageManager.getInstance().navigateWithData(
                 View.WAREHOUSE_DASHBOARD,
                 "Dashboard",
-                (WarehouseDashboardController controller) -> controller.setWarehouse(warehouse)
+                (WarehouseDashboardController controller) -> controller.initData(currentWarehouse, currentUser)
         );
     }
 
@@ -46,7 +49,19 @@ public class StaffCreateController {
         StageManager.getInstance().navigateWithData(
             View.STAFF_INDEX,
             "Staff Management",
-            (StaffIndexController controller) -> { controller.initData(warehouse); }
+            (StaffIndexController controller) -> { controller.initData(currentWarehouse, currentUser); }
+        );
+    }
+
+    @FXML
+    private void goToProductIndex() {
+        currentUser = SessionManager.getInstance().getCurrentUser();
+        StageManager.getInstance().navigateWithData(
+                View.PRODUCT_INDEX,
+                "Warehouse " + currentWarehouse.getId() + " Product Management",
+                (ProductIndexController controller) -> {
+                    controller.initData(currentWarehouse, currentUser);
+                }
         );
     }
 
@@ -81,12 +96,12 @@ public class StaffCreateController {
         }
 
         // check warehouse id exists
-        if (warehouse.getId() <= 0) {
+        if (currentWarehouse.getId() <= 0) {
             showAlert(Alert.AlertType.ERROR, "System Error", "Warehouse ID is missing. Please go back and try again.");
             return;
         }
 
-        boolean success = staffRepository.createStaff(name, email, password, this.warehouse.getId());
+        boolean success = staffRepository.createStaff(name, email, password, this.currentWarehouse.getId());
 
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Success", "A new staff account has been created successfully!");
@@ -102,7 +117,7 @@ public class StaffCreateController {
     }
 
     public void setWarehouseId(Warehouse warehouse) {
-        this.warehouse = warehouse;
+        this.currentWarehouse = warehouse;
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

@@ -1,0 +1,17 @@
+.sku-readonly-field {
+    -fx-background-color: #f3f4f6; /* Latar abu-abu muda */
+    -fx-border-color: #d1d5db;
+    -fx-focus-color: transparent; /* Hilangkan highlight biru saat diklik */
+    -fx-faint-focus-color: transparent;
+}
+
+/* Opsional: Style untuk radio button yang disabled agar lebih jelas */
+.radio-button:disabled {
+    -fx-opacity: 0.6;
+}
+.radio-button:disabled .radio {
+    -fx-border-color: #d1d5db;
+}
+.radio-button:disabled:selected .radio .dot {
+    -fx-background-color: #9ca3af; /* Warna dot abu-abu saat disabled */
+}

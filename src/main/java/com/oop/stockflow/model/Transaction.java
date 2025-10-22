@@ -3,12 +3,21 @@ package com.oop.stockflow.model;
 import java.util.Date;
 
 public abstract class Transaction {
+    protected int id;
     protected int sku;
     protected int staffId;
     protected Date date;
     protected int quantity;
     protected TransactionStatus status;
     protected ShippingType shippingType;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getQuantity() {
         return quantity;

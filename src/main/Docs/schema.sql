@@ -73,7 +73,7 @@ CREATE TYPE product_type AS ENUM (
 -- Products Table
 CREATE TABLE products
 (
-    sku                         VARCHAR(50) PRIMARY KEY,
+    sku                         SERIAL PRIMARY KEY,
     name                        VARCHAR(100) NOT NULL,
     brand                       VARCHAR(100),
     description                 TEXT,
@@ -81,8 +81,9 @@ CREATE TABLE products
     weight_per_unit_kg          NUMERIC(10, 3),
     volume_per_unit_m3          NUMERIC(10, 3),
     quantity                    INT     DEFAULT 0,
-    -- inheritance
     product_type                product_type,
+    warehouse_id                BIGINT           REFERENCES warehouses (id)
+                                             ON UPDATE CASCADE ON DELETE SET NULL,
     -- dry good product
     reorder_point               INTEGER DEFAULT 0,
     reorder_quantity            INTEGER DEFAULT 0,

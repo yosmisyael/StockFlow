@@ -70,6 +70,7 @@ public class StageManager {
             setScene(scene, title);
         } catch (Exception e) {
             System.out.println("[ERROR] " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

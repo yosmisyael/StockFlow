@@ -1,0 +1,210 @@
+/* Root Colors */
+.root {
+    -fx-background-color: #f5f7fa;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Main Content */
+.main-content {
+    -fx-background-color: #f5f7fa;
+}
+
+.header {
+    -fx-background-color: white;
+    -fx-padding: 20 32;
+    -fx-spacing: 16;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 0 1 0;
+}
+
+.page-title {
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+.notification-badge {
+    -fx-cursor: hand;
+}
+
+.notification-icon {
+    -fx-font-size: 24;
+    -fx-fill: #6b7280;
+}
+
+.badge {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-font-size: 10;
+    -fx-font-weight: bold;
+    -fx-padding: 2 6;
+    -fx-background-radius: 10;
+    -fx-translate-x: 10;
+    -fx-translate-y: -10;
+}
+
+.date-label {
+    -fx-font-size: 14;
+    -fx-text-fill: #6b7280;
+}
+
+/* Scroll Content */
+.scroll-content {
+    -fx-background-color: transparent;
+}
+
+.scroll-content > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Form Wrapper */
+.form-wrapper {
+    -fx-padding: 32;
+}
+
+.form-container {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-padding: 32;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 2);
+    -fx-max-width: 900;
+}
+
+.form-title {
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+.field-label {
+    -fx-font-size: 14;
+    -fx-font-weight: 600;
+    -fx-text-fill: #374151;
+}
+
+.section-label {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+.field-separator {
+    -fx-background-color: #e5e7eb;
+    -fx-pref-height: 1;
+}
+
+/* Text Input Fields */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 10 12;
+    -fx-font-size: 14;
+    -fx-text-fill: #111827;
+    -fx-prompt-text-fill: #9ca3af;
+}
+
+.text-field:focused {
+    -fx-border-color: #2563eb;
+    -fx-border-width: 2;
+}
+
+.text-area {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 10 12;
+    -fx-font-size: 14;
+    -fx-text-fill: #111827;
+    -fx-prompt-text-fill: #9ca3af;
+}
+
+.text-area:focused {
+    -fx-border-color: #2563eb;
+    -fx-border-width: 2;
+}
+
+.text-area .content {
+    -fx-background-color: white;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: white;
+}
+
+.text-area .scroll-pane .viewport {
+    -fx-background-color: white;
+}
+
+/* Radio Buttons */
+.radio-button {
+    -fx-font-size: 14;
+    -fx-text-fill: #374151;
+}
+
+.radio-button .radio {
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+}
+
+.radio-button:selected .radio {
+    -fx-border-color: #2563eb;
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #2563eb;
+    -fx-background-radius: 5;
+}
+
+/* Submit Button */
+.button-container {
+    -fx-padding: 16 0 0 0;
+}
+
+.submit-btn {
+    -fx-background-color: #111827;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-weight: 600;
+    -fx-padding: 12 48;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.submit-btn:hover {
+    -fx-background-color: #1f2937;
+}
+
+.submit-btn:pressed {
+    -fx-background-color: #374151;
+}
+
+/* Scrollbar Styling */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #cbd5e1;
+    -fx-background-radius: 4;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #94a3b8;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}

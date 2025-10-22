@@ -9,9 +9,11 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
 
 public class InboundTransactionsController {
     // sidebar fields
@@ -55,21 +57,32 @@ public class InboundTransactionsController {
      * Populates ComboBoxes with data (Products, Shipping Types, Statuses).
      */
     private void populateComboBoxes() {
-        // TODO: Replace with actual data fetching from ProductRepository
-        // List<Product> products = productRepository.getAllProducts();
-        // cmbProductSku.setItems(FXCollections.observableArrayList(products));
-        // TODO: Add a StringConverter to display Product name/SKU nicely
-        // cmbProductSku.setConverter(new StringConverter<Product>() { ... });
-        cmbProductSku.setItems(FXCollections.observableArrayList(/* Sample Products or fetch */));
+        try {
+            // Fetch products from the repository
+            List<Product> products = productRepository.getAllProducts();
+            cmbProductSku.setItems(FXCollections.observableArrayList(products));
 
+            // Set how Product objects are displayed in the ComboBox
+            cmbProductSku.setConverter(new StringConverter<Product>() {
+                @Override
+                public String toString(Product product) {
+                    return (product == null) ? null : product.getName() + " (SKU: " + product.getSku() + ")";
+                }
 
-        // --- Shipping Method ---
+                @Override
+                public Product fromString(String string) {
+                    return null;
+                }
+            });
+
+        } catch (Exception e) {
+            System.err.println("[ERROR] Failed to load products into ComboBox: " + e.getMessage());
+            e.printStackTrace();
+        }
         cmbShippingMethod.setItems(FXCollections.observableArrayList(ShippingType.values()));
-        cmbShippingMethod.getSelectionModel().selectFirst(); // Select a default
-
-        // --- Status ---
+        cmbShippingMethod.getSelectionModel().selectFirst();
         cmbStatus.setItems(FXCollections.observableArrayList(TransactionStatus.values()));
-        cmbStatus.getSelectionModel().select(TransactionStatus.PENDING); // Default is Pending
+        cmbStatus.getSelectionModel().select(TransactionStatus.PENDING);
     }
 
     /**
@@ -84,8 +97,7 @@ public class InboundTransactionsController {
     }
 
 
-    // === Action Handlers ===
-
+    // Action Handlers
     /**
      * Handles the "+ Create Transaction" button click.
      * Validates input and calls the repository to save the inbound transaction.
@@ -104,6 +116,7 @@ public class InboundTransactionsController {
         }
 
         int quantity;
+
         try {
             quantity = Integer.parseInt(quantityStr);
             if (quantity <= 0) {
@@ -115,19 +128,14 @@ public class InboundTransactionsController {
             return;
         }
 
-        // --- 3. Prepare Data for Repository ---
-        // TODO: Get current staff ID and warehouse ID
-        int staffId = 1; // Placeholder - Get from SessionManager
-        // int warehouseId = 1; // Placeholder - Get from SessionManager or initData
         Timestamp timestamp = Timestamp.valueOf(selectedDate.atStartOfDay());
         int productSku = selectedProduct.getSku();
 
-        // --- 4. Call Repository ---
         System.out.println("Creating Inbound Transaction:");
         System.out.println("  SKU: " + productSku + ", Qty: " + quantity + ", Date: " + timestamp + ", Ship: " + selectedShipping + ", Status: " + selectedStatus);
 
         boolean success = transactionRepository.createInboundTransaction(
-                staffId,
+                currentUser.getId(),
                 timestamp,
                 selectedShipping,
                 productSku,
@@ -135,14 +143,11 @@ public class InboundTransactionsController {
                 selectedStatus
         );
 
-        // --- 5. Feedback & Cleanup ---
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Success", "Inbound transaction created successfully!");
             clearForm();
-            // Optionally navigate back or refresh something
         } else {
             showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to create inbound transaction.");
-            // Consider more specific error messages based on repo feedback
         }
     }
 
@@ -154,14 +159,13 @@ public class InboundTransactionsController {
     private void cancelTransaction(ActionEvent event) {
         System.out.println("Cancel button clicked.");
         clearForm();
-        // Or navigate back to the transaction list:
-        // navigateToTransactionsList(event);
+        goToTransactionIndex();
     }
 
 
     // navigations
     @FXML
-    private void goToTransactionIndex(ActionEvent event) {
+    private void goToTransactionIndex() {
         StageManager.getInstance().navigateWithData(
                 View.TRANSACTION_INDEX,
                 "Product Transactions",
@@ -197,7 +201,7 @@ public class InboundTransactionsController {
     }
 
     @FXML
-    private void handleLogout(ActionEvent event) {
+    private void handleLogout() {
         System.out.println("Logging out...");
         // SessionManager.getInstance().endSession(); // Clear session
         StageManager.getInstance().navigate(View.LOGIN, "Login"); // Navigate to Login

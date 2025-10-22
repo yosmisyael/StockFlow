@@ -1,0 +1,124 @@
+/* ================================================================== */
+/* ==       STYLES UNTUK TRANSACTION TABLE VIEW                  == */
+/* ================================================================== */
+
+/* --- Container TableView --- */
+/* Menghapus border default dan mengatur background agar transparan */
+.transaction-table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent; /* Hapus border luar */
+    -fx-table-cell-border-color: transparent; /* Hapus border antar sel default */
+    -fx-background-insets: 0;
+    -fx-padding: 0; /* Hapus padding default jika ada */
+}
+
+/* --- Header Tabel --- */
+/* Memberi background abu-abu muda pada area header */
+.transaction-table-view .column-header-background {
+    -fx-background-color: #f9fafb; /* Abu-abu sangat muda */
+    -fx-border-color: #e5e7eb; /* Garis bawah header */
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Style untuk label di dalam header */
+.transaction-table-view .column-header {
+    -fx-background-color: transparent; /* Header transparan di atas background */
+    -fx-padding: 12 15 12 15; /* Padding atas/bawah 12, kiri/kanan 15 */
+}
+
+.transaction-table-view .column-header .label {
+    -fx-text-fill: #6b7280; /* Teks abu-abu */
+    -fx-font-size: 12px;
+    -fx-font-weight: 600; /* Sedikit tebal */
+    -fx-alignment: CENTER_LEFT; /* Rata kiri (kecuali status/aksi) */
+}
+
+/* --- Baris Tabel --- */
+.transaction-table-view .table-row-cell {
+    -fx-background-color: white; /* Latar belakang baris putih */
+    -fx-border-color: #f3f4f6; /* Garis pemisah abu-abu muda */
+    -fx-border-width: 0 0 1 0; /* Hanya garis bawah antar baris */
+    -fx-padding: 0; /* Hapus padding default baris */
+}
+
+/* Efek hover pada baris */
+.transaction-table-view .table-row-cell:hover {
+    -fx-background-color: #f9fafb; /* Abu-abu sangat muda saat hover */
+}
+
+/* Efek saat baris dipilih (opsional) */
+.transaction-table-view .table-row-cell:selected {
+    -fx-background-color: #eff6ff; /* Biru muda saat dipilih */
+}
+
+/* --- Sel Tabel --- */
+.transaction-table-view .table-cell {
+    -fx-padding: 14 15 14 15; /* Padding vertikal 14, horizontal 15 */
+    -fx-border-color: transparent; /* Hapus border default antar sel */
+    -fx-font-size: 13px;
+    -fx-text-fill: #374151; /* Teks abu-abu tua */
+}
+
+/* --- Placeholder (saat tabel kosong) --- */
+.transaction-table-view .placeholder {
+    -fx-background-color: white;
+}
+.transaction-table-view .placeholder .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #9ca3af; /* Teks abu-abu muda */
+}
+
+/* --- Penyesuaian Style Kolom Spesifik (jika perlu) --- */
+/* Misalnya, membuat teks status dan aksi rata tengah */
+.transaction-table-view .status-column .table-cell {
+    -fx-alignment: CENTER;
+}
+.transaction-table-view .actions-column .table-cell {
+    -fx-alignment: CENTER;
+}
+
+/* Style untuk badge status (sudah diatur via setStyle di controller, tapi bisa juga di sini) */
+.status-badge {
+    -fx-padding: 4 12;
+    -fx-background-radius: 12;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-alignment: CENTER;
+    -fx-max-width: infinity; /* Agar memenuhi sel */
+}
+.status-badge-committed {
+    -fx-background-color: #d1fae5;
+    -fx-text-fill: #065f46;
+}
+.status-badge-pending {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #92400e;
+}
+.status-badge-voided {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #991b1b;
+}
+
+/* Style untuk tombol aksi (sudah diatur via setStyle di controller, tapi bisa juga di sini) */
+.action-button {
+    -fx-font-size: 12px;
+    -fx-padding: 6 16;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+    -fx-font-weight: 500;
+}
+.action-button-detail {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+}
+.action-button-update {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #92400e;
+}
+.action-button-detail:hover {
+    -fx-background-color: #bfdbfe;
+}
+.action-button-update:hover {
+    -fx-background-color: #fef08a;
+}

@@ -11,13 +11,23 @@ public class DryGoodProduct extends Product {
     private int reorderQuantity;
     private int unitsPerCase;
 
-    // Constructor
-    public DryGoodProduct(int sku, String name, String brand, String description,
+    public DryGoodProduct(Integer sku, String name, String brand, String description,
                           BigDecimal purchasePrice, double weightPerUnitKg, double volumePerUnitM3,
                           int quantity,
-                          int reorderPoint, int reorderQuantity, int unitsPerCase) {
+                          int reorderPoint, int reorderQuantity, int unitsPerCase, int warehouseId) {
         super(sku, name, brand, description, purchasePrice, weightPerUnitKg, volumePerUnitM3,
-                quantity, ProductType.DRY_GOOD);
+                quantity, ProductType.DRY_GOOD, warehouseId);
+        this.reorderPoint = reorderPoint;
+        this.reorderQuantity = reorderQuantity;
+        this.unitsPerCase = unitsPerCase;
+    }
+
+    public DryGoodProduct(String name, String brand, String description,
+                          BigDecimal purchasePrice, double weightPerUnitKg, double volumePerUnitM3,
+                          int quantity,
+                          int reorderPoint, int reorderQuantity, int unitsPerCase, int warehouseId) {
+        super(name, brand, description, purchasePrice, weightPerUnitKg, volumePerUnitM3,
+                quantity, ProductType.DRY_GOOD, warehouseId);
         this.reorderPoint = reorderPoint;
         this.reorderQuantity = reorderQuantity;
         this.unitsPerCase = unitsPerCase;

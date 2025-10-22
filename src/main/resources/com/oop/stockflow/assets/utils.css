@@ -1,0 +1,94 @@
+/* --- Form Buttons --- */
+.button-primary {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.button-primary:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+.button-secondary {
+    -fx-background-color: white;
+    -fx-text-fill: #374151;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+.button-secondary:hover {
+    -fx-background-color: #f9fafb;
+}
+
+/* --- Tips Box --- */
+.tips-box {
+    -fx-background-color: #eff6ff;
+    -fx-background-radius: 8;
+    -fx-border-color: #93c5fd;
+    -fx-border-width: 1;
+}
+.tips-icon {
+    -fx-font-size: 16px;
+}
+.tips-title {
+    -fx-text-fill: #1e40af;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.tips-list-item {
+    -fx-text-fill: #1d4ed8;
+    -fx-font-size: 13px;
+}
+
+/* actions buttons */
+.action-button-show {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+    -fx-border-color: #bfdbfe;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 6 12;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-font-weight: 500;
+}
+
+.action-button-show:hover {
+    -fx-background-color: #bfdbfe;
+}
+
+.action-button-edit {
+    -fx-background-color: #fefce8;
+    -fx-text-fill: #92400e;
+    -fx-border-color: #fcd34d;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 6 12;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.action-button-edit:hover {
+    -fx-background-color: #fef9c3;
+    -fx-border-color: #fbbf24;
+}
+
+.action-button-delete {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #b91c1c;
+    -fx-border-color: #fecaca;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 6 12;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+.action-button-delete:hover {
+    -fx-background-color: #fecaca;
+}

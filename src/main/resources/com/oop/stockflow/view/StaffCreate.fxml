@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="root" stylesheets="@../assets/warehouse-dashboard.css, @../assets/staff-create.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.StaffCreateController">
+<BorderPane styleClass="root" stylesheets="@../assets/utils.css, @../assets/sidebar.css, @../assets/topbar.css, @../assets/staff-create.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.StaffCreateController">
 
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
@@ -64,7 +64,7 @@
                     </font>
                 </Label>
                 <VBox>
-                    <Label fx:id="userNameLabel" styleClass="user-name" text="Manager Name">
+                    <Label fx:id="userNameLabel" styleClass="user-name" text="Yanto">
                         <font>
                             <Font name="System Bold" size="16.0" />
                         </font>
@@ -94,7 +94,7 @@
                 </Button>
 
                 <!-- Stock Management -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📦  Stock Management">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📦  Stock Management" onAction="#goToProductIndex">
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12" />
                     </padding>
@@ -103,27 +103,7 @@
                     </font>
                 </Button>
 
-                <!-- Outbound Transactions -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📤  Outbound Transactions">
-                    <padding>
-                        <Insets bottom="12" left="16" right="12" top="12" />
-                    </padding>
-                    <font>
-                        <Font size="14" />
-                    </font>
-                </Button>
-
-                <!-- Delivery Schedule -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="🚚  Delivery Schedule">
-                    <padding>
-                        <Insets bottom="12" left="16" right="12" top="12" />
-                    </padding>
-                    <font>
-                        <Font size="14" />
-                    </font>
-                </Button>
-
-                <!-- Staff Management - Active -->
+                <!-- Staff Management -->
                 <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="👥  Staff Management">
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12" />

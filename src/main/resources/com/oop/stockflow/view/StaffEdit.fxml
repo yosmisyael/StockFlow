@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="root" stylesheets="@../assets/warehouse-dashboard.css, @../assets/staff-create.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.StaffEditController">
+<BorderPane styleClass="root" stylesheets="@../assets/topbar.css, @../assets/sidebar.css, @../assets/utils.css, @../assets/staff-create.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.StaffEditController">
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
             <padding> <Insets bottom="16" left="24" right="24" top="16" /> </padding>
@@ -31,22 +31,80 @@
 
     <left>
         <VBox minWidth="200" prefWidth="200" spacing="8" styleClass="sidebar">
-            <padding> <Insets bottom="20" left="12" right="12" top="20" /> </padding>
+            <padding>
+                <Insets bottom="20" left="12" right="12" top="20" />
+            </padding>
+
+            <!-- User Profile -->
             <HBox alignment="CENTER_LEFT" spacing="12" styleClass="user-profile">
-                <padding> <Insets bottom="12" left="12" right="12" top="12" /> </padding>
-                <Label styleClass="user-icon" text="👤" />
-                <VBox> <Label fx:id="userNameLabel" styleClass="user-name" text="Manager Name" /> <Label fx:id="userRole" styleClass="user-role" text="Manager" /> </VBox>
+                <padding>
+                    <Insets bottom="12" left="12" right="12" top="12" />
+                </padding>
+                <Label styleClass="user-icon" text="👤">
+                    <font>
+                        <Font size="24" />
+                    </font>
+                </Label>
+                <VBox>
+                    <Label fx:id="userNameLabel" styleClass="user-name" text="Yanto">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                    </Label>
+                    <Label fx:id="userRole" style="-fx-background-radius: 24;" styleClass="user-role" text="Manager">
+                        <font>
+                            <Font size="13.0" />
+                        </font>
+                    </Label>
+                </VBox>
             </HBox>
+
+            <!-- Navigation Menu -->
             <VBox spacing="4" VBox.vgrow="NEVER">
-                <padding> <Insets top="12" /> </padding>
-                <Button onAction="#goToDashboard" alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📊  Dashboard" />
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📦  Stock Management" />
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📤  Outbound Transactions" />
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="🚚  Delivery Schedule" />
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="👥  Staff Management" />
+                <padding>
+                    <Insets top="12" />
+                </padding>
+
+                <!-- Dashboard -->
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" onAction="#goToDashboard" styleClass="nav-button" text="📊  Dashboard">
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12" />
+                    </padding>
+                    <font>
+                        <Font size="14" />
+                    </font>
+                </Button>
+
+                <!-- Stock Management -->
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📦  Stock Management" onAction="#goToProductIndex">
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12" />
+                    </padding>
+                    <font>
+                        <Font size="14" />
+                    </font>
+                </Button>
+
+                <!-- Staff Management -->
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="👥  Staff Management">
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12" />
+                    </padding>
+                    <font>
+                        <Font size="14" />
+                    </font>
+                </Button>
             </VBox>
+
+            <!-- Spacer -->
             <Region VBox.vgrow="ALWAYS" />
-            <Button onAction="#handleLogout" alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="logout-button" text="⎋ Logout" />
+
+            <!-- Logout Button -->
+            <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="logout-button" text="⎋ Logout">
+                <padding>
+                    <Insets bottom="12" left="12" right="12" top="12" />
+                </padding>
+            </Button>
         </VBox>
     </left>
 

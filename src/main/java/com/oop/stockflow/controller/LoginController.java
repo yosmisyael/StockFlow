@@ -56,7 +56,11 @@ public class LoginController {
                         (TransactionIndexController controller) -> { controller.initData(warehouse, user); }
                 );
             } else {
-                StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
+                StageManager.getInstance().navigateWithData(
+                        View.WAREHOUSE_INDEX,
+                        "Warehouse List",
+                        (WarehouseController controller) -> { controller.initData(user); }
+                );
             }
         } else {
             showAlert(Alert.AlertType.ERROR, "Invalid email or password!");

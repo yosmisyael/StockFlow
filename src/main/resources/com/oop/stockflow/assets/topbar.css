@@ -1,0 +1,53 @@
+/* Navigation Bar */
+.navbar {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 0 1 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 8, 0, 0, 2);
+}
+
+.app-title {
+    -fx-text-fill: #1f2937;
+}
+
+.app-subtitle {
+    -fx-text-fill: #6b7280;
+}
+
+/* Notification Bell */
+.notification-bell {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 8;
+    -fx-padding: 8;
+    -fx-cursor: hand;
+}
+
+.notification-bell:hover {
+    -fx-background-color: #e5e7eb;
+}
+
+.bell-icon {
+    -fx-text-fill: #4b5563;
+}
+
+.notification-badge {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 2 6 2 6;
+    -fx-alignment: center;
+}
+
+/* Date and Status */
+.date-label {
+    -fx-text-fill: #6b7280;
+}
+
+.status-active-badge {
+    -fx-background-color: #d1fae5;
+    -fx-background-radius: 20;
+}
+
+.status-active-text {
+    -fx-text-fill: #065f46;
+}

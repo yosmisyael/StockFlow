@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class WarehouseDashboardController implements Initializable {
+public class WarehouseDashboardController {
     // Sidebar User Profile
     @FXML
     private Label userNameLabel;
@@ -43,41 +43,50 @@ public class WarehouseDashboardController implements Initializable {
     @FXML
     private VBox notificationsContainer;
 
-    private Warehouse warehouse;
+    private Warehouse currentWarehouse;
+    private AuthenticatedUser currentUser;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        AuthenticatedUser user = SessionManager.getInstance().getCurrentUser();
-        if (user != null) {
-            userNameLabel.setText(user.getName());
-            userRole.setText(user.getUserType().getDbValue());
-        }
-    }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
+    public void initData(Warehouse warehouse, AuthenticatedUser user) {
+        currentUser = user;
+        currentWarehouse = warehouse;
         updateUI();
     }
 
     private void updateUI() {
-        if (warehouse != null) {
-            warehouseName.setText(warehouse.getName());
-            warehouseAddress.setText(warehouse.getAddress());
+        if (currentWarehouse != null) {
+            warehouseName.setText(currentWarehouse.getName());
+            warehouseAddress.setText(currentWarehouse.getAddress());
         }
     }
 
     @FXML
     private void goToWarehouseList() {
-        StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
+        StageManager.getInstance().navigateWithData(
+                View.WAREHOUSE_INDEX,
+                "Warehouse List",
+                (WarehouseController controller) -> { controller.initData(currentUser); }
+        );
     }
 
     @FXML
     private void goToStaffMenu() {
         StageManager.getInstance().navigateWithData(
                 View.STAFF_INDEX,
-                "Warehouse " + warehouse.getId() + " Staff Management",
+                "Warehouse " + currentWarehouse.getId() + " Staff Management",
                 (StaffIndexController controller) -> {
-                    controller.initData(warehouse);
+                    controller.initData(currentWarehouse, currentUser);
+                }
+        );
+    }
+
+    @FXML
+    private void goToProductIndex() {
+        currentUser = SessionManager.getInstance().getCurrentUser();
+        StageManager.getInstance().navigateWithData(
+                View.PRODUCT_INDEX,
+                "Warehouse " + currentWarehouse.getId() + " Product Management",
+                (ProductIndexController controller) -> {
+                    controller.initData(currentWarehouse, currentUser);
                 }
         );
     }

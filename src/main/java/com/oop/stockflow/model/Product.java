@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  */
 public abstract class Product {
 
-    protected int sku;
+    protected Integer sku;
     protected String name;
     protected String brand;
     protected String description;
@@ -17,10 +17,11 @@ public abstract class Product {
     protected double volumePerUnitM3;
     protected int quantity;
     protected ProductType productType;
+    protected int warehouseId;
 
-    protected Product(int sku, String name, String brand, String description,
+    protected Product(Integer sku, String name, String brand, String description,
                       BigDecimal purchasePrice, double weightPerUnitKg, double volumePerUnitM3,
-                      int quantity, ProductType productType) {
+                      int quantity, ProductType productType, int warehouseId) {
         this.sku = sku;
         this.name = name;
         this.brand = brand;
@@ -30,10 +31,21 @@ public abstract class Product {
         this.volumePerUnitM3 = volumePerUnitM3;
         this.quantity = quantity;
         this.productType = productType;
+        this.warehouseId = warehouseId;
+    }
+
+    protected Product(String name, String brand, String description,
+                      BigDecimal purchasePrice, double weightPerUnitKg, double volumePerUnitM3,
+                      int quantity, ProductType productType, int warehouseId) {
+        this(null, name, brand, description, purchasePrice, weightPerUnitKg, volumePerUnitM3, quantity, productType, warehouseId);
     }
 
     // getter
-    public int getSku() {
+    public int getWarehouseId() {
+        return warehouseId;
+    }
+
+    public Integer getSku() {
         return sku;
     }
 
@@ -70,7 +82,11 @@ public abstract class Product {
     }
 
     // setter
-    public void setSku(int sku) {
+    public void setWarehouseId(int warehouseId) {
+        this.warehouseId = warehouseId;
+    }
+
+    public void setSku(Integer sku) {
         this.sku = sku;
     }
 

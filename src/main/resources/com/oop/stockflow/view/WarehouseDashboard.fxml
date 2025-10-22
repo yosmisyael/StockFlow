@@ -23,7 +23,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="root" stylesheets="@../assets/warehouse-dashboard.css" xmlns="http://javafx.com/javafx/17.0.12"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.WarehouseDashboardController">
+<BorderPane styleClass="root" stylesheets="@../assets/sidebar.css, @../assets/topbar.css, @../assets/warehouse-dashboard.css" xmlns="http://javafx.com/javafx/17.0.12"  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.WarehouseDashboardController">
 
     <!-- Top Navigation Bar -->
     <top>
@@ -144,27 +144,7 @@
                 </Button>
 
                 <!-- Stock Management -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"  text="📦  Stock Management">
-                    <padding>
-                        <Insets bottom="12" left="16" right="12" top="12" />
-                    </padding>
-                    <font>
-                        <Font size="14" />
-                    </font>
-                </Button>
-
-                <!-- Outbound Transactions -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📤  Outbound Transactions">
-                    <padding>
-                        <Insets bottom="12" left="16" right="12" top="12" />
-                    </padding>
-                    <font>
-                        <Font size="14" />
-                    </font>
-                </Button>
-
-                <!-- Delivery Schedule -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="🚚  Delivery Schedule">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"  text="📦  Stock Management" onAction="#goToProductIndex">
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12" />
                     </padding>
