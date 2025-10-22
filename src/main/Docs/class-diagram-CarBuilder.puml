@@ -1,0 +1,20 @@
+@startuml
+skinparam classAttributeIconSize 0
+class CarBuilder {
+    - type: CarType
+    - seats: int
+    - engine: Engine
+    - transmission: Transmission
+    - tripComputer: TripComputer
+    - gpsNavigator: GPSNavigator
+
+    + setCarType(type: CarType): void
+    + setSeats(seats: int): void
+    + setEngine(engine: Engine): void
+    + setTransmission(transmission: Transmission): void
+    + setTripComputer(tripComputer: TripComputer): void
+    + setGPSNavigator(gpsNavigator: GPSNavigator): void
+    + getResult(): Car
+}
+@enduml
+

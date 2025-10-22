@@ -1,0 +1,10 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Person {
+    - Name: string
+    - Address: string
+    + Person(name: string, address: string)
+    + DisplayInfo(): void
+}
+@enduml
