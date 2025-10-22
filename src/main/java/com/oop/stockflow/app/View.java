@@ -9,6 +9,7 @@ public enum View {
     STAFF_INDEX("StaffIndex.fxml"),
     STAFF_CREATE("StaffCreate.fxml"),
     STAFF_EDIT("StaffEdit.fxml"),
+    TRANSACTION_CREATE("TransactionCreate.fxml"),
     WAREHOUSE_DASHBOARD("WarehouseDashboard.fxml"),;
 
     private final String fxmlFile;
