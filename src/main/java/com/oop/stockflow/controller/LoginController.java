@@ -4,6 +4,7 @@ import com.oop.stockflow.app.SessionManager;
 import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
 import com.oop.stockflow.model.AuthenticatedUser;
+import com.oop.stockflow.model.UserType;
 import com.oop.stockflow.repository.AuthRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,26 +28,29 @@ public class LoginController {
     }
 
     @FXML
-    private void handleLogin(ActionEvent event) throws IOException {
-        StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
-//        String email = emailField.getText().trim();
-//        String password = passwordField.getText().trim();
-//
-//
-//        if (email.isEmpty() || password.isEmpty()) {
-//            showAlert(Alert.AlertType.WARNING, "Please fill in all fields!");
-//            return;
-//        }
-//
-//        AuthenticatedUser user = authRepo.login(email, password);
-//
-//        if (user != null) {
-//            SessionManager.getInstance().startSession(user);
-//            StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
-//
-//        } else {
-//            showAlert(Alert.AlertType.ERROR, "Invalid email or password!");
-//        }
+    private void handleLogin() throws IOException {
+//        StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
+        String email = emailField.getText().trim();
+        String password = passwordField.getText().trim();
+
+
+        if (email.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Please fill in all fields!");
+            return;
+        }
+
+        AuthenticatedUser user = authRepo.login(email, password);
+
+        if (user != null) {
+            SessionManager.getInstance().startSession(user);
+            if (user.getUserType() ==  UserType.STAFF) {
+                StageManager.getInstance().navigate(View.TRANSACTION_CREATE, "Product Transactions");
+            } else {
+                StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
+            }
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Invalid email or password!");
+        }
     }
 
     private void showAlert(Alert.AlertType type, String message) {
