@@ -13,6 +13,7 @@ DROP TYPE IF EXISTS warehouse_status;
 DROP TYPE IF EXISTS product_type;
 DROP TYPE IF EXISTS transaction_type;
 DROP TYPE IF EXISTS transaction_status;
+DROP TYPE IF EXISTS shipping_method;
 
 CREATE TYPE user_role AS ENUM ('manager', 'staff');
 
