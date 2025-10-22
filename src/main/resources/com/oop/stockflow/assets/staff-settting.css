@@ -1,0 +1,411 @@
+/* settings.css - Settings Page Styles */
+
+/* Root and Base */
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Top Navigation Bar */
+.navbar {
+    -fx-background-color: white;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 0 1 0;
+}
+
+.app-logo {
+    -fx-background-color: #3b82f6;
+    -fx-background-radius: 8;
+    -fx-pref-width: 36;
+    -fx-pref-height: 36;
+}
+
+.logo-icon {
+    -fx-text-fill: white;
+}
+
+.app-title {
+    -fx-text-fill: #1f2937;
+}
+
+.nav-username {
+    -fx-text-fill: #374151;
+}
+
+.nav-avatar {
+    -fx-background-color: #3b82f6;
+    -fx-background-radius: 20;
+    -fx-pref-width: 36;
+    -fx-pref-height: 36;
+    -fx-min-width: 36;
+    -fx-min-height: 36;
+}
+
+.nav-avatar-initials {
+    -fx-text-fill: white;
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 1 0 0;
+}
+
+.sidebar-profile {
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 0 1 0;
+}
+
+.sidebar-avatar {
+    -fx-background-color: #dbeafe;
+    -fx-background-radius: 20;
+    -fx-pref-width: 40;
+    -fx-pref-height: 40;
+    -fx-min-width: 40;
+    -fx-min-height: 40;
+}
+
+.sidebar-avatar-initials {
+    -fx-text-fill: #1e40af;
+}
+
+.sidebar-username {
+    -fx-text-fill: #1f2937;
+}
+
+.sidebar-role {
+    -fx-text-fill: #6b7280;
+}
+
+/* Navigation Menu */
+.nav-menu {
+    -fx-background-color: transparent;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #4b5563;
+    -fx-border-color: transparent;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.nav-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.nav-button-active {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+}
+
+.nav-button-active:hover {
+    -fx-background-color: #bfdbfe;
+}
+
+/* Logout Section */
+.logout-section {
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 1 0 0 0;
+}
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ef4444;
+    -fx-border-color: transparent;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.logout-button:hover {
+    -fx-background-color: #fee2e2;
+}
+
+/* Main Content */
+.content-scroll {
+    -fx-background-color: transparent;
+}
+
+.content-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.main-content {
+    -fx-background-color: transparent;
+}
+
+/* Page Headers */
+.page-title {
+    -fx-text-fill: #111827;
+}
+
+.page-subtitle {
+    -fx-text-fill: #6b7280;
+}
+
+/* Settings Cards */
+.settings-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+}
+
+.section-title {
+    -fx-text-fill: #111827;
+}
+
+/* Field Labels */
+.field-label {
+    -fx-text-fill: #374151;
+}
+
+/* Form Inputs */
+.form-input {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 10 12;
+    -fx-font-size: 14;
+    -fx-text-fill: #374151;
+    -fx-prompt-text-fill: #9ca3af;
+}
+
+.form-input:focused {
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 2;
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+}
+
+.form-input:hover {
+    -fx-border-color: #9ca3af;
+}
+
+/* Text Field */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 10 12;
+    -fx-font-size: 14;
+    -fx-text-fill: #374151;
+    -fx-prompt-text-fill: #9ca3af;
+}
+
+.text-field:focused {
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 2;
+    -fx-background-insets: 0;
+}
+
+/* Password Field */
+.password-field {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 10 12 10 12;
+    -fx-font-size: 14;
+    -fx-text-fill: #374151;
+    -fx-prompt-text-fill: #9ca3af;
+}
+
+.password-field:focused {
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 2;
+    -fx-background-insets: 0;
+}
+
+/* Toggle Password Button */
+.toggle-password-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 4;
+}
+
+.toggle-password-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
+    -fx-background-radius: 4;
+}
+
+.eye-icon {
+    -fx-text-fill: #6b7280;
+}
+
+/* Action Buttons */
+.cancel-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6b7280;
+    -fx-border-color: transparent;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.cancel-button:pressed {
+    -fx-background-color: #e5e7eb;
+}
+
+.save-button {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.save-button:hover {
+    -fx-background-color: #2563eb;
+}
+
+.save-button:pressed {
+    -fx-background-color: #1d4ed8;
+}
+
+/* Toggle Row */
+.toggle-row {
+    -fx-background-color: transparent;
+}
+
+.toggle-title {
+    -fx-text-fill: #111827;
+}
+
+.toggle-description {
+    -fx-text-fill: #6b7280;
+}
+
+/* Settings Separator */
+.settings-separator {
+    -fx-background-color: #e5e7eb;
+    -fx-pref-height: 1;
+}
+
+.settings-separator .line {
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1 0 0 0;
+}
+
+/* Custom Toggle Switch */
+.toggle-switch {
+    -fx-background-color: #e5e7eb;
+    -fx-background-radius: 20;
+    -fx-pref-width: 44;
+    -fx-pref-height: 24;
+    -fx-min-width: 44;
+    -fx-min-height: 24;
+    -fx-max-width: 44;
+    -fx-max-height: 24;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.toggle-switch:selected {
+    -fx-background-color: #3b82f6;
+}
+
+.toggle-switch:hover {
+    -fx-opacity: 0.9;
+}
+
+.toggle-switch .thumb {
+    -fx-background-color: white;
+    -fx-background-radius: 50;
+    -fx-pref-width: 20;
+    -fx-pref-height: 20;
+    -fx-translate-x: 2;
+}
+
+.toggle-switch:selected .thumb {
+    -fx-translate-x: 22;
+}
+
+/* Override default toggle button styling */
+.toggle-button {
+    -fx-background-color: #e5e7eb;
+    -fx-background-radius: 20;
+    -fx-border-width: 0;
+    -fx-pref-width: 44;
+    -fx-pref-height: 24;
+    -fx-cursor: hand;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #3b82f6;
+}
+
+.toggle-button:hover {
+    -fx-opacity: 0.9;
+}
+
+.toggle-button .text {
+    -fx-fill: transparent;
+}
+
+/* Scrollbar Styling */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-height: 8;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #d1d5db;
+    -fx-background-radius: 4;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #9ca3af;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* Focus Ring Removal */
+.form-input:focused,
+.text-field:focused,
+.password-field:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.button:focused,
+.toggle-button:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-background-insets: 0;
+}
+
+/* Tooltip Styling */
+.tooltip {
+    -fx-background-color: #1f2937;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-font-size: 12;
+    -fx-padding: 6 10;
+}

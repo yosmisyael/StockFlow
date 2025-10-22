@@ -29,7 +29,7 @@ public class WarehouseCreateController {
     @FXML private ToggleGroup statusToggleGroup;
 
 
-    private final WarehouseRepository warehouseRepository = new WarehouseRepository();
+    private final WarehouseRepository warehouseRepository = WarehouseRepository.getInstance();
 
     @FXML
     private void initialize() {

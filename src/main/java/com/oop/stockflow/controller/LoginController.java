@@ -4,8 +4,12 @@ import com.oop.stockflow.app.SessionManager;
 import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
 import com.oop.stockflow.model.AuthenticatedUser;
+import com.oop.stockflow.model.Staff;
 import com.oop.stockflow.model.UserType;
+import com.oop.stockflow.model.Warehouse;
 import com.oop.stockflow.repository.AuthRepository;
+import com.oop.stockflow.repository.StaffRepository;
+import com.oop.stockflow.repository.WarehouseRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -44,7 +48,13 @@ public class LoginController {
         if (user != null) {
             SessionManager.getInstance().startSession(user);
             if (user.getUserType() ==  UserType.STAFF) {
-                StageManager.getInstance().navigate(View.TRANSACTION_CREATE, "Product Transactions");
+                Staff staff = StaffRepository.getInstance().getStaffById(user.getId());
+                Warehouse warehouse = WarehouseRepository.getInstance().getWarehouseById(staff.getWarehouseId());
+                StageManager.getInstance().navigateWithData(
+                        View.TRANSACTION_INDEX,
+                        "Product Transactions",
+                        (TransactionIndexController controller) -> { controller.initData(warehouse, user); }
+                );
             } else {
                 StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
             }

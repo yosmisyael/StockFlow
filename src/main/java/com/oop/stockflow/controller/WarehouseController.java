@@ -49,7 +49,7 @@ public class WarehouseController implements Initializable {
     }
 
     public WarehouseController() {
-        this.warehouseRepository = new WarehouseRepository();
+        this.warehouseRepository = WarehouseRepository.getInstance();
     }
 
     @FXML

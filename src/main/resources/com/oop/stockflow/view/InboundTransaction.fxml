@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<?import java.lang.String?>
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.oop.stockflow.controller.InboundTransactionsController"
+            stylesheets="@../assets/inbound-transaction.css">
+
+    <!-- Left Sidebar -->
+    <left>
+        <VBox styleClass="sidebar" prefWidth="240" spacing="0">
+            <!-- User Section -->
+            <VBox styleClass="user-section" spacing="8">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <StackPane styleClass="user-avatar">
+                        <Label text="JS" styleClass="user-initials"/>
+                    </StackPane>
+                    <VBox spacing="2">
+                        <Label fx:id="nameLabel" text="John Smith" styleClass="user-name"/>
+                        <Label fx:id="roleLabel" text="Staff" styleClass="user-role"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Menu Items -->
+            <VBox styleClass="menu-section" spacing="8" VBox.vgrow="ALWAYS">
+                <Button text="☰  Transactions List" styleClass="menu-item" fx:id="btnTransactionsList" onAction="#goToTransactionIndex"/>
+                <Button text="⬇  Inbound Transactions" styleClass="menu-item, menu-item-active" fx:id="btnInbound" onAction="#goToInboundTransaction" />
+                <Button text="⬆  Outbound Transactions" styleClass="menu-item" fx:id="btnOutbound" onAction="#goToOutboundTransaction" />
+                <Button text="⚙  Settings" styleClass="menu-item" fx:id="btnSettings" onAction="#goToSettings" />
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <VBox styleClass="main-content">
+            <!-- Form Container -->
+            <VBox styleClass="form-wrapper">
+                <VBox styleClass="form-container" spacing="32">
+                    <!-- Header -->
+                    <VBox spacing="8">
+                        <Label text="Create Inbound Transaction" styleClass="form-title"/>
+                        <Label text="Add new inventory items to the warehouse" styleClass="form-subtitle"/>
+                    </VBox>
+
+                    <!-- Form Fields -->
+                    <VBox spacing="24" styleClass="form-fields">
+                        <!-- Product SKU -->
+                        <VBox spacing="8">
+                            <Label text="Product SKU" styleClass="field-label"/>
+                            <ComboBox fx:id="cmbProductSku" promptText="Select Product SKU" styleClass="combo-box" maxWidth="Infinity">
+                                <items>
+                                    <!-- Items will be populated from database -->
+                                </items>
+                            </ComboBox>
+                        </VBox>
+
+                        <!-- Quantity -->
+                        <VBox spacing="8">
+                            <Label text="Quantity" styleClass="field-label"/>
+                            <TextField fx:id="txtQuantity" promptText="Enter quantity" styleClass="text-field"/>
+                        </VBox>
+
+                        <!-- Shipping Method -->
+                        <VBox spacing="8">
+                            <Label text="Shipping Method" styleClass="field-label"/>
+                            <ComboBox fx:id="cmbShippingMethod" promptText="Select Shipping Method" styleClass="combo-box" maxWidth="Infinity">
+                                <items>
+                                    <javafx.collections.FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="standard ground"/>
+                                        <String fx:value="express air"/>
+                                        <String fx:value="sea freight"/>
+                                    </javafx.collections.FXCollections>
+                                </items>
+                            </ComboBox>
+                        </VBox>
+
+                        <!-- Date -->
+                        <VBox spacing="8">
+                            <Label text="Date" styleClass="field-label"/>
+                            <DatePicker fx:id="dateTransaction" promptText="mm/dd/yyyy" styleClass="date-picker" maxWidth="Infinity"/>
+                        </VBox>
+
+                        <!-- Status -->
+                        <VBox spacing="8">
+                            <Label text="Status" styleClass="field-label"/>
+                            <ComboBox fx:id="cmbStatus" promptText="Select Status" styleClass="combo-box" maxWidth="Infinity">
+                                <items>
+                                    <javafx.collections.FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Committed"/>
+                                        <String fx:value="Pending"/>
+                                        <String fx:value="Voided"/>
+                                    </javafx.collections.FXCollections>
+                                </items>
+                            </ComboBox>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Action Buttons -->
+                    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="button-group">
+                        <Button text="+ Create Transaction" styleClass="create-btn" fx:id="btnCreate" onAction="#createTransaction"/>
+                        <Button text="Cancel" styleClass="cancel-btn" fx:id="btnCancel" onAction="#cancelTransaction"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Status Guide -->
+                <VBox styleClass="status-guide">
+                    <HBox spacing="8" alignment="CENTER_LEFT" styleClass="guide-header">
+                        <StackPane styleClass="guide-icon">
+                            <Text>ℹ️</Text>
+                        </StackPane>
+                        <Label text="Transaction Status Guide:" styleClass="guide-title"/>
+                    </HBox>
+
+                    <VBox spacing="6" styleClass="guide-items">
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <StackPane styleClass="status-dot, status-dot-green"/>
+                            <Label text="Committed - Transaction is confirmed and processed" styleClass="guide-text"/>
+                        </HBox>
+
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <StackPane styleClass="status-dot, status-dot-yellow"/>
+                            <Label text="Pending - Transaction is awaiting approval" styleClass="guide-text"/>
+                        </HBox>
+
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <StackPane styleClass="status-dot, status-dot-red"/>
+                            <Label text="Voided - Transaction has been cancelled" styleClass="guide-text"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

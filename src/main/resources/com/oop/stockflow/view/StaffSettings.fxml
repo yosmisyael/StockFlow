@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane styleClass="root" stylesheets="@../assets/staff-settting.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.StaffSettingsController">
+
+    <!-- Top Navigation Bar -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
+            <padding>
+                <Insets top="16" right="24" bottom="16" left="24" />
+            </padding>
+
+            <!-- Logo Section -->
+            <HBox alignment="CENTER_LEFT" spacing="12" HBox.hgrow="NEVER">
+                <StackPane styleClass="app-logo">
+                    <Label text="📦" styleClass="logo-icon">
+                        <font>
+                            <Font size="24" />
+                        </font>
+                    </Label>
+                </StackPane>
+                <Label text="StockFlow" styleClass="app-title">
+                    <font>
+                        <Font name="System Bold" size="18" />
+                    </font>
+                </Label>
+            </HBox>
+
+            <!-- Spacer -->
+            <Region HBox.hgrow="ALWAYS" />
+
+            <!-- User Profile -->
+            <HBox spacing="12" alignment="CENTER">
+                <Label fx:id="nameLabel" text="John Smith" styleClass="nav-username">
+                    <font>
+                        <Font size="14" />
+                    </font>
+                </Label>
+                <StackPane styleClass="nav-avatar">
+                    <Label text="JS" styleClass="nav-avatar-initials">
+                        <font>
+                            <Font name="System Bold" size="14" />
+                        </font>
+                    </Label>
+                </StackPane>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- Sidebar -->
+    <left>
+        <VBox styleClass="sidebar" minWidth="200" prefWidth="200" spacing="0">
+            <padding>
+                <Insets top="24" right="0" bottom="24" left="0" />
+            </padding>
+
+            <!-- User Profile Section -->
+            <VBox alignment="CENTER_LEFT" spacing="8" styleClass="sidebar-profile">
+                <padding>
+                    <Insets top="0" right="16" bottom="20" left="16" />
+                </padding>
+
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <StackPane styleClass="sidebar-avatar">
+                        <Label text="JS" styleClass="sidebar-avatar-initials">
+                            <font>
+                                <Font name="System Bold" size="16" />
+                            </font>
+                        </Label>
+                    </StackPane>
+
+                    <VBox spacing="2">
+                        <Label fx:id="sidebarNameLabel" text="John Smith" styleClass="sidebar-username">
+                            <font>
+                                <Font name="System Bold" size="14" />
+                            </font>
+                        </Label>
+                        <Label fx:id="sidebarRoleLabel" text="Staff" styleClass="sidebar-role">
+                            <font>
+                                <Font size="12" />
+                            </font>
+                        </Label>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Navigation Menu -->
+            <VBox spacing="4" styleClass="nav-menu">
+                <padding>
+                    <Insets top="8" right="12" bottom="12" left="12" />
+                </padding>
+
+                <!-- Transactions List -->
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="≡  Transactions List" onAction="#goToTransactionList">
+                    <padding>
+                        <Insets top="10" right="12" bottom="10" left="12" />
+                    </padding>
+                    <font>
+                        <Font size="13" />
+                    </font>
+                </Button>
+
+                <!-- Inbound Transactions -->
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="↓  Inbound Transactions" onAction="#goToInboundTransaction">
+                    <padding>
+                        <Insets top="10" right="12" bottom="10" left="12" />
+                    </padding>
+                    <font>
+                        <Font size="13" />
+                    </font>
+                </Button>
+
+                <!-- Outbound Transactions -->
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="↑  Outbound Transactions" onAction="#goToOutboundTransaction">
+                    <padding>
+                        <Insets top="10" right="12" bottom="10" left="12" />
+                    </padding>
+                    <font>
+                        <Font size="13" />
+                    </font>
+                </Button>
+
+                <!-- Settings - Active -->
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="⚙  Settings" onAction="#goToSettings">
+                    <padding>
+                        <Insets top="10" right="12" bottom="10" left="12" />
+                    </padding>
+                    <font>
+                        <Font size="13" />
+                    </font>
+                </Button>
+            </VBox>
+
+            <!-- Spacer -->
+            <Region VBox.vgrow="ALWAYS" />
+
+            <!-- Logout Button -->
+            <VBox styleClass="logout-section">
+                <padding>
+                    <Insets top="12" right="12" bottom="0" left="12" />
+                </padding>
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="logout-button" text="⎋  Logout" onAction="#handleLogout">
+                    <padding>
+                        <Insets top="10" right="12" bottom="10" left="12" />
+                    </padding>
+                    <font>
+                        <Font size="13" />
+                    </font>
+                </Button>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="content-scroll">
+            <VBox styleClass="main-content" spacing="24">
+                <padding>
+                    <Insets top="32" right="40" bottom="40" left="40" />
+                </padding>
+
+                <!-- Header Section -->
+                <VBox spacing="8">
+                    <Label text="Settings" styleClass="page-title">
+                        <font>
+                            <Font name="System Bold" size="28" />
+                        </font>
+                    </Label>
+                    <Label text="Update your account information and preferences" styleClass="page-subtitle">
+                        <font>
+                            <Font size="14" />
+                        </font>
+                    </Label>
+                </VBox>
+
+                <!-- Account Information Card -->
+                <VBox spacing="24" styleClass="settings-card">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24" />
+                    </padding>
+
+                    <Label text="Account Information" styleClass="section-title">
+                        <font>
+                            <Font name="System Bold" size="16" />
+                        </font>
+                    </Label>
+
+                    <!-- Form Fields -->
+                    <VBox spacing="20">
+                        <!-- Staff Name -->
+                        <VBox spacing="8">
+                            <Label text="Staff Name" styleClass="field-label">
+                                <font>
+                                    <Font name="System Bold" size="13" />
+                                </font>
+                            </Label>
+                            <TextField fx:id="staffNameField" text="John Smith" styleClass="form-input">
+                                <font>
+                                    <Font size="14" />
+                                </font>
+                            </TextField>
+                        </VBox>
+
+                        <!-- New Password -->
+                        <VBox spacing="8">
+                            <Label text="New Password" styleClass="field-label">
+                                <font>
+                                    <Font name="System Bold" size="13" />
+                                </font>
+                            </Label>
+                            <StackPane>
+                                <PasswordField fx:id="newPasswordField" promptText="Enter new password" styleClass="form-input">
+                                    <font>
+                                        <Font size="14" />
+                                    </font>
+                                </PasswordField>
+                                <HBox alignment="CENTER_RIGHT" pickOnBounds="false">
+                                    <padding>
+                                        <Insets right="12" />
+                                    </padding>
+                                    <Button styleClass="toggle-password-button" onAction="#togglePasswordVisibility">
+                                        <graphic>
+                                            <Label text="👁" styleClass="eye-icon">
+                                                <font>
+                                                    <Font size="16" />
+                                                </font>
+                                            </Label>
+                                        </graphic>
+                                    </Button>
+                                </HBox>
+                            </StackPane>
+                        </VBox>
+
+                        <!-- Confirm Password -->
+                        <VBox spacing="8">
+                            <Label text="Confirm Password" styleClass="field-label">
+                                <font>
+                                    <Font name="System Bold" size="13" />
+                                </font>
+                            </Label>
+                            <PasswordField fx:id="confirmPasswordField" promptText="Confirm your password" styleClass="form-input">
+                                <font>
+                                    <Font size="14" />
+                                </font>
+                            </PasswordField>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Action Buttons -->
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <padding>
+                            <Insets top="8" />
+                        </padding>
+
+                        <Button text="Cancel" styleClass="cancel-button" onAction="#handleCancel">
+                            <font>
+                                <Font size="14" />
+                            </font>
+                            <padding>
+                                <Insets top="10" right="24" bottom="10" left="24" />
+                            </padding>
+                        </Button>
+
+                        <Button text="Save Changes" styleClass="save-button" onAction="#handleSaveChanges">
+                            <font>
+                                <Font name="System Bold" size="14" />
+                            </font>
+                            <padding>
+                                <Insets top="10" right="24" bottom="10" left="24" />
+                            </padding>
+                        </Button>
+                    </HBox>
+                </VBox>
+
+                <!-- Additional Settings Card -->
+                <VBox spacing="20" styleClass="settings-card">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24" />
+                    </padding>
+
+                    <Label text="Additional Settings" styleClass="section-title">
+                        <font>
+                            <Font name="System Bold" size="16" />
+                        </font>
+                    </Label>
+
+                    <!-- Email Notifications Toggle -->
+                    <HBox alignment="CENTER_LEFT" spacing="16" styleClass="toggle-row">
+                        <padding>
+                            <Insets top="12" right="0" bottom="12" left="0" />
+                        </padding>
+
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Email Notifications" styleClass="toggle-title">
+                                <font>
+                                    <Font name="System Bold" size="14" />
+                                </font>
+                            </Label>
+                            <Label text="Receive notifications about transactions" styleClass="toggle-description">
+                                <font>
+                                    <Font size="12" />
+                                </font>
+                            </Label>
+                        </VBox>
+
+                        <!-- Custom Toggle Switch -->
+                        <ToggleButton fx:id="emailNotificationsToggle" selected="true" styleClass="toggle-switch" onAction="#handleEmailNotificationsToggle">
+                            <tooltip>
+                                <Tooltip text="Toggle email notifications" />
+                            </tooltip>
+                        </ToggleButton>
+                    </HBox>
+
+                    <!-- Separator -->
+                    <Separator styleClass="settings-separator" />
+
+                    <!-- Two-Factor Authentication Toggle -->
+                    <HBox alignment="CENTER_LEFT" spacing="16" styleClass="toggle-row">
+                        <padding>
+                            <Insets top="12" right="0" bottom="12" left="0" />
+                        </padding>
+
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Two-Factor Authentication" styleClass="toggle-title">
+                                <font>
+                                    <Font name="System Bold" size="14" />
+                                </font>
+                            </Label>
+                            <Label text="Add an extra layer of security" styleClass="toggle-description">
+                                <font>
+                                    <Font size="12" />
+                                </font>
+                            </Label>
+                        </VBox>
+
+                        <!-- Custom Toggle Switch -->
+                        <ToggleButton fx:id="twoFactorToggle" selected="false" styleClass="toggle-switch" onAction="#handleTwoFactorToggle">
+                            <tooltip>
+                                <Tooltip text="Toggle two-factor authentication" />
+                            </tooltip>
+                        </ToggleButton>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

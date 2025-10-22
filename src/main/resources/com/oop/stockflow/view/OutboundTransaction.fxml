@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import java.lang.String?>
+<BorderPane styleClass="root" stylesheets="@../assets/outbound-transaction.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.OutboundTransactionController">
+
+    <!-- Sidebar -->
+    <left>
+        <VBox styleClass="sidebar" minWidth="250" prefWidth="250" spacing="0">
+            <padding>
+                <Insets top="24" right="0" bottom="24" left="0" />
+            </padding>
+
+            <!-- User Profile -->
+            <VBox alignment="CENTER" spacing="12" styleClass="user-profile-section">
+                <padding>
+                    <Insets top="0" right="20" bottom="24" left="20" />
+                </padding>
+
+                <!-- Avatar Circle -->
+                <StackPane styleClass="avatar-circle">
+                    <Label text="JS" styleClass="avatar-initials">
+                        <font>
+                            <Font name="System Bold" size="20" />
+                        </font>
+                    </Label>
+                </StackPane>
+
+                <!-- User Info -->
+                <VBox alignment="CENTER" spacing="4">
+                    <Label fx:id="nameLabel" text="John Smith" styleClass="user-name">
+                        <font>
+                            <Font name="System Bold" size="16" />
+                        </font>
+                    </Label>
+                    <Label text="Staff" styleClass="user-role">
+                        <font>
+                            <Font size="13" />
+                        </font>
+                    </Label>
+                </VBox>
+            </VBox>
+
+            <!-- Navigation Menu -->
+            <VBox spacing="4" styleClass="nav-menu">
+                <padding>
+                    <Insets top="12" right="16" bottom="12" left="16" />
+                </padding>
+
+                <!-- Transactions List -->
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="≡  Transactions List" onAction="#goToTransactionIndex">
+                    <graphic>
+                        <Region styleClass="nav-icon" />
+                    </graphic>
+                    <padding>
+                        <Insets top="12" right="16" bottom="12" left="16" />
+                    </padding>
+                    <font>
+                        <Font size="14" />
+                    </font>
+                </Button>
+
+                <!-- Inbound Transactions -->
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="↓  Inbound Transactions" onAction="#goToInboundTransaction">
+                    <padding>
+                        <Insets top="12" right="16" bottom="12" left="16" />
+                    </padding>
+                    <font>
+                        <Font size="14" />
+                    </font>
+                </Button>
+
+                <!-- Outbound Transactions - Active -->
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="↑  Outbound Transactions" onAction="#goToOutboundTransaction">
+                    <padding>
+                        <Insets top="12" right="16" bottom="12" left="16" />
+                    </padding>
+                    <font>
+                        <Font size="14" />
+                    </font>
+                </Button>
+
+                <!-- Settings -->
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="⚙  Settings" onAction="#goToSettings">
+                    <padding>
+                        <Insets top="12" right="16" bottom="12" left="16" />
+                    </padding>
+                    <font>
+                        <Font size="14" />
+                    </font>
+                </Button>
+            </VBox>
+
+            <!-- Spacer -->
+            <Region VBox.vgrow="ALWAYS" />
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="content-scroll">
+            <VBox styleClass="main-content" spacing="32">
+                <padding>
+                    <Insets top="40" right="48" bottom="40" left="48" />
+                </padding>
+
+                <!-- Header Section -->
+                <VBox spacing="8">
+                    <Label text="Create Outbound Transaction" styleClass="page-title">
+                        <font>
+                            <Font name="System Bold" size="32" />
+                        </font>
+                    </Label>
+                    <Label text="Add a new outbound transaction record to the system" styleClass="page-subtitle">
+                        <font>
+                            <Font size="15" />
+                        </font>
+                    </Label>
+                </VBox>
+
+                <!-- Form Container -->
+                <VBox spacing="24" styleClass="form-container">
+                    <padding>
+                        <Insets top="32" right="32" bottom="32" left="32" />
+                    </padding>
+
+                    <!-- Form Grid -->
+                    <GridPane hgap="24" vgap="24">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50" />
+                            <ColumnConstraints percentWidth="50" />
+                        </columnConstraints>
+
+                        <!-- Product SKU -->
+                        <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <Label text="Product SKU" styleClass="field-label">
+                                <font>
+                                    <Font name="System Bold" size="13" />
+                                </font>
+                            </Label>
+                            <ComboBox fx:id="productSKUCombo" promptText="Select Product SKU" styleClass="form-combo" maxWidth="Infinity">
+                                <items>
+                                    <javafx.collections.FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="PROD-001" />
+                                        <String fx:value="PROD-002" />
+                                        <String fx:value="PROD-003" />
+                                    </javafx.collections.FXCollections>
+                                </items>
+                            </ComboBox>
+                        </VBox>
+
+                        <!-- Quantity -->
+                        <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <Label text="Quantity" styleClass="field-label">
+                                <font>
+                                    <Font name="System Bold" size="13" />
+                                </font>
+                            </Label>
+                            <TextField fx:id="quantityField" promptText="Enter quantity" styleClass="form-input">
+                                <font>
+                                    <Font size="14" />
+                                </font>
+                            </TextField>
+                        </VBox>
+
+                        <!-- Shipping Method -->
+                        <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                            <Label text="Shipping Method" styleClass="field-label">
+                                <font>
+                                    <Font name="System Bold" size="13" />
+                                </font>
+                            </Label>
+                            <ComboBox fx:id="shippingMethodCombo" promptText="Select Shipping Method" styleClass="form-combo" maxWidth="Infinity">
+                                <items>
+                                    <javafx.collections.FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="standard ground" />
+                                        <String fx:value="express air" />
+                                        <String fx:value="sea freight" />
+                                    </javafx.collections.FXCollections>
+                                </items>
+                            </ComboBox>
+                        </VBox>
+
+                        <!-- Date -->
+                        <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <Label text="Date" styleClass="field-label">
+                                <font>
+                                    <Font name="System Bold" size="13" />
+                                </font>
+                            </Label>
+                            <DatePicker fx:id="transactionDatePicker" promptText="mm/dd/yyyy" styleClass="form-datepicker" maxWidth="Infinity" showWeekNumbers="false">
+                            </DatePicker>
+                        </VBox>
+
+                        <!-- Status -->
+                        <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                            <Label text="Status" styleClass="field-label">
+                                <font>
+                                    <Font name="System Bold" size="13" />
+                                </font>
+                            </Label>
+                            <ComboBox fx:id="statusCombo" promptText="Select Status" styleClass="form-combo" maxWidth="Infinity">
+                                <items>
+                                    <javafx.collections.FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Pending" />
+                                        <String fx:value="Processing" />
+                                        <String fx:value="Completed" />
+                                        <String fx:value="Cancelled" />
+                                    </javafx.collections.FXCollections>
+                                </items>
+                            </ComboBox>
+                        </VBox>
+
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+
+                    <!-- Destination Address - Full Width -->
+                    <VBox spacing="8">
+                        <Label text="Destination Address" styleClass="field-label">
+                            <font>
+                                <Font name="System Bold" size="13" />
+                            </font>
+                        </Label>
+                        <TextArea fx:id="destinationAddressArea" promptText="Enter complete destination address" styleClass="form-textarea" prefRowCount="4" wrapText="true">
+                            <font>
+                                <Font size="14" />
+                            </font>
+                        </TextArea>
+                    </VBox>
+
+                    <!-- Action Buttons -->
+                    <HBox spacing="12" alignment="CENTER_RIGHT">
+                        <padding>
+                            <Insets top="8" />
+                        </padding>
+
+                        <Button text="Cancel" styleClass="cancel-button" onAction="#handleCancel">
+                            <font>
+                                <Font name="System Bold" size="14" />
+                            </font>
+                            <padding>
+                                <Insets top="12" right="32" bottom="12" left="32" />
+                            </padding>
+                        </Button>
+
+                        <Button text="Create Transaction" styleClass="submit-button" onAction="#handleCreateTransaction">
+                            <font>
+                                <Font name="System Bold" size="14" />
+                            </font>
+                            <padding>
+                                <Insets top="12" right="32" bottom="12" left="32" />
+                            </padding>
+                        </Button>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

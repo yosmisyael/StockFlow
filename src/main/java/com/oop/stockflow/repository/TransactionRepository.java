@@ -19,9 +19,7 @@ public class TransactionRepository {
     }
 
     public boolean createInboundTransaction(int staffId, Timestamp date, ShippingType shippingMethod,
-                                            String productSku, int quantity, TransactionStatus initialStatus) {
-        // Kolom di SQL: user_id, date, transaction_type, shipping_method, product_sku, quantity, status
-        // destination_address di-set NULL secara eksplisit
+                                            int productSku, int quantity, TransactionStatus initialStatus) {
         String sql = "INSERT INTO transactions (user_id, date, transaction_type, destination_address, shipping_method, product_sku, quantity, status) " +
                 "VALUES (?, ?, 'inbound'::transaction_type, NULL, ?::shipping_method, ?, ?, ?::transaction_status)";
 
@@ -30,12 +28,10 @@ public class TransactionRepository {
 
             stmt.setInt(1, staffId);
             stmt.setTimestamp(2, date);
-            // Parameter 3 (transaction_type) sudah di SQL ('inbound')
-            // Parameter 4 (destination_address) sudah di SQL (NULL)
-            stmt.setString(3, shippingMethod.getDbValue()); // Indeks parameter sekarang 3
-            stmt.setString(4, productSku);                // Indeks parameter sekarang 4
-            stmt.setInt(5, quantity);                     // Indeks parameter sekarang 5
-            stmt.setString(6, initialStatus.getDbValue());  // Indeks parameter sekarang 6
+            stmt.setString(3, shippingMethod.getDbValue());
+            stmt.setInt(4, productSku);
+            stmt.setInt(5, quantity);
+            stmt.setString(6, initialStatus.getDbValue());
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {

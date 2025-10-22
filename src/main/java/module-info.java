@@ -9,6 +9,8 @@ module com.oop.stockflow {
     requires java.dotenv;
     requires com.zaxxer.hikari;
     requires java.desktop;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.ikonli.fontawesome5;
 
     opens com.oop.stockflow to javafx.fxml;
     exports com.oop.stockflow;

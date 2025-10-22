@@ -1,0 +1,420 @@
+/* outbound-transaction.css - Outbound Transaction Form Styles */
+
+/* Root and Base */
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 1 0 0;
+}
+
+/* User Profile Section */
+.user-profile-section {
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 0 1 0;
+}
+
+.avatar-circle {
+    -fx-background-color: #3b82f6;
+    -fx-background-radius: 50;
+    -fx-pref-width: 64;
+    -fx-pref-height: 64;
+    -fx-min-width: 64;
+    -fx-min-height: 64;
+    -fx-max-width: 64;
+    -fx-max-height: 64;
+}
+
+.avatar-initials {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.user-name {
+    -fx-text-fill: #1f2937;
+}
+
+.user-role {
+    -fx-text-fill: #6b7280;
+}
+
+/* Navigation Menu */
+.nav-menu {
+    -fx-background-color: transparent;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #4b5563;
+    -fx-border-color: transparent;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-size: 14;
+}
+
+.nav-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.nav-button-active {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+    -fx-font-weight: bold;
+}
+
+.nav-button-active:hover {
+    -fx-background-color: #bfdbfe;
+}
+
+/* Main Content */
+.content-scroll {
+    -fx-background-color: transparent;
+}
+
+.content-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.main-content {
+    -fx-background-color: transparent;
+}
+
+/* Page Headers */
+.page-title {
+    -fx-text-fill: #111827;
+    -fx-font-weight: bold;
+}
+
+.page-subtitle {
+    -fx-text-fill: #6b7280;
+}
+
+/* Form Container */
+.form-container {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 2);
+}
+
+/* Field Labels */
+.field-label {
+    -fx-text-fill: #374151;
+    -fx-font-weight: bold;
+}
+
+/* Form Inputs */
+.form-input {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 12 16;
+    -fx-font-size: 14;
+    -fx-text-fill: #374151;
+    -fx-prompt-text-fill: #9ca3af;
+}
+
+.form-input:focused {
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 2;
+    -fx-background-color: white;
+}
+
+.form-input:hover {
+    -fx-border-color: #9ca3af;
+}
+
+/* Text Field */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 12 16;
+    -fx-font-size: 14;
+    -fx-text-fill: #374151;
+    -fx-prompt-text-fill: #9ca3af;
+}
+
+.text-field:focused {
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 2;
+    -fx-background-color: white;
+}
+
+.text-field:hover {
+    -fx-border-color: #9ca3af;
+}
+
+/* TextArea */
+.form-textarea {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 12 16;
+    -fx-font-size: 14;
+    -fx-text-fill: #374151;
+    -fx-prompt-text-fill: #9ca3af;
+}
+
+.form-textarea:focused {
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 2;
+}
+
+.form-textarea:hover {
+    -fx-border-color: #9ca3af;
+}
+
+.form-textarea .content {
+    -fx-background-color: white;
+}
+
+.form-textarea .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.form-textarea .scroll-pane .viewport {
+    -fx-background-color: white;
+}
+
+/* ComboBox Base Styling */
+.form-combo {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.form-combo:hover {
+    -fx-border-color: #9ca3af;
+}
+
+.form-combo:focused {
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 2;
+}
+
+.form-combo .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #374151;
+    -fx-padding: 12 16;
+    -fx-font-size: 14;
+}
+
+.form-combo .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 8 0 0;
+}
+
+.form-combo .arrow {
+    -fx-background-color: #6b7280;
+    -fx-shape: "M 0 0 L 4 5 L 8 0 Z";
+    -fx-scale-shape: true;
+    -fx-padding: 4;
+}
+
+/* ComboBox Popup */
+.combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 15, 0, 0, 5);
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #374151;
+    -fx-padding: 10 16;
+    -fx-font-size: 14;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+}
+
+/* DatePicker Styling */
+.form-datepicker {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.form-datepicker:hover {
+    -fx-border-color: #9ca3af;
+}
+
+.form-datepicker:focused {
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 2;
+}
+
+.form-datepicker .text-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 12 16;
+    -fx-prompt-text-fill: #9ca3af;
+}
+
+.form-datepicker .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 12 0 0;
+}
+
+.form-datepicker .arrow-button .arrow {
+    -fx-background-color: #6b7280;
+}
+
+/* DatePicker Popup */
+.date-picker-popup {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 15, 0, 0, 5);
+}
+
+.date-picker-popup .month-year-pane {
+    -fx-background-color: white;
+}
+
+.date-picker-popup .week-number-cell {
+    -fx-background-color: #f9fafb;
+}
+
+.date-picker-popup .day-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #374151;
+}
+
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+.date-picker-popup .selected {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+}
+
+.date-picker-popup .today {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+}
+
+/* Action Buttons */
+.cancel-button {
+    -fx-background-color: white;
+    -fx-text-fill: #374151;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #f9fafb;
+    -fx-border-color: #9ca3af;
+}
+
+.cancel-button:pressed {
+    -fx-background-color: #f3f4f6;
+}
+
+.submit-button {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.submit-button:hover {
+    -fx-background-color: #2563eb;
+}
+
+.submit-button:pressed {
+    -fx-background-color: #1d4ed8;
+}
+
+/* Scrollbar Styling */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-height: 8;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #d1d5db;
+    -fx-background-radius: 4;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #9ca3af;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* TextArea Scrollbar */
+.form-textarea .scroll-bar:vertical {
+    -fx-pref-width: 6;
+}
+
+.form-textarea .scroll-bar .thumb {
+    -fx-background-color: #d1d5db;
+    -fx-background-radius: 3;
+}
+
+/* Focus Ring Removal */
+.form-input:focused,
+.form-combo:focused,
+.form-datepicker:focused,
+.form-textarea:focused,
+.text-field:focused {
+    -fx-background-insets: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* Button Focus */
+.button:focused {
+    -fx-background-insets: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}

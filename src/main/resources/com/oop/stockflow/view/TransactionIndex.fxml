@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.Circle?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.oop.stockflow.controller.TransactionIndexController"
+            style="-fx-background-color: #f8f9fa;">
+
+    <!-- Left Sidebar -->
+    <left>
+        <VBox style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 1 0 0;"
+              prefWidth="240" spacing="0">
+            <padding>
+                <Insets top="20" right="0" bottom="20" left="0"/>
+            </padding>
+
+            <!-- App Logo and Title -->
+            <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 0 20;">
+                <StackPane prefWidth="44" prefHeight="44" style="-fx-background-color: #2563eb; -fx-background-radius: 10;">
+                    <FontIcon iconLiteral="fas-warehouse" iconSize="22" iconColor="white"/>
+                </StackPane>
+                <VBox spacing="0">
+                    <Label text="StackFlow" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+                </VBox>
+            </HBox>
+
+            <Region prefHeight="30"/>
+
+            <!-- User Info -->
+            <VBox spacing="8" style="-fx-padding: 0 20;">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <StackPane prefWidth="40" prefHeight="40" style="-fx-background-color: #2563eb; -fx-background-radius: 20;">
+                        <Label text="JS" style="-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    </StackPane>
+                    <VBox spacing="2">
+                        <Label fx:id="nameLabel" text="John Smith" style="-fx-font-size: 14px; -fx-font-weight: 600; -fx-text-fill: #111827;"/>
+                        <Label fx:id="roleLabel" text="Staff" style="-fx-font-size: 11px; -fx-text-fill: #6b7280; -fx-background-color: #f3f4f6; -fx-padding: 2 10; -fx-background-radius: 12;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <Region prefHeight="30"/>
+
+            <!-- Navigation Menu -->
+            <VBox spacing="4" VBox.vgrow="ALWAYS">
+                <Button fx:id="transactionsListBtn" text="Transactions List" graphicTextGap="12" alignment="CENTER_LEFT"
+                        style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: 600; -fx-padding: 12 20; -fx-cursor: hand; -fx-background-radius: 8;"
+                        onAction="#handleTransactionsList">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-list-alt" iconSize="16" iconColor="white"/>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets left="16" right="16"/>
+                    </VBox.margin>
+                </Button>
+
+                <Button text="Inbound Transactions" graphicTextGap="12" alignment="CENTER_LEFT"
+                        style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-size: 14px; -fx-padding: 12 20; -fx-cursor: hand; -fx-background-radius: 0;"
+                        onAction="#goToInboundTransaction">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-arrow-down" iconSize="16" iconColor="#6b7280"/>
+                    </graphic>
+                </Button>
+
+                <Button text="Outbound Transactions" graphicTextGap="12" alignment="CENTER_LEFT"
+                        style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-size: 14px; -fx-padding: 12 20; -fx-cursor: hand; -fx-background-radius: 0;"
+                        onAction="#goToOutboundTransaction">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-arrow-up" iconSize="16" iconColor="#6b7280"/>
+                    </graphic>
+                </Button>
+
+                <Button text="Settings" graphicTextGap="12" alignment="CENTER_LEFT"
+                        style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-font-size: 14px; -fx-padding: 12 20; -fx-cursor: hand; -fx-background-radius: 0;"
+                        onAction="#goToSettings">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-cog" iconSize="16" iconColor="#6b7280"/>
+                    </graphic>
+                </Button>
+
+                <Region VBox.vgrow="ALWAYS"/>
+            </VBox>
+
+            <!-- Logout Button -->
+            <Button text="Logout" graphicTextGap="12" alignment="CENTER_LEFT"
+                    style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-font-size: 14px; -fx-padding: 12 20; -fx-cursor: hand; -fx-background-radius: 0;"
+                    onAction="#handleLogout">
+                <graphic>
+                    <FontIcon iconLiteral="fas-sign-out-alt" iconSize="16" iconColor="#ef4444"/>
+                </graphic>
+            </Button>
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <VBox spacing="0" style="-fx-background-color: #f8f9fa;">
+            <!-- Top Header Bar -->
+            <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-padding: 16 30; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 1 0;">
+                <VBox spacing="4">
+                    <Label text="Transactions Overview" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+                    <Label text="Manage and monitor all warehouse transactions" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <!-- User Profile Badge -->
+                <HBox spacing="12" alignment="CENTER_RIGHT">
+                    <Label text="John Smith" style="-fx-font-size: 14px; -fx-text-fill: #374151; -fx-font-weight: 500;"/>
+                    <StackPane prefWidth="36" prefHeight="36" style="-fx-background-color: #2563eb; -fx-background-radius: 18; -fx-cursor: hand;">
+                        <Label text="JS" style="-fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                    </StackPane>
+                </HBox>
+            </HBox>
+
+            <!-- Dashboard Content -->
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                <VBox spacing="24" style="-fx-background-color: #f8f9fa;">
+                    <padding>
+                        <Insets top="30" right="30" bottom="30" left="30"/>
+                    </padding>
+
+                    <!-- Stats Cards -->
+                    <GridPane hgap="20" vgap="20">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="25"/>
+                            <ColumnConstraints percentWidth="25"/>
+                            <ColumnConstraints percentWidth="25"/>
+                            <ColumnConstraints percentWidth="25"/>
+                        </columnConstraints>
+
+                        <!-- Pending Transactions Card -->
+                        <VBox spacing="16" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-width: 1; -fx-border-radius: 12; -fx-padding: 24;"
+                              GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <Label text="Pending Transactions" style="-fx-font-size: 13px; -fx-text-fill: #6b7280; -fx-font-weight: 500;"/>
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <Label fx:id="pendingLabel" text="24" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <StackPane prefWidth="40" prefHeight="40" style="-fx-background-color: #fef3c7; -fx-background-radius: 10;">
+                                    <FontIcon iconLiteral="fas-clock" iconSize="20" iconColor="#f59e0b"/>
+                                </StackPane>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Committed Transactions Card -->
+                        <VBox spacing="16" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-width: 1; -fx-border-radius: 12; -fx-padding: 24;"
+                              GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <Label text="Committed Transactions" style="-fx-font-size: 13px; -fx-text-fill: #6b7280; -fx-font-weight: 500;"/>
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <Label fx:id="committedLabel" text="142" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #10b981;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <StackPane prefWidth="40" prefHeight="40" style="-fx-background-color: #d1fae5; -fx-background-radius: 10;">
+                                    <FontIcon iconLiteral="fas-check-circle" iconSize="20" iconColor="#10b981"/>
+                                </StackPane>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Inbound Transactions Card -->
+                        <VBox spacing="16" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-width: 1; -fx-border-radius: 12; -fx-padding: 24;"
+                              GridPane.columnIndex="2" GridPane.rowIndex="0">
+                            <Label text="Inbound Transactions" style="-fx-font-size: 13px; -fx-text-fill: #6b7280; -fx-font-weight: 500;"/>
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <Label fx:id="inboundLabel" text="89" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #3b82f6;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <StackPane prefWidth="40" prefHeight="40" style="-fx-background-color: #dbeafe; -fx-background-radius: 10;">
+                                    <FontIcon iconLiteral="fas-arrow-down" iconSize="20" iconColor="#3b82f6"/>
+                                </StackPane>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Outbound Transactions Card -->
+                        <VBox spacing="16" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-width: 1; -fx-border-radius: 12; -fx-padding: 24;"
+                              GridPane.columnIndex="3" GridPane.rowIndex="0">
+                            <Label text="Outbound Transactions" style="-fx-font-size: 13px; -fx-text-fill: #6b7280; -fx-font-weight: 500;"/>
+                            <HBox alignment="CENTER_LEFT" spacing="12">
+                                <Label fx:id="outboundLabel" text="77" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #8b5cf6;"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <StackPane prefWidth="40" prefHeight="40" style="-fx-background-color: #ede9fe; -fx-background-radius: 10;">
+                                    <FontIcon iconLiteral="fas-arrow-up" iconSize="20" iconColor="#8b5cf6"/>
+                                </StackPane>
+                            </HBox>
+                        </VBox>
+                    </GridPane>
+
+                    <!-- Recent Transactions Table -->
+                    <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #e5e7eb; -fx-border-width: 1; -fx-border-radius: 12; -fx-padding: 24;">
+                        <Label text="Recent Transactions" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+
+                        <!-- Table -->
+                        <TableView fx:id="transactionsTable" style="-fx-background-color: white; -fx-border-color: transparent;">
+                            <columns>
+                                <TableColumn fx:id="skuColumn" text="SKU" prefWidth="100" style="-fx-alignment: CENTER_LEFT;"/>
+                                <TableColumn fx:id="productNameColumn" text="Product Name" prefWidth="200" style="-fx-alignment: CENTER_LEFT;"/>
+                                <TableColumn fx:id="brandColumn" text="Brand" prefWidth="150" style="-fx-alignment: CENTER_LEFT;"/>
+                                <TableColumn fx:id="dateColumn" text="Date" prefWidth="120" style="-fx-alignment: CENTER_LEFT;"/>
+                                <TableColumn fx:id="statusColumn" text="Status" prefWidth="120" style="-fx-alignment: CENTER;"/>
+                                <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="180" style="-fx-alignment: CENTER;"/>
+                            </columns>
+
+                            <placeholder>
+                                <VBox alignment="CENTER" spacing="10" style="-fx-padding: 40;">
+                                    <FontIcon iconLiteral="fas-inbox" iconSize="48" iconColor="#d1d5db"/>
+                                    <Label text="No transactions found" style="-fx-font-size: 14px; -fx-text-fill: #9ca3af;"/>
+                                </VBox>
+                            </placeholder>
+                        </TableView>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>

@@ -144,7 +144,7 @@
                 </Button>
 
                 <!-- Stock Management -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📦  Stock Management">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"  text="📦  Stock Management">
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12" />
                     </padding>
@@ -607,7 +607,7 @@
                             </columnConstraints>
 
                             <!-- Request Delivery -->
-                            <VBox alignment="CENTER" spacing="12" styleClass="action-card, action-card-blue" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <VBox alignment="CENTER" spacing="12" styleClass="action-card, action-card-blue" GridPane.columnIndex="0" GridPane.rowIndex="0" >
                                 <padding>
                                     <Insets bottom="20" left="20" right="20" top="20" />
                                 </padding>
@@ -658,7 +658,7 @@
                             </VBox>
 
                             <!-- Manage Staff -->
-                            <VBox alignment="CENTER" spacing="12" styleClass="action-card, action-card-purple" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <VBox alignment="CENTER" onMouseClicked="#goToStaffMenu" spacing="12" styleClass="action-card, action-card-purple" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                 <padding>
                                     <Insets bottom="20" left="20" right="20" top="20" />
                                 </padding>

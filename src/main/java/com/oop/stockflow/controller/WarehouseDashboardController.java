@@ -2,7 +2,7 @@ package com.oop.stockflow.controller;
 
 import com.oop.stockflow.app.SessionManager;
 import com.oop.stockflow.app.StageManager;
-import com.oop.stockflow.app.View;
+import com.oop.stockflow.app.View; // Pastikan View.STOCK_MANAGEMENT sudah ada di sini
 import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.Warehouse;
 import javafx.fxml.FXML;
@@ -16,22 +16,32 @@ import java.util.ResourceBundle;
 
 public class WarehouseDashboardController implements Initializable {
     // Sidebar User Profile
-    @FXML private Label userNameLabel;
-    @FXML private Label userRole;
+    @FXML
+    private Label userNameLabel;
+    @FXML
+    private Label userRole;
 
     // Main Content Header
-    @FXML private Label warehouseName;
-    @FXML private Label warehouseAddress;
+    @FXML
+    private Label warehouseName;
+    @FXML
+    private Label warehouseAddress;
 
     // Stats Cards
-    @FXML private Label totalStockLabel;
-    @FXML private Label outboundTodayLabel;
-    @FXML private Label lowStockLabel;
-    @FXML private Label expiringSoonLabel;
+    @FXML
+    private Label totalStockLabel;
+    @FXML
+    private Label outboundTodayLabel;
+    @FXML
+    private Label lowStockLabel;
+    @FXML
+    private Label expiringSoonLabel;
 
     // Charts & Notifications
-    @FXML private LineChart<?, ?> outboundChart;
-    @FXML private VBox notificationsContainer;
+    @FXML
+    private LineChart<?, ?> outboundChart;
+    @FXML
+    private VBox notificationsContainer;
 
     private Warehouse warehouse;
 
@@ -64,9 +74,11 @@ public class WarehouseDashboardController implements Initializable {
     @FXML
     private void goToStaffMenu() {
         StageManager.getInstance().navigateWithData(
-            View.STAFF_INDEX,
-            "Warehouse " + warehouse.getId() + " Staff Management",
-            (StaffIndexController controller) -> { controller.initData(warehouse); }
+                View.STAFF_INDEX,
+                "Warehouse " + warehouse.getId() + " Staff Management",
+                (StaffIndexController controller) -> {
+                    controller.initData(warehouse);
+                }
         );
     }
 }
