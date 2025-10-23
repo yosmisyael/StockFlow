@@ -130,10 +130,10 @@ public class StaffIndexController {
         String formattedId = String.format("STF%03d", staff.getId());
         Label idLabel = new Label("ID: " + formattedId);
         idLabel.getStyleClass().add("staff-detail");
-        idLabel.setFont(Font.font(13));
+        idLabel.setFont(Font.font(15));
         Label emailLabel = new Label("Email: " + staff.getEmail());
         emailLabel.getStyleClass().add("staff-detail");
-        emailLabel.setFont(Font.font(13));
+        emailLabel.setFont(Font.font(15));
         HBox detailBox = new HBox(16, idLabel, emailLabel);
         VBox infoBox = new VBox(4, nameLabel, detailBox);
         HBox.setHgrow(infoBox, Priority.ALWAYS);

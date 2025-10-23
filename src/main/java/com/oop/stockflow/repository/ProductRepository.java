@@ -15,6 +15,15 @@ public class ProductRepository {
     private static ProductRepository instance;
     private ProductRepository() {}
 
+    /**
+     * Returns the singleton instance of the ProductRepository.
+     * Uses lazy initialization (creates instance on first call).
+     * Consider changing to eager initialization for thread safety if needed:
+     * private static final ProductRepository instance = new ProductRepository();
+     * public static ProductRepository getInstance() { return instance; }
+     *
+     * @return The singleton ProductRepository instance.
+     */
     public static ProductRepository getInstance() {
         if (instance == null) {
             instance = new ProductRepository();
@@ -117,6 +126,12 @@ public class ProductRepository {
         return products;
     }
 
+    /**
+     * Retrieves all products belonging to a specific warehouse from the database, ordered by name.
+     *
+     * @param warehouseId The ID of the warehouse whose products to retrieve.
+     * @return A List of Product objects (instantiated as DryGoodProduct or FreshProduct), or an empty list if none found or an error occurs.
+     */
     public int countProductsByWarehouseId(int warehouseId) {
         String sql = "SELECT COUNT(*) FROM products WHERE warehouse_id = ?";
         try (Connection conn = DatabaseManager.getConnection();
@@ -137,8 +152,6 @@ public class ProductRepository {
 
     /**
      * Counts the number of products considered "low stock" in a specific warehouse.
-     * Currently, only checks the condition for 'dry good' products (quantity < reorder_point).
-     * The condition for 'fresh' products cannot be implemented as stated without an expiry_date column.
      *
      * @param warehouseId The ID of the warehouse.
      * @return The count of low stock products, or -1 if an error occurs.
@@ -147,6 +160,62 @@ public class ProductRepository {
         String sql = "SELECT COUNT(*) FROM products " +
                 "WHERE warehouse_id = ? " +
                 "AND (product_type = 'dry good'::product_type AND quantity < reorder_point)";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, warehouseId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERROR] " + e.getMessage());
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     * Counts the number of products considered "in stock" in a specific warehouse.
+     *
+     * @param warehouseId The ID of the warehouse.
+     * @return The count of low stock products, or -1 if an error occurs.
+     */
+    public int countInStock(int warehouseId) {
+        String sql = "SELECT COUNT(*) FROM products " +
+                "WHERE warehouse_id = ? " +
+                "AND (product_type = 'dry good'::product_type AND quantity >= reorder_point)";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, warehouseId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERROR] " + e.getMessage());
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     * Counts the number of products considered "out stock" in a specific warehouse.
+     *
+     * @param warehouseId The ID of the warehouse.
+     * @return The count of low stock products, or -1 if an error occurs.
+     */
+    public int countOutStock(int warehouseId) {
+        String sql = "SELECT COUNT(*) FROM products " +
+                "WHERE warehouse_id = ? " +
+                "AND (product_type = 'dry good'::product_type AND quantity = 0)";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -294,6 +363,12 @@ public class ProductRepository {
         }
     }
 
+    /**
+     * Retrieves only the name of a product based on its SKU.
+     *
+     * @param sku The integer SKU of the product.
+     * @return The product name as a String if found, otherwise null.
+     */
     public String getProductNameBySku(int sku) {
         String sql = "SELECT name FROM products WHERE sku = ?";
         try (Connection conn = DatabaseManager.getConnection();
@@ -310,6 +385,12 @@ public class ProductRepository {
         return null;
     }
 
+    /**
+     * Retrieves only the brand of a product based on its SKU.
+     *
+     * @param sku The integer SKU of the product.
+     * @return The product brand as a String if found or defined, otherwise null.
+     */
     public String getProductBrandBySku(int sku) {
         String sql = "SELECT brand FROM products WHERE sku = ?";
         try (Connection conn = DatabaseManager.getConnection();
@@ -326,6 +407,14 @@ public class ProductRepository {
         return null;
     }
 
+    /**
+     * Deletes a product from the database based on its SKU.
+     * Note: Depending on foreign key constraints (e.g., in transactions), this might fail
+     * if the product is referenced elsewhere. Consider soft delete (adding an 'is_active' flag) instead.
+     *
+     * @param sku The integer SKU of the product to delete.
+     * @return true if the product was successfully deleted (at least one row affected), false otherwise.
+     */
     public boolean deleteProduct(int sku) {
         String sql = "DELETE FROM products WHERE sku = ?";
 

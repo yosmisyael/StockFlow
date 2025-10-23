@@ -5,6 +5,7 @@ import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
 import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.Warehouse;
+import com.oop.stockflow.model.WarehouseStatus;
 import com.oop.stockflow.repository.ProductRepository;
 import com.oop.stockflow.repository.StaffRepository;
 import com.oop.stockflow.repository.WarehouseRepository;
@@ -82,7 +83,6 @@ public class WarehouseController {
         for (Warehouse w : warehouses) {
             VBox card = createWarehouseCard(w);
 
-            // Set the grid position for each card
             GridPane.setColumnIndex(card, col);
             GridPane.setRowIndex(card, row);
 
@@ -127,12 +127,16 @@ public class WarehouseController {
         HBox nameRow = new HBox(10, initials, infoBox);
         VBox.setVgrow(nameRow, Priority.NEVER);
 
-        // Status Label (Active)
-        Label statusLabel = new Label("Active");
-        statusLabel.getStyleClass().add("status-badge-active");
-        statusLabel.setPadding(new Insets(4, 12, 4, 12));
-        statusLabel.setFont(Font.font(12));
-        statusLabel.setStyle("-fx-background-radius: 32; -fx-font-size: 12;");
+        // Status Label
+        Label statusLabel = new Label(warehouse.getStatus().getDbVal().toUpperCase());
+        System.out.println(warehouse.getStatus().getDbVal());
+        if (warehouse.getStatus() == WarehouseStatus.ACTIVE) {
+            statusLabel.getStyleClass().add("status-badge-active");
+        } else if (warehouse.getStatus() == WarehouseStatus.INACTIVE) {
+            statusLabel.getStyleClass().add("status-badge-pending");
+        } else {
+            statusLabel.getStyleClass().add("status-badge-inactive");
+        }
         VBox.setMargin(statusLabel, new Insets(0, 0, 0, 60));
 
         VBox topBox = new VBox(4, nameRow, statusLabel);

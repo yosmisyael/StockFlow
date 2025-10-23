@@ -16,6 +16,14 @@ public class AuthRepository {
     private static AuthRepository instance;
     private AuthRepository() {}
 
+    /**
+     * Returns the singleton instance of the AuthRepository.
+     * Creates the instance on the first call (lazy initialization).
+     * Note: This simple lazy initialization is not thread-safe.
+     * Consider eager initialization for better thread safety if needed.
+     *
+     * @return The singleton AuthRepository instance.
+     */
     public static AuthRepository getInstance() {
         if (instance == null) {
             instance = new AuthRepository();
@@ -23,6 +31,15 @@ public class AuthRepository {
         return instance;
     }
 
+    /**
+     * Attempts to authenticate a user (Manager or Staff) based on email and password.
+     * It first checks the managers table, then the staff table.
+     *
+     * @param email    The user's email address.
+     * @param password The user's plain-text password.
+     * @return An {@link AuthenticatedUser} object containing the user's ID, name, and type upon successful authentication,
+     * or {@code null} if authentication fails (invalid email, wrong password, or database error).
+     */
     public AuthenticatedUser login(String email, String password) {
         String managerQuery = "SELECT id, name, password FROM managers WHERE email = ?";
         try (PreparedStatement managerStmt = DatabaseManager.getConnection().prepareStatement(managerQuery)) {
@@ -54,8 +71,14 @@ public class AuthRepository {
     }
 
     /**
-     * Helper method to reduce code duplication.
-     * Checks password and creates an AuthenticatedUser if valid.
+     * Helper method to validate the plain-text password against the hashed password
+     * retrieved from the database and create an AuthenticatedUser object if valid.
+     *
+     * @param rs            The ResultSet positioned at the row containing user data (id, name, password).
+     * @param plainPassword The plain-text password entered by the user.
+     * @param userType      The type of user (MANAGER or STAFF).
+     * @return An {@link AuthenticatedUser} object if the password is valid, otherwise {@code null}.
+     * @throws SQLException If an error occurs reading from the ResultSet.
      */
     private AuthenticatedUser validateAndCreateUser(ResultSet rs, String plainPassword, UserType userType) throws SQLException {
         String hashedPassword = rs.getString("password");

@@ -141,3 +141,67 @@
 .main-content {
     -fx-background-color: #f8f9fa;
 }
+
+/* Stats Cards */
+.stat-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 10, 0, 0, 2);
+    -fx-min-height: 120;
+}
+
+.stat-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 15, 0, 0, 4);
+}
+
+.stat-label {
+    -fx-text-fill: #6b7280;
+}
+
+.stat-value {
+    -fx-text-fill: #111827;
+}
+
+.stat-icon-blue {
+    -fx-background-color: #2563EB;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+    -fx-min-height: 50;
+    -fx-max-height: 50;
+    -fx-min-width: 50;
+    -fx-max-width: 50;
+    -fx-alignment: center;
+}
+
+.stat-icon-green {
+    -fx-background-color: #037c40;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+    -fx-min-height: 50;
+    -fx-max-height: 50;
+    -fx-min-width: 50;
+    -fx-max-width: 50;
+    -fx-alignment: center;
+}
+
+.stat-icon-warning {
+    -fx-background-color: #eac95a;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+    -fx-min-height: 50;
+    -fx-max-height: 50;
+    -fx-min-width: 50;
+    -fx-max-width: 50;
+    -fx-alignment: center;
+}
+
+.stat-icon-danger {
+    -fx-background-color: #b93939;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+    -fx-min-height: 50;
+    -fx-max-height: 50;
+    -fx-min-width: 50;
+    -fx-max-width: 50;
+    -fx-alignment: center;
+}

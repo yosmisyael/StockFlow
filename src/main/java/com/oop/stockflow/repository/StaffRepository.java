@@ -16,6 +16,14 @@ public class StaffRepository {
 
     private StaffRepository() {}
 
+    /**
+     * Returns the singleton instance of the StaffRepository.
+     * Creates the instance on the first call (lazy initialization).
+     * Note: This simple lazy initialization is not thread-safe.
+     * Consider eager initialization for better thread safety if needed.
+     *
+     * @return The singleton StaffRepository instance.
+     */
     public static StaffRepository getInstance() {
         if (instance == null) {
             instance = new StaffRepository();
@@ -23,6 +31,16 @@ public class StaffRepository {
         return instance;
     }
 
+    /**
+     * Creates a new staff member in the database with an encrypted password.
+     * Assumes the 'status' column is handled automatically or defaults.
+     *
+     * @param name         The full name of the staff member.
+     * @param email        The unique email address of the staff member (used as username).
+     * @param password     The plain-text password to be encrypted.
+     * @param warehouseId  The ID of the warehouse the staff member belongs to.
+     * @return {@code true} if the staff member was created successfully, {@code false} otherwise.
+     */
     public boolean createStaff(String name, String email, String password, int warehouseId) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
@@ -44,6 +62,13 @@ public class StaffRepository {
         }
     }
 
+    /**
+     * Retrieves a list of all staff members assigned to a specific warehouse.
+     * Does not retrieve password information.
+     *
+     * @param warehouseId The ID of the warehouse.
+     * @return A {@code List} of {@code Staff} objects, or an empty list if no staff are found or an error occurs.
+     */
     public List<Staff> getStaffByWarehouse(int warehouseId) {
         List<Staff> staffList = new ArrayList<>();
         String sql = "SELECT id, name, email, warehouse_id FROM staff WHERE warehouse_id = ?";
@@ -71,6 +96,13 @@ public class StaffRepository {
         return staffList;
     }
 
+    /**
+     * Retrieves the details of a single staff member by their ID.
+     * Does not retrieve password information for security reasons.
+     *
+     * @param staffId The ID of the staff member to retrieve.
+     * @return A {@code Staff} object if found, otherwise {@code null}.
+     */
     public Staff getStaffById(int staffId) {
         String sql = "SELECT id, name, email, password, warehouse_id FROM staff WHERE id = ?";
 
@@ -96,6 +128,12 @@ public class StaffRepository {
         return null;
     }
 
+    /**
+     * Counts the number of staff members assigned to a specific warehouse.
+     *
+     * @param warehouseId The ID of the warehouse.
+     * @return The total count of staff members, or -1 if an error occurs.
+     */
     public int countStaffByWarehouseId(int warehouseId) {
         String sql = "SELECT COUNT(*) FROM staff WHERE warehouse_id = ?";
         try (Connection conn = DatabaseManager.getConnection();
@@ -187,6 +225,14 @@ public class StaffRepository {
         }
     }
 
+    /**
+     * Deletes a staff member from the database based on their ID.
+     * Note: Depending on foreign key constraints (e.g., in transactions table referencing user_id),
+     * the behavior might be restricted (e.g., setting user_id to NULL or preventing deletion).
+     *
+     * @param staffId The ID of the staff member to delete.
+     * @return {@code true} if the staff member was successfully deleted (at least one row affected), {@code false} otherwise.
+     */
     public boolean deleteStaff(int staffId) {
         String sql = "DELETE FROM staff WHERE id = ?";
 

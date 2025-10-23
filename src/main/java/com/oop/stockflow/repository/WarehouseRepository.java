@@ -14,6 +14,12 @@ public class WarehouseRepository {
 
     private WarehouseRepository() {}
 
+    /**
+     * Returns the singleton instance of the WarehouseRepository.
+     * Creates the instance on the first call (lazy initialization).
+     *
+     * @return The singleton WarehouseRepository instance.
+     */
     public static WarehouseRepository getInstance() {
         if (instance == null) {
             instance = new WarehouseRepository();
@@ -21,6 +27,20 @@ public class WarehouseRepository {
         return instance;
     }
 
+    /**
+     * Inserts a new warehouse record into the database.
+     *
+     * @param name                   The name of the warehouse.
+     * @param address                The full address of the warehouse.
+     * @param city                   The city where the warehouse is located.
+     * @param state                  The state where the warehouse is located.
+     * @param postalCode             The postal code of the warehouse.
+     * @param storageCapacityKgField The maximum weight capacity in kilograms.
+     * @param storageCapacityM3Field The maximum volume capacity in cubic meters.
+     * @param status                 The operational status of the warehouse (enum WarehouseStatus).
+     * @param manager_id             The ID of the manager assigned to this warehouse.
+     * @return true if the warehouse was inserted successfully, false otherwise.
+     */
     public boolean insertWarehouse(String name, String address, String city, String state, String postalCode, int storageCapacityKgField, int storageCapacityM3Field, WarehouseStatus status, int manager_id) {
         String sql = "INSERT INTO warehouses (name, address, city, state, postal_code, max_capacity_volume_m3, max_capacity_weight_kg, status, manager_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?::warehouse_status, ?)";
 
@@ -100,6 +120,11 @@ public class WarehouseRepository {
         return warehouse;
     }
 
+    /**
+     * Retrieves a list of all warehouses from the database.
+     *
+     * @return A List containing all Warehouse objects found, or an empty list if none exist or an error occurs.
+     */
     public List<Warehouse> getAllWarehouses() {
         List<Warehouse> warehouses = new ArrayList<>();
         String query = "SELECT * FROM warehouses";

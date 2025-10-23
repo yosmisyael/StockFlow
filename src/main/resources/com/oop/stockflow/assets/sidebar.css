@@ -12,6 +12,8 @@
 
 .user-name {
     -fx-text-fill: #1f2937;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
 }
 
 .user-section {

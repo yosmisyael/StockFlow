@@ -11,6 +11,12 @@ public class TransactionRepository {
     private static TransactionRepository instance;
     private TransactionRepository() {}
 
+    /**
+     * Returns the singleton instance of the TransactionRepository.
+     * Creates the instance on the first call (lazy initialization).
+     *
+     * @return The singleton TransactionRepository instance.
+     */
     public static TransactionRepository getInstance() {
         if (instance == null) {
             instance = new TransactionRepository();
@@ -18,6 +24,12 @@ public class TransactionRepository {
         return instance;
     }
 
+    /**
+     * Returns the singleton instance of the TransactionRepository.
+     * Creates the instance on the first call (lazy initialization).
+     *
+     * @return The singleton TransactionRepository instance.
+     */
     public boolean createInboundTransaction(int staffId, Timestamp date, ShippingType shippingMethod,
                                             int productSku, int quantity, TransactionStatus initialStatus) {
         String sql = "INSERT INTO transactions (user_id, date, transaction_type, destination_address, shipping_method, product_sku, quantity, status) " +
@@ -41,6 +53,18 @@ public class TransactionRepository {
         }
     }
 
+    /**
+     * Creates a new outbound transaction in the database.
+     *
+     * @param staffId            The ID of the staff member creating the transaction.
+     * @param date               The timestamp of the transaction.
+     * @param destinationAddress The shipping destination address.
+     * @param shippingMethod     The {@link ShippingType} enum value.
+     * @param quantity           The quantity of the product.
+     * @param productSku         The SKU (integer ID) of the product.
+     * @param initialStatus      The initial {@link TransactionStatus} (e.g., PENDING).
+     * @return {@code true} if the transaction was created successfully, {@code false} otherwise.
+     */
     public boolean createOutboundTransaction(int staffId, Timestamp date, String destinationAddress,
                                              ShippingType shippingMethod,
                                              int quantity, int productSku, TransactionStatus initialStatus) {
@@ -66,6 +90,14 @@ public class TransactionRepository {
         }
     }
 
+    /**
+     * Retrieves a list of all transactions (Inbound and Outbound) created by a specific staff member.
+     * The list is ordered by date in descending order.
+     *
+     * @param staffId The ID of the staff member.
+     * @return A {@code List<Transaction>} containing all transactions for the given staff member.
+     * Returns an empty list if no transactions are found or an error occurs.
+     */
     public List<Transaction> getAllTransactionsByStaffId(int staffId) {
         List<Transaction> transactions = new ArrayList<>();
         String sql = "SELECT id, user_id, date, transaction_type, destination_address, shipping_method, product_sku, quantity, status " +
@@ -91,6 +123,11 @@ public class TransactionRepository {
         return transactions;
     }
 
+    /**
+     * Counts the number of outbound transactions recorded today (since 00:00).
+     *
+     * @return The total count of today's outbound transactions, or -1 if an error occurs.
+     */
     public int countTodayOutboundTransaction() {
         String sql = "SELECT COUNT(*) FROM transactions " +
                 "WHERE transaction_type = 'outbound'::transaction_type " +
@@ -112,6 +149,11 @@ public class TransactionRepository {
         return -1;
     }
 
+    /**
+     * Counts the number of inbound transactions recorded today (since 00:00).
+     *
+     * @return The total count of today's inbound transactions, or -1 if an error occurs.
+     */
     public int countTodayInboundTransaction() {
         String sql = "SELECT COUNT(*) FROM transactions " +
                 "WHERE transaction_type = 'inbound'::transaction_type " +
@@ -133,6 +175,13 @@ public class TransactionRepository {
         return -1;
     }
 
+    /**
+     * Updates only the status (e.g., PENDING to COMMITTED) of a specific transaction.
+     *
+     * @param transactionId The ID (BIGSERIAL) of the transaction to update.
+     * @param newStatus     The new {@link TransactionStatus} to set.
+     * @return {@code true} if the status was updated successfully, {@code false} otherwise.
+     */
     public boolean updateTransactionStatus(long transactionId, TransactionStatus newStatus) {
         String sql = "UPDATE transactions SET status = ?::transaction_status WHERE id = ?";
 
@@ -150,6 +199,15 @@ public class TransactionRepository {
         }
     }
 
+    /**
+     * Helper method to map a row from a ResultSet to the correct Transaction subclass
+     * ({@link InboundTransaction} or {@link OutboundTransaction}) based on the 'transaction_type' column.
+     *
+     * @param rs The ResultSet, positioned at the row to map.
+     * @return A {@code Transaction} object (as {@code InboundTransaction} or {@code OutboundTransaction}),
+     * or {@code null} if the type is unknown or enum values are invalid.
+     * @throws SQLException If an error occurs while reading from the ResultSet.
+     */
     private Transaction mapResultSetToTransaction(ResultSet rs) throws SQLException {
         int id = (int)rs.getLong("id");
         int staffId = rs.getInt("user_id");

@@ -21,7 +21,7 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane
-        stylesheets="@../assets/sidebar.css, @../assets/topbar.css, @../assets/utils.css, @../assets/product-index.css,  @../assets/warehouse-dashboard.css"
+        stylesheets="@../assets/sidebar.css, @../assets/topbar.css, @../assets/utils.css, @../assets/product-index.css"
         xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="com.oop.stockflow.controller.ProductIndexController">
     <top>
@@ -94,10 +94,11 @@
                 <Insets top="24" right="0" bottom="24" left="0"/>
             </padding>
 
+            <!-- User Profile -->
             <VBox spacing="8" styleClass="user-section">
                 <HBox alignment="CENTER_LEFT" spacing="12">
                     <StackPane styleClass="user-avatar">
-                        <Label fx:id="initialLabel" styleClass="user-initials" text="JS"/>
+                        <Label fx:id="initialLabel" styleClass="user-initials" text="N/A"/>
                     </StackPane>
                     <VBox spacing="2">
                         <Label fx:id="nameLabel" styleClass="user-name" text="N/A"/>
@@ -115,8 +116,11 @@
                 <padding>
                     <Insets top="12"/>
                 </padding>
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="Warehouse Dashboard"
-                        onAction="#goToWarehouseDashboard">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" onAction="#goToWarehouseDashboard"
+                        text="Warehouse Dashboard" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-home" iconSize="16"/>
+                    </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
@@ -125,9 +129,11 @@
                     </font>
                 </Button>
 
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active"
-                        text="Stock Management"
-                        onAction="#goToProductIndex">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="Stock Management"
+                        onAction="#goToProductIndex" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-boxes" iconSize="16"/>
+                    </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
@@ -136,8 +142,10 @@
                     </font>
                 </Button>
 
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"
-                        onAction="#goToStaffMenu" text="Staff Management">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="Staff Management" graphicTextGap="12" onAction="#goToStaffMenu">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-users"  iconSize="16"/>
+                    </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
@@ -197,7 +205,7 @@
                             <VBox spacing="4" HBox.hgrow="ALWAYS">
                                 <Label styleClass="stat-label" text="Total Stock Items">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="18.0" />
                                     </font>
                                 </Label>
                                 <Label fx:id="totalStockLabel" styleClass="stat-value" text="1,247">
@@ -224,7 +232,7 @@
                             <VBox spacing="4" HBox.hgrow="ALWAYS">
                                 <Label styleClass="stat-label" text="Outbound Today">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="18.0" />
                                     </font>
                                 </Label>
                                 <Label fx:id="outboundTodayLabel" styleClass="stat-value" text="89">
@@ -251,7 +259,7 @@
                             <VBox spacing="4" HBox.hgrow="ALWAYS">
                                 <Label styleClass="stat-label" text="Inbound Today">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="18.0" />
                                     </font>
                                 </Label>
                                 <Label fx:id="inboundTodayLabel" styleClass="stat-value" text="89">
@@ -279,7 +287,7 @@
                                 <VBox spacing="4" HBox.hgrow="ALWAYS">
                                     <Label styleClass="stat-label" text="Low Stock Product">
                                         <font>
-                                            <Font size="14.0" />
+                                            <Font size="18.0" />
                                         </font>
                                     </Label>
                                     <Label fx:id="lowStockLabel" styleClass="stat-value" text="23">

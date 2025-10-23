@@ -19,19 +19,6 @@
     -fx-background-color: transparent;
 }
 
-.main-content {
-    -fx-background-color: transparent;
-}
-
-/* Page Headers */
-.page-title {
-    -fx-text-fill: #111827;
-}
-
-.page-subtitle {
-    -fx-text-fill: #6b7280;
-}
-
 /* Add Warehouse Button */
 .add-button {
     -fx-background-color: #2563eb;
@@ -83,26 +70,50 @@
 
 .stat-icon-blue {
     -fx-background-color: #dbeafe;
+    -fx-text-fill: #254161;
     -fx-background-radius: 10;
     -fx-padding: 12;
+    -fx-min-height: 50;
+    -fx-max-height: 50;
+    -fx-min-width: 50;
+    -fx-max-width: 50;
+    -fx-alignment: center;
 }
 
 .stat-icon-green {
     -fx-background-color: #d1fae5;
+    -fx-text-fill: #2b6447;
     -fx-background-radius: 10;
     -fx-padding: 12;
+    -fx-min-height: 50;
+    -fx-max-height: 50;
+    -fx-min-width: 50;
+    -fx-max-width: 50;
+    -fx-alignment: center;
 }
 
 .stat-icon-orange {
     -fx-background-color: #fed7aa;
     -fx-background-radius: 10;
+    -fx-text-fill: #6b532a;
     -fx-padding: 12;
+    -fx-min-height: 50;
+    -fx-max-height: 50;
+    -fx-min-width: 50;
+    -fx-max-width: 50;
+    -fx-alignment: center;
 }
 
 .stat-icon-purple {
     -fx-background-color: #ddd6fe;
     -fx-background-radius: 10;
     -fx-padding: 12;
+    -fx-icon-color: #2e2c58;
+    -fx-min-height: 50;
+    -fx-max-height: 50;
+    -fx-min-width: 50;
+    -fx-max-width: 50;
+    -fx-alignment: center;
 }
 
 /* Warehouse Grid Configuration */
@@ -180,6 +191,8 @@
     -fx-text-fill: #065f46;
     -fx-background-radius: 12;
     -fx-font-weight: bold;
+    -fx-font-size: 12;
+    -fx-padding: 4 8;
 }
 
 .status-badge-maintenance {
@@ -187,6 +200,17 @@
     -fx-text-fill: #92400e;
     -fx-background-radius: 12;
     -fx-font-weight: bold;
+    -fx-font-size: 13;
+    -fx-padding: 4 6;
+}
+
+.status-badge-inactive {
+    -fx-background-color: #ee7870;
+    -fx-text-fill: #b81b0a;
+    -fx-background-radius: 12;
+    -fx-font-weight: bold;
+    -fx-font-size: 13;
+    -fx-padding: 4 6;
 }
 
 /* View Details Button */

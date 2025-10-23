@@ -104,8 +104,11 @@
                 <padding>
                     <Insets top="12"/>
                 </padding>
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" onAction="#goToWarehouseDashboard"
-                        styleClass="nav-button" text="Warehouse Dashboard">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" onAction="#goToWarehouseDashboard"
+                        text="Warehouse Dashboard" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-home" iconSize="16"/>
+                    </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
@@ -114,8 +117,11 @@
                     </font>
                 </Button>
 
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" onAction="#goToProductIndex" styleClass="nav-button"
-                        text="Stock Management">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="Stock Management"
+                        onAction="#goToProductIndex" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-boxes" iconSize="16"/>
+                    </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
@@ -124,8 +130,10 @@
                     </font>
                 </Button>
 
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active"
-                        text="Staff Management">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="Staff Management" graphicTextGap="12" onAction="#goToStaffMenu">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-users"  iconSize="16"/>
+                    </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>

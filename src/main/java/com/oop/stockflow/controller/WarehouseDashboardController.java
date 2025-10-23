@@ -4,7 +4,6 @@ import com.oop.stockflow.app.SessionManager;
 import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View; // Pastikan View.STOCK_MANAGEMENT sudah ada di sini
 import com.oop.stockflow.model.AuthenticatedUser;
-import com.oop.stockflow.model.Product;
 import com.oop.stockflow.model.Warehouse;
 import com.oop.stockflow.repository.ProductRepository;
 import com.oop.stockflow.repository.TransactionRepository;
@@ -37,13 +36,20 @@ public class WarehouseDashboardController {
 
     // Stats Cards
     @FXML
-    private Label totalStockLabel;
+    private Label totalStockCardLabel;
     @FXML
-    private Label outboundTodayLabel;
+    private Label outboundTodayCardLabel;
     @FXML
-    private Label inboundTodayLabel;
+    private Label inboundTodayCardLabel;
+    @FXML
+    private Label lowStockCardLabel;
     @FXML
     private Label lowStockLabel;
+    @FXML
+    private Label inStockLabel;
+    @FXML
+    private Label outStockLabel;
+
 
     // Charts & Notifications
     @FXML
@@ -73,22 +79,33 @@ public class WarehouseDashboardController {
         // count inbound today
         int countInboundToday = 0;
         countInboundToday = transactionRepository.countTodayInboundTransaction();
-        inboundTodayLabel.setText(String.valueOf(countInboundToday));
+        inboundTodayCardLabel.setText(String.valueOf(countInboundToday));
 
         // count outbound today
         int countOutboundToday = 0;
         countOutboundToday = transactionRepository.countTodayOutboundTransaction();
-        outboundTodayLabel.setText(String.valueOf(countOutboundToday));
+        outboundTodayCardLabel.setText(String.valueOf(countOutboundToday));
 
-        // count low stock
+        // count low stock product
         int countLowStock = 0;
         countLowStock = productRepository.countLowStockByWarehouseId(currentWarehouse.getId());
+        lowStockCardLabel.setText(String.valueOf(countLowStock));
         lowStockLabel.setText(String.valueOf(countLowStock));
+
+        // count in stock product
+        int countInStock = 0;
+        countInStock = productRepository.countInStock(currentWarehouse.getId());
+        inStockLabel.setText(String.valueOf(countInStock));
+
+        // count out stock product
+        int countOutStock = 0;
+        countOutStock = productRepository.countOutStock(currentWarehouse.getId());
+        outStockLabel.setText(String.valueOf(countOutStock));
 
         // calculate stock
         int countStock = 0;
         countStock = productRepository.countProductsByWarehouseId(currentWarehouse.getId());
-        totalStockLabel.setText(String.valueOf(countStock));
+        totalStockCardLabel.setText(String.valueOf(countStock));
     }
 
     @FXML

@@ -100,7 +100,11 @@
                 <padding>
                     <Insets top="12"/>
                 </padding>
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="Warehouse Dashboard" onAction="#goToWarehouseDashboard">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" onAction="#goToWarehouseDashboard"
+                        text="Warehouse Dashboard" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-home" iconSize="16"/>
+                    </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
@@ -110,7 +114,10 @@
                 </Button>
 
                 <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="Stock Management"
-                        onAction="#goToProductIndex">
+                        onAction="#goToProductIndex" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-boxes" iconSize="16"/>
+                    </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
@@ -119,8 +126,10 @@
                     </font>
                 </Button>
 
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"
-                        onAction="#goToStaffMenu" text="Staff Management">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="Staff Management" graphicTextGap="12" onAction="#goToStaffMenu">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-users"  iconSize="16"/>
+                    </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>

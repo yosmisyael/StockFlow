@@ -24,7 +24,10 @@
 <?import javafx.scene.text.Font?>
 
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<BorderPane styleClass="root" stylesheets="@../assets/sidebar.css, @../assets/topbar.css, @../assets/utils.css, @../assets/warehouse-dashboard.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.WarehouseDashboardController">
+<BorderPane styleClass="root"
+            stylesheets="@../assets/sidebar.css, @../assets/topbar.css, @../assets/utils.css, @../assets/warehouse-dashboard.css"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.oop.stockflow.controller.WarehouseDashboardController">
 
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
@@ -95,11 +98,11 @@
             <padding>
                 <Insets top="24" right="0" bottom="24" left="0"/>
             </padding>
-
+            <!-- User Profile -->
             <VBox spacing="8" styleClass="user-section">
                 <HBox alignment="CENTER_LEFT" spacing="12">
                     <StackPane styleClass="user-avatar">
-                        <Label fx:id="initialLabel" styleClass="user-initials" text="JS"/>
+                        <Label fx:id="initialLabel" styleClass="user-initials" text="N/A"/>
                     </StackPane>
                     <VBox spacing="2">
                         <Label fx:id="nameLabel" styleClass="user-name" text="N/A"/>
@@ -117,7 +120,11 @@
                 <padding>
                     <Insets top="12"/>
                 </padding>
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="Warehouse Dashboard">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active"
+                        text="Warehouse Dashboard" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-home" iconSize="16"/>
+                    </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
@@ -127,7 +134,10 @@
                 </Button>
 
                 <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="Stock Management"
-                        onAction="#goToProductIndex">
+                        onAction="#goToProductIndex" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-boxes" iconSize="16"/>
+                    </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
@@ -137,7 +147,10 @@
                 </Button>
 
                 <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"
-                        onAction="#goToStaffMenu" text="Staff Management">
+                        onAction="#goToStaffMenu" text="Staff Management" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-users"  iconSize="16"/>
+                    </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
@@ -147,6 +160,7 @@
                 </Button>
             </VBox>
 
+            <!-- Logout -->
             <VBox VBox.vgrow="ALWAYS">
                 <Region VBox.vgrow="ALWAYS"/>
                 <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="logout-button" text="Logout"
@@ -170,36 +184,38 @@
         <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="content-scroll">
             <VBox spacing="24" styleClass="main-content">
                 <padding>
-                    <Insets bottom="32" left="32" right="32" top="32" />
+                    <Insets bottom="32" left="32" right="32" top="32"/>
                 </padding>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-               <children>
-      
-                      <!-- Header Section -->
-                      <VBox spacing="4">
-                          <Label fx:id="warehouseName" styleClass="page-title" text="Warehouse Jakarta Pusat">
-                              <font>
-                                  <Font name="System Bold" size="28.0" />
-                              </font>
-                          </Label>
-                          <Label fx:id="warehouseAddress" styleClass="page-subtitle" text="Jl. Sudirman No. 123, Jakarta Pusat" VBox.vgrow="ALWAYS">
-                              <font>
-                                  <Font size="16.0" />
-                              </font>
-                          </Label>
-                      </VBox>
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#goToWarehouseList" style="-fx-padding: 8px 16px; -fx-background-color: white; -fx-border-color: #6b7280; -fx-border-radius: 6px;" text="← Back to Warehouses" />
-               </children>
-            </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <!-- Header Section -->
+                        <VBox spacing="8">
+                            <Label fx:id="warehouseName" styleClass="page-title" text="N/A">
+                                <font>
+                                    <Font name="System Bold" size="28.0"/>
+                                </font>
+                            </Label>
+                            <Label fx:id="warehouseAddress" styleClass="page-subtitle"
+                                   text="N/A" VBox.vgrow="ALWAYS">
+                                <font>
+                                    <Font size="16.0"/>
+                                </font>
+                            </Label>
+                        </VBox>
+                        <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
+                        <Button mnemonicParsing="false" onAction="#goToWarehouseList"
+                                style="-fx-padding: 8px 16px; -fx-background-color: white; -fx-border-color: #6b7280; -fx-border-radius: 6px;"
+                                text="← Back to Warehouses"/>
+                    </children>
+                </HBox>
 
                 <!-- Stats Cards Grid -->
                 <GridPane hgap="20" styleClass="stats-grid" vgap="20">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
-                        <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
-                        <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
-                        <ColumnConstraints hgrow="ALWAYS" minWidth="200" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200"/>
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200"/>
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200"/>
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200"/>
                     </columnConstraints>
 
                     <!-- Total Stock Items -->
@@ -210,10 +226,10 @@
                         <VBox spacing="4" HBox.hgrow="ALWAYS">
                             <Label styleClass="stat-label" text="Total Stock Items">
                                 <font>
-                                    <Font size="14.0" />
+                                    <Font size="18.0" />
                                 </font>
                             </Label>
-                            <Label fx:id="totalStockLabel" styleClass="stat-value" text="1,247">
+                            <Label fx:id="totalStockCardLabel" styleClass="stat-value" text="1,247">
                                 <font>
                                     <Font name="System Bold" size="32.0" />
                                 </font>
@@ -237,10 +253,10 @@
                         <VBox spacing="4" HBox.hgrow="ALWAYS">
                             <Label styleClass="stat-label" text="Outbound Today">
                                 <font>
-                                    <Font size="14.0" />
+                                    <Font size="18.0" />
                                 </font>
                             </Label>
-                            <Label fx:id="outboundTodayLabel" styleClass="stat-value" text="89">
+                            <Label fx:id="outboundTodayCardLabel" styleClass="stat-value" text="89">
                                 <font>
                                     <Font name="System Bold" size="32.0" />
                                 </font>
@@ -264,10 +280,10 @@
                         <VBox spacing="4" HBox.hgrow="ALWAYS">
                             <Label styleClass="stat-label" text="Inbound Today">
                                 <font>
-                                    <Font size="14.0" />
+                                    <Font size="18.0" />
                                 </font>
                             </Label>
-                            <Label fx:id="inboundTodayLabel" styleClass="stat-value" text="89">
+                            <Label fx:id="inboundTodayCardLabel" styleClass="stat-value" text="89">
                                 <font>
                                     <Font name="System Bold" size="32.0" />
                                 </font>
@@ -275,7 +291,7 @@
                         </VBox>
                         <Label styleClass="stat-icon-green">
                             <graphic>
-                                <FontIcon iconColor="white" iconLiteral="fas-download" iconSize="20"/>
+                                <FontIcon iconColor="white" iconLiteral="fas-download" iconSize="28"/>
                             </graphic>
                             <font>
                                 <Font size="28" />
@@ -292,10 +308,10 @@
                             <VBox spacing="4" HBox.hgrow="ALWAYS">
                                 <Label styleClass="stat-label" text="Low Stock Product">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="18.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="lowStockLabel" styleClass="stat-value" text="23">
+                                <Label fx:id="lowStockCardLabel" styleClass="stat-value" text="23">
                                     <font>
                                         <Font name="System Bold" size="32.0" />
                                     </font>
@@ -313,47 +329,48 @@
                     </VBox>
 
                     <rowConstraints>
-                        <RowConstraints />
+                        <RowConstraints/>
                     </rowConstraints>
                 </GridPane>
 
                 <!-- Chart and Notifications Section -->
                 <GridPane hgap="20" vgap="20">
                     <columnConstraints>
-                        <ColumnConstraints percentWidth="65" />
-                        <ColumnConstraints percentWidth="35" />
+                        <ColumnConstraints percentWidth="65"/>
+                        <ColumnConstraints percentWidth="35"/>
                     </columnConstraints>
 
                     <!-- Outbound Transactions Chart -->
                     <VBox spacing="16" styleClass="chart-card" GridPane.columnIndex="0">
                         <padding>
-                            <Insets bottom="24" left="24" right="24" top="24" />
+                            <Insets bottom="24" left="24" right="24" top="24"/>
                         </padding>
 
                         <HBox alignment="CENTER_LEFT">
                             <Label styleClass="card-title" text="Outbound Transactions">
                                 <font>
-                                    <Font name="System Bold" size="18" />
+                                    <Font name="System Bold" size="18"/>
                                 </font>
                             </Label>
-                            <Region HBox.hgrow="ALWAYS" />
+                            <Region HBox.hgrow="ALWAYS"/>
                             <ComboBox prefWidth="140" styleClass="time-filter" value="Last 7 days">
                                 <items>
                                     <FXCollections fx:factory="observableArrayList">
-                                        <String fx:value="Last 7 days" />
-                                        <String fx:value="Last 30 days" />
-                                        <String fx:value="Last 90 days" />
+                                        <String fx:value="Last 7 days"/>
+                                        <String fx:value="Last 30 days"/>
+                                        <String fx:value="Last 90 days"/>
                                     </FXCollections>
                                 </items>
                             </ComboBox>
                         </HBox>
 
-                        <LineChart fx:id="outboundChart" legendVisible="false" styleClass="line-chart" VBox.vgrow="ALWAYS">
+                        <LineChart fx:id="outboundChart" legendVisible="false" styleClass="line-chart"
+                                   VBox.vgrow="ALWAYS">
                             <xAxis>
-                                <CategoryAxis side="BOTTOM" styleClass="chart-axis" />
+                                <CategoryAxis side="BOTTOM" styleClass="chart-axis"/>
                             </xAxis>
                             <yAxis>
-                                <NumberAxis label="Items" side="LEFT" styleClass="chart-axis" />
+                                <NumberAxis label="Items" side="LEFT" styleClass="chart-axis"/>
                             </yAxis>
                         </LineChart>
                     </VBox>
@@ -361,12 +378,12 @@
                     <!-- Recent Notifications -->
                     <VBox spacing="16" styleClass="notifications-card" GridPane.columnIndex="1">
                         <padding>
-                            <Insets bottom="24" left="24" right="24" top="24" />
+                            <Insets bottom="24" left="24" right="24" top="24"/>
                         </padding>
 
                         <Label styleClass="card-title" text="Recent Notifications">
                             <font>
-                                <Font name="System Bold" size="18" />
+                                <Font name="System Bold" size="18"/>
                             </font>
                         </Label>
 
@@ -374,27 +391,28 @@
                             <!-- Critical Stock Level -->
                             <HBox spacing="12" styleClass="notification-item, notification-danger">
                                 <padding>
-                                    <Insets bottom="12" left="12" right="12" top="12" />
+                                    <Insets bottom="12" left="12" right="12" top="12"/>
                                 </padding>
                                 <Label styleClass="notification-icon" text="🔴">
                                     <font>
-                                        <Font size="20" />
+                                        <Font size="20"/>
                                     </font>
                                 </Label>
                                 <VBox spacing="4" HBox.hgrow="ALWAYS">
                                     <Label styleClass="notification-title" text="Critical Stock Level">
                                         <font>
-                                            <Font name="System Bold" size="13" />
+                                            <Font name="System Bold" size="13"/>
                                         </font>
                                     </Label>
-                                    <Label styleClass="notification-text" text="Widget A has only 5 units left" wrapText="true">
+                                    <Label styleClass="notification-text" text="Widget A has only 5 units left"
+                                           wrapText="true">
                                         <font>
-                                            <Font size="12" />
+                                            <Font size="12"/>
                                         </font>
                                     </Label>
                                     <Label styleClass="notification-time" text="2 minutes ago">
                                         <font>
-                                            <Font size="11" />
+                                            <Font size="11"/>
                                         </font>
                                     </Label>
                                 </VBox>
@@ -403,27 +421,28 @@
                             <!-- Expiration Alert -->
                             <HBox spacing="12" styleClass="notification-item, notification-warning">
                                 <padding>
-                                    <Insets bottom="12" left="12" right="12" top="12" />
+                                    <Insets bottom="12" left="12" right="12" top="12"/>
                                 </padding>
                                 <Label styleClass="notification-icon" text="📦">
                                     <font>
-                                        <Font size="20" />
+                                        <Font size="20"/>
                                     </font>
                                 </Label>
                                 <VBox spacing="4" HBox.hgrow="ALWAYS">
                                     <Label styleClass="notification-title" text="Expiration Alert">
                                         <font>
-                                            <Font name="System Bold" size="13" />
+                                            <Font name="System Bold" size="13"/>
                                         </font>
                                     </Label>
-                                    <Label styleClass="notification-text" text="Product B expires in 15 days" wrapText="true">
+                                    <Label styleClass="notification-text" text="Product B expires in 15 days"
+                                           wrapText="true">
                                         <font>
-                                            <Font size="12" />
+                                            <Font size="12"/>
                                         </font>
                                     </Label>
                                     <Label styleClass="notification-time" text="1 hour ago">
                                         <font>
-                                            <Font size="11" />
+                                            <Font size="11"/>
                                         </font>
                                     </Label>
                                 </VBox>
@@ -432,27 +451,28 @@
                             <!-- Delivery Scheduled -->
                             <HBox spacing="12" styleClass="notification-item, notification-info">
                                 <padding>
-                                    <Insets bottom="12" left="12" right="12" top="12" />
+                                    <Insets bottom="12" left="12" right="12" top="12"/>
                                 </padding>
                                 <Label styleClass="notification-icon" text="🚚">
                                     <font>
-                                        <Font size="20" />
+                                        <Font size="20"/>
                                     </font>
                                 </Label>
                                 <VBox spacing="4" HBox.hgrow="ALWAYS">
                                     <Label styleClass="notification-title" text="Delivery Scheduled">
                                         <font>
-                                            <Font name="System Bold" size="13" />
+                                            <Font name="System Bold" size="13"/>
                                         </font>
                                     </Label>
-                                    <Label styleClass="notification-text" text="Order #1234 scheduled for tomorrow" wrapText="true">
+                                    <Label styleClass="notification-text" text="Order #1234 scheduled for tomorrow"
+                                           wrapText="true">
                                         <font>
-                                            <Font size="12" />
+                                            <Font size="12"/>
                                         </font>
                                     </Label>
                                     <Label styleClass="notification-time" text="3 hours ago">
                                         <font>
-                                            <Font size="11" />
+                                            <Font size="11"/>
                                         </font>
                                     </Label>
                                 </VBox>
@@ -461,32 +481,32 @@
 
                         <Button maxWidth="Infinity" styleClass="view-all-button" text="View all notifications">
                             <font>
-                                <Font size="13" />
+                                <Font size="13"/>
                             </font>
                         </Button>
                     </VBox>
 
                     <rowConstraints>
-                        <RowConstraints />
+                        <RowConstraints/>
                     </rowConstraints>
                 </GridPane>
 
                 <!-- Stock Status and Quick Actions -->
                 <GridPane hgap="20" vgap="20">
                     <columnConstraints>
-                        <ColumnConstraints percentWidth="50" />
-                        <ColumnConstraints percentWidth="50" />
+                        <ColumnConstraints percentWidth="50"/>
+                        <ColumnConstraints percentWidth="50"/>
                     </columnConstraints>
 
                     <!-- Stock Status Overview -->
                     <VBox spacing="16" styleClass="stock-status-card" GridPane.columnIndex="0">
                         <padding>
-                            <Insets bottom="24" left="24" right="24" top="24" />
+                            <Insets bottom="24" left="24" right="24" top="24"/>
                         </padding>
 
                         <Label styleClass="card-title" text="Stock Status Overview">
                             <font>
-                                <Font name="System Bold" size="18" />
+                                <Font name="System Bold" size="18"/>
                             </font>
                         </Label>
 
@@ -494,17 +514,17 @@
                             <!-- In Stock -->
                             <HBox alignment="CENTER_LEFT" spacing="16">
                                 <HBox alignment="CENTER" spacing="8" HBox.hgrow="NEVER">
-                                    <Circle fill="#10b981" radius="6" />
+                                    <Circle fill="#10b981" radius="6"/>
                                     <Label styleClass="status-label" text="In Stock">
                                         <font>
-                                            <Font size="14" />
+                                            <Font size="14"/>
                                         </font>
                                     </Label>
                                 </HBox>
-                                <Region HBox.hgrow="ALWAYS" />
-                                <Label styleClass="status-value" text="10">
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="inStockLabel" styleClass="status-value" text="N/A">
                                     <font>
-                                        <Font name="System Bold" size="24" />
+                                        <Font name="System Bold" size="24"/>
                                     </font>
                                 </Label>
                             </HBox>
@@ -512,17 +532,17 @@
                             <!-- Low Stock -->
                             <HBox alignment="CENTER_LEFT" spacing="16">
                                 <HBox alignment="CENTER" spacing="8" HBox.hgrow="NEVER">
-                                    <Circle fill="#f59e0b" radius="6" />
+                                    <Circle fill="#f59e0b" radius="6"/>
                                     <Label styleClass="status-label" text="Low Stock">
                                         <font>
-                                            <Font size="14" />
+                                            <Font size="14"/>
                                         </font>
                                     </Label>
                                 </HBox>
-                                <Region HBox.hgrow="ALWAYS" />
-                                <Label styleClass="status-value" text="6">
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label styleClass="status-value" fx:id="lowStockLabel" text="N/A">
                                     <font>
-                                        <Font name="System Bold" size="24" />
+                                        <Font name="System Bold" size="24"/>
                                     </font>
                                 </Label>
                             </HBox>
@@ -530,17 +550,17 @@
                             <!-- Out of Stock -->
                             <HBox alignment="CENTER_LEFT" spacing="16">
                                 <HBox alignment="CENTER" spacing="8" HBox.hgrow="NEVER">
-                                    <Circle fill="#ef4444" radius="6" />
+                                    <Circle fill="#ef4444" radius="6"/>
                                     <Label styleClass="status-label" text="Out of Stock">
                                         <font>
-                                            <Font size="14" />
+                                            <Font size="14"/>
                                         </font>
                                     </Label>
                                 </HBox>
-                                <Region HBox.hgrow="ALWAYS" />
-                                <Label styleClass="status-value" text="2">
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label styleClass="status-value" fx:id="outStockLabel" text="N/A">
                                     <font>
-                                        <Font name="System Bold" size="24" />
+                                        <Font name="System Bold" size="24"/>
                                     </font>
                                 </Label>
                             </HBox>
@@ -550,98 +570,107 @@
                     <!-- Quick Actions -->
                     <VBox spacing="16" styleClass="quick-actions-card" GridPane.columnIndex="1">
                         <padding>
-                            <Insets bottom="24" left="24" right="24" top="24" />
+                            <Insets bottom="24" left="24" right="24" top="24"/>
                         </padding>
 
                         <Label styleClass="card-title" text="Quick Actions">
                             <font>
-                                <Font name="System Bold" size="18" />
+                                <Font name="System Bold" size="18"/>
                             </font>
                         </Label>
 
                         <GridPane hgap="12" vgap="12">
                             <columnConstraints>
-                                <ColumnConstraints percentWidth="50" />
-                                <ColumnConstraints percentWidth="50" />
+                                <ColumnConstraints percentWidth="50"/>
+                                <ColumnConstraints percentWidth="50"/>
                             </columnConstraints>
 
                             <!-- Request Delivery -->
-                            <VBox alignment="CENTER" spacing="12" styleClass="action-card, action-card-blue" GridPane.columnIndex="0" GridPane.rowIndex="0" >
+                            <VBox alignment="CENTER" spacing="12" styleClass="action-card, action-card-blue"
+                                  GridPane.columnIndex="0" GridPane.rowIndex="0">
                                 <padding>
-                                    <Insets bottom="20" left="20" right="20" top="20" />
+                                    <Insets bottom="20" left="20" right="20" top="20"/>
                                 </padding>
                                 <Label styleClass="action-icon" text="🚚">
                                     <font>
-                                        <Font size="32" />
+                                        <Font size="32"/>
                                     </font>
                                 </Label>
-                                <Label styleClass="action-label" text="Request Delivery" textAlignment="CENTER" wrapText="true">
+                                <Label styleClass="action-label" text="Request Delivery" textAlignment="CENTER"
+                                       wrapText="true">
                                     <font>
-                                        <Font name="System Bold" size="14" />
+                                        <Font name="System Bold" size="14"/>
                                     </font>
                                 </Label>
                             </VBox>
 
                             <!-- Add Stock -->
-                            <VBox alignment="CENTER" spacing="12" styleClass="action-card, action-card-green" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <VBox alignment="CENTER" spacing="12" styleClass="action-card, action-card-green"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="0">
                                 <padding>
-                                    <Insets bottom="20" left="20" right="20" top="20" />
+                                    <Insets bottom="20" left="20" right="20" top="20"/>
                                 </padding>
                                 <Label styleClass="action-icon" text="➕">
                                     <font>
-                                        <Font size="32" />
+                                        <Font size="32"/>
                                     </font>
                                 </Label>
-                                <Label styleClass="action-label" text="Add Stock" textAlignment="CENTER" wrapText="true">
+                                <Label styleClass="action-label" text="Add Stock" textAlignment="CENTER"
+                                       wrapText="true">
                                     <font>
-                                        <Font name="System Bold" size="14" />
+                                        <Font name="System Bold" size="14"/>
                                     </font>
                                 </Label>
                             </VBox>
 
                             <!-- Generate Report -->
-                            <VBox alignment="CENTER" spacing="12" styleClass="action-card, action-card-orange" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                            <VBox alignment="CENTER" spacing="12" styleClass="action-card, action-card-orange"
+                                  GridPane.columnIndex="0" GridPane.rowIndex="1">
                                 <padding>
-                                    <Insets bottom="20" left="20" right="20" top="20" />
+                                    <Insets bottom="20" left="20" right="20" top="20"/>
                                 </padding>
                                 <Label styleClass="action-icon" text="📊">
                                     <font>
-                                        <Font size="32" />
+                                        <Font size="32"/>
                                     </font>
                                 </Label>
-                                <Label styleClass="action-label" text="Generate Report" textAlignment="CENTER" wrapText="true">
+                                <Label styleClass="action-label" text="Generate Report" textAlignment="CENTER"
+                                       wrapText="true">
                                     <font>
-                                        <Font name="System Bold" size="14" />
+                                        <Font name="System Bold" size="14"/>
                                     </font>
                                 </Label>
                             </VBox>
 
                             <!-- Manage Staff -->
-                            <VBox alignment="CENTER" onMouseClicked="#goToStaffMenu" spacing="12" styleClass="action-card, action-card-purple" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <VBox alignment="CENTER" onMouseClicked="#goToStaffMenu" spacing="12"
+                                  styleClass="action-card, action-card-purple" GridPane.columnIndex="1"
+                                  GridPane.rowIndex="1">
                                 <padding>
-                                    <Insets bottom="20" left="20" right="20" top="20" />
+                                    <Insets bottom="20" left="20" right="20" top="20"/>
                                 </padding>
                                 <Label styleClass="action-icon" text="👥">
                                     <font>
-                                        <Font size="32" />
+                                        <Font size="32"/>
                                     </font>
                                 </Label>
-                                <Label styleClass="action-label" text="Manage Staff" textAlignment="CENTER" wrapText="true">
+                                <Label styleClass="action-label" text="Manage Staff" textAlignment="CENTER"
+                                       wrapText="true">
                                     <font>
-                                        <Font name="System Bold" size="14" />
+                                        <Font name="System Bold" size="14"/>
                                     </font>
                                 </Label>
                             </VBox>
 
                             <rowConstraints>
-                                <RowConstraints />
-                                <RowConstraints />
+                                <RowConstraints/>
+                                <RowConstraints/>
                             </rowConstraints>
                         </GridPane>
                     </VBox>
 
                     <rowConstraints>
-                        <RowConstraints />
+                        <RowConstraints/>
                     </rowConstraints>
                 </GridPane>
             </VBox>

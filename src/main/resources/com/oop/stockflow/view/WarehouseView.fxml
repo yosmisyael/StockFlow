@@ -146,7 +146,10 @@
                                 </font>
                             </Label>
                         </VBox>
-                        <Label scaleX="1.15" styleClass="stat-icon-blue" text="🏢">
+                        <Label styleClass="stat-icon-blue">
+                            <graphic>
+                                <FontIcon iconLiteral="fas-warehouse" iconSize="28"/>
+                            </graphic>
                             <font>
                                 <Font size="28" />
                             </font>
@@ -170,7 +173,10 @@
                                 </font>
                             </Label>
                         </VBox>
-                        <Label scaleX="1.15" styleClass="stat-icon-green" text="👥">
+                        <Label styleClass="stat-icon-green">
+                            <graphic>
+                                <FontIcon iconLiteral="fas-users" iconSize="28"/>
+                            </graphic>
                             <font>
                                 <Font size="28" />
                             </font>
@@ -194,10 +200,13 @@
                                 </font>
                             </Label>
                         </VBox>
-                        <Label scaleX="1.15" styleClass="stat-icon-orange" text="📊">
+                        <Label styleClass="stat-icon-orange">
                             <font>
                                 <Font size="28" />
                             </font>
+                            <graphic>
+                                <FontIcon iconLiteral="fas-box" iconSize="28"/>
+                            </graphic>
                         </Label>
                     </HBox>
 
@@ -218,7 +227,10 @@
                                 </font>
                             </Label>
                         </VBox>
-                        <Label scaleX="1.15" styleClass="stat-icon-purple" text="📍">
+                        <Label styleClass="stat-icon-purple">
+                            <graphic>
+                                <FontIcon iconLiteral="fas-map-marker-alt" iconSize="28"/>
+                            </graphic>
                             <font>
                                 <Font size="28" />
                             </font>
