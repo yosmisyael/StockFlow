@@ -121,7 +121,7 @@ CREATE TABLE transactions
     transaction_type    transaction_type NOT NULL,
     destination_address TEXT             NULL,
     shipping_method     shipping_method  NOT NULL,
-    product_sku         VARCHAR(50) REFERENCES products (sku)
+    product_sku         INT REFERENCES products (sku)
         ON UPDATE CASCADE ON DELETE CASCADE NOT NULL,
     quantity            INT NOT NULL DEFAULT 0,
     status              transaction_status NOT NULL
@@ -129,3 +129,73 @@ CREATE TABLE transactions
 
 -- Indexes for Faster Lookup
 CREATE INDEX idx_transactions_user ON transactions (user_id);
+
+-- trigger for product quantity
+CREATE OR REPLACE FUNCTION update_product_quantity_v2()
+    RETURNS TRIGGER AS $$
+DECLARE
+    delta_quantity INTEGER := 0;
+BEGIN
+    IF (TG_OP = 'INSERT') THEN
+        IF NEW.status = 'committed' THEN
+            IF NEW.transaction_type = 'inbound' THEN
+                delta_quantity := NEW.quantity;
+            ELSIF NEW.transaction_type = 'outbound' THEN
+                delta_quantity := -NEW.quantity;
+            END IF;
+        END IF;
+
+    ELSIF (TG_OP = 'UPDATE') THEN
+        IF OLD.status = 'committed' THEN
+            IF OLD.transaction_type = 'inbound' THEN
+                delta_quantity := delta_quantity - OLD.quantity;
+            ELSIF OLD.transaction_type = 'outbound' THEN
+                delta_quantity := delta_quantity + OLD.quantity;
+            END IF;
+        END IF;
+
+        IF NEW.status = 'committed' THEN
+            IF NEW.transaction_type = 'inbound' THEN
+                delta_quantity := delta_quantity + NEW.quantity;
+            ELSIF NEW.transaction_type = 'outbound' THEN
+                delta_quantity := delta_quantity - NEW.quantity;
+            END IF;
+        END IF;
+
+        IF OLD.product_sku != NEW.product_sku AND OLD.status != NEW.status THEN
+            RAISE WARNING 'product_sku diubah PADA SAAT status berubah (Transaksi ID: %), trigger kuantitas mungkin tidak akurat.', NEW.id;
+            delta_quantity := 0;
+            IF NEW.status = 'committed' THEN
+                IF NEW.transaction_type = 'inbound' THEN
+                    delta_quantity := NEW.quantity;
+                ELSIF NEW.transaction_type = 'outbound' THEN
+                    delta_quantity := -NEW.quantity;
+                END IF;
+                UPDATE products
+                SET quantity = quantity + delta_quantity
+                WHERE sku = NEW.product_sku;
+                delta_quantity := 0;
+            END IF;
+        END IF;
+
+    END IF;
+
+    IF delta_quantity != 0 THEN
+        UPDATE products
+        SET quantity = quantity + delta_quantity
+        WHERE sku = NEW.product_sku;
+
+    IF (SELECT quantity FROM products WHERE sku = NEW.product_sku) < 0 THEN
+        RAISE EXCEPTION 'product quantity (SKU: %) can not be negative after transaction ID %', NEW.product_sku, NEW.id;
+    END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS transactions_after_insert_update ON transactions;
+CREATE TRIGGER transactions_after_insert_update_v2
+    AFTER INSERT OR UPDATE ON transactions
+    FOR EACH ROW
+EXECUTE FUNCTION update_product_quantity_v2();

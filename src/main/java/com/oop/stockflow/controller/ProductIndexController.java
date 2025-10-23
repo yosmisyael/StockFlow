@@ -7,6 +7,9 @@ import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.Product;
 import com.oop.stockflow.model.Warehouse;
 import com.oop.stockflow.repository.ProductRepository;
+import com.oop.stockflow.repository.TransactionRepository;
+import com.oop.stockflow.utils.DateTimeUtils;
+import com.oop.stockflow.utils.StringUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,33 +29,46 @@ public class ProductIndexController implements Initializable {
     private Warehouse currentWarehouse;
     private AuthenticatedUser currentUser;
 
-    private final ProductRepository productRepository = ProductRepository.getInstance(); // Asumsi Singleton
+    private ProductRepository productRepository = ProductRepository.getInstance();
+    private TransactionRepository transactionRepository = TransactionRepository.getInstance();
 
-    // === FXML Fields ===
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label roleLabel;
+    @FXML
+    private Label dateLabel;
+    @FXML
+    private Label initialLabel;
 
-     @FXML private Label userNameLabel; // Nama di navbar atas
-
-     @FXML private Label sidebarUserNameLabel;
-     @FXML private Label sidebarUserRoleLabel;
-
-     @FXML private Label totalStockLabel;
-     @FXML private Label expirySoonLabel;
-     @FXML private Label lowStockLabel;
-     @FXML private Label pendingTransactionsLabel;
+    // Stats Cards
+    @FXML
+    private Label totalStockLabel;
+    @FXML
+    private Label outboundTodayLabel;
+    @FXML
+    private Label inboundTodayLabel;
+    @FXML
+    private Label lowStockLabel;
 
     // Products Table
-    @FXML private TableView<Product> productsTable;
-    @FXML private TableColumn<Product, Integer> skuColumn;
-    @FXML private TableColumn<Product, String> productNameColumn;
-    @FXML private TableColumn<Product, String> brandColumn;
-    @FXML private TableColumn<Product, Integer> quantityColumn;
-    @FXML private TableColumn<Product, Void> actionsColumn;
+    @FXML
+    private TableView<Product> productsTable;
+    @FXML
+    private TableColumn<Product, Integer> skuColumn;
+    @FXML
+    private TableColumn<Product, String> productNameColumn;
+    @FXML
+    private TableColumn<Product, String> brandColumn;
+    @FXML
+    private TableColumn<Product, Integer> quantityColumn;
+    @FXML
+    private TableColumn<Product, Void> actionsColumn;
 
     private ObservableList<Product> productList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("ProductIndexController initializing (FXML injected)...");
         setupTableColumns();
         productsTable.setItems(productList);
     }
@@ -63,61 +79,58 @@ public class ProductIndexController implements Initializable {
 
         if (this.currentUser == null) {
             System.err.println("Error: AuthenticatedUser is required for Product Index.");
-            handleLogout(null);
             return;
         }
 
-        loadUserData();
-        loadStatistics();
+        loadPageContext();
+        loadStats();
         loadProductData();
     }
 
-    /**
-     * Mengisi data pengguna di UI (misalnya, sidebar).
-     */
-    private void loadUserData() {
-        // if (currentUser != null && sidebarUserNameLabel != null && sidebarUserRoleLabel != null) {
-        //    sidebarUserNameLabel.setText(currentUser.getName());
-        //    sidebarUserRoleLabel.setText(currentUser.getUserType().toString()); // Sesuaikan
-        // }
+    private void loadStats() {
+        // count inbound today
+        int countInboundToday = 0;
+        countInboundToday = transactionRepository.countTodayInboundTransaction();
+        inboundTodayLabel.setText(String.valueOf(countInboundToday));
+
+        // count outbound today
+        int countOutboundToday = 0;
+        countOutboundToday = transactionRepository.countTodayOutboundTransaction();
+        outboundTodayLabel.setText(String.valueOf(countOutboundToday));
+
+        // count low stock
+        int countLowStock = 0;
+        countLowStock = productRepository.countLowStockByWarehouseId(currentWarehouse.getId());
+        lowStockLabel.setText(String.valueOf(countLowStock));
+
+        // calculate stock
+        int countStock = 0;
+        countStock = productRepository.countProductsByWarehouseId(currentWarehouse.getId());
+        totalStockLabel.setText(String.valueOf(countStock));
     }
 
-    /**
-     * Placeholder untuk memuat data statistik ke kartu di atas.
-     */
-    private void loadStatistics() {
-        System.out.println("Placeholder: Loading statistics...");
-        // TODO: Panggil repositori untuk mendapatkan data statistik
-        // Contoh:
-        // int totalItems = productRepository.getTotalStockCount(currentWarehouse.getId());
-        // int expiring = productRepository.getExpiringSoonCount(currentWarehouse.getId(), 30);
-        // ...
-        // totalStockLabel.setText(String.valueOf(totalItems));
-        // expirySoonLabel.setText(String.valueOf(expiring));
-    }
-
-    /**
-     * Mengatur CellValueFactory dan CellFactory untuk kolom tabel produk.
-     */
     private void setupTableColumns() {
-        // Sesuaikan "property" dengan nama getter di kelas Product Anda
-        // (misal, getSku() -> "sku", getName() -> "name")
         skuColumn.setCellValueFactory(new PropertyValueFactory<>("sku"));
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         brandColumn.setCellValueFactory(new PropertyValueFactory<>("brand"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
-        // Setup kolom Aksi (dengan tombol Edit/Delete)
         actionsColumn.setCellFactory(column -> new TableCell<Product, Void>() {
+            private final Button showBtn = new Button("Show");
             private final Button editBtn = new Button("Edit");
             private final Button deleteBtn = new Button("Delete");
-            private final HBox pane = new HBox(8, editBtn, deleteBtn); // Spasi 8
+            private final HBox pane = new HBox(8, showBtn, editBtn, deleteBtn);
 
             {
-                pane.setAlignment(Pos.CENTER);
-                // Terapkan style class dari CSS Anda
+                pane.setAlignment(Pos.CENTER_LEFT);
+                showBtn.getStyleClass().add("action-button-show");
                 editBtn.getStyleClass().add("action-button-edit");
                 deleteBtn.getStyleClass().add("action-button-delete");
+
+                showBtn.setOnAction(event -> {
+                    Product product = getTableView().getItems().get(getIndex());
+                    handleShowProduct(product);
+                });
 
                 editBtn.setOnAction(event -> {
                     Product product = getTableView().getItems().get(getIndex());
@@ -138,9 +151,6 @@ public class ProductIndexController implements Initializable {
         });
     }
 
-    /**
-     * Memuat data produk dari repositori dan menampilkannya di tabel.
-     */
     private void loadProductData() {
         List<Product> productsFromDb = productRepository.getAllProductsByWarehouseId(currentWarehouse.getId());
         productList.setAll(productsFromDb);
@@ -148,7 +158,6 @@ public class ProductIndexController implements Initializable {
     }
 
     // action handlers
-
     @FXML
     private void handleAddNewProduct(ActionEvent event) {
         System.out.println("Add New Product button clicked.");
@@ -170,6 +179,7 @@ public class ProductIndexController implements Initializable {
         // TODO: Implementasi logika pagination - pergi ke halaman 2
         showAlert(Alert.AlertType.INFORMATION, "Action", "Pagination (Page 2) not implemented yet.");
     }
+
     @FXML
     private void handlePage3(ActionEvent event) { // Contoh untuk tombol halaman 3
         System.out.println("Page 3 button clicked.");
@@ -185,12 +195,21 @@ public class ProductIndexController implements Initializable {
     }
 
     private void handleEditProduct(Product product) {
-         StageManager.getInstance().navigateWithData(
-              View.PRODUCT_EDIT,
-              "Edit Product: " + product.getName(),
-              (ProductEditController controller) -> controller.initData(currentWarehouse, currentUser, product)
-         );
+        StageManager.getInstance().navigateWithData(
+                View.PRODUCT_EDIT,
+                "Edit Product: " + product.getName(),
+                (ProductEditController controller) -> controller.initData(currentWarehouse, currentUser, product)
+        );
     }
+
+    private void handleShowProduct(Product product) {
+        StageManager.getInstance().navigateWithData(
+                View.PRODUCT_SHOW,
+                "Product Detail of " + product.getName(),
+                (ProductShowController controller) -> controller.initData(currentWarehouse, currentUser, product)
+        );
+    }
+
 
     private void handleDeleteProduct(Product product) {
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
@@ -259,18 +278,9 @@ public class ProductIndexController implements Initializable {
     }
 
     @FXML
-    private void goToDashboard() {
-        StageManager.getInstance().navigateWithData(
-                View.WAREHOUSE_DASHBOARD,
-                "Warehouse " + currentWarehouse + " Dashboard",
-                (WarehouseDashboardController controller) -> { controller.initData(currentWarehouse, currentUser); }
-        );
-    }
-
-    @FXML
-    private void handleLogout(ActionEvent event) {
-        System.out.println("Logging out...");
+    private void handleLogout() {
         SessionManager.getInstance().endSession();
+        StageManager.getInstance().navigate(View.LOGIN, "Login");
     }
 
     // helper methods
@@ -280,5 +290,13 @@ public class ProductIndexController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    // helper methods
+    private void loadPageContext() {
+        nameLabel.setText(currentUser.getName());
+        roleLabel.setText(currentUser.getUserType().getDbValue());
+        dateLabel.setText(DateTimeUtils.getCurrentDate());
+        initialLabel.setText(StringUtils.getInitial(currentUser.getName()));
     }
 }

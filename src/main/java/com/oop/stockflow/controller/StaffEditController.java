@@ -7,15 +7,14 @@ import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.Staff;
 import com.oop.stockflow.model.Warehouse;
 import com.oop.stockflow.repository.StaffRepository;
+import com.oop.stockflow.utils.DateTimeUtils;
+import com.oop.stockflow.utils.StringUtils;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class StaffEditController {
@@ -25,11 +24,20 @@ public class StaffEditController {
 
     private StaffRepository staffRepository = StaffRepository.getInstance();
 
-    @FXML private Label userNameLabel;
-    @FXML private Label userRole;
-    @FXML private TextField nameField;
-    @FXML private TextField emailField;
-    @FXML private PasswordField passwordField;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label roleLabel;
+    @FXML
+    private Label dateLabel;
+    @FXML
+    private Label initialLabel;
+    @FXML
+    private TextField nameField;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private PasswordField passwordField;
 
     public void initData(Warehouse warehouse, AuthenticatedUser user, Staff staff) {
         this.currentWarehouse = warehouse;
@@ -41,10 +49,8 @@ public class StaffEditController {
             handleCancel();
             return;
         }
-
-        // Isi form dengan data yang ada
         populateForm();
-        loadUserData();
+        loadPageContext();
     }
 
     /**
@@ -108,17 +114,6 @@ public class StaffEditController {
         }
     }
 
-    /**
-     * Memuat data pengguna yang login di sidebar.
-     */
-    private void loadUserData() {
-        AuthenticatedUser user = SessionManager.getInstance().getCurrentUser();
-        if (user != null) {
-            userNameLabel.setText(user.getName());
-            userRole.setText(user.getUserType().toString());
-        }
-    }
-
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -127,12 +122,15 @@ public class StaffEditController {
         alert.showAndWait();
     }
 
+    // navigations
     @FXML
-    private void goToDashboard() {
+    private void goToWarehouseDashboard() {
         StageManager.getInstance().navigateWithData(
-            View.WAREHOUSE_DASHBOARD,
-            "Dashboard",
-            (WarehouseDashboardController controller) -> { controller.initData(currentWarehouse, currentUser); }
+                View.WAREHOUSE_DASHBOARD,
+                "Dashboard",
+                (WarehouseDashboardController controller) -> {
+                    controller.initData(currentWarehouse, currentUser);
+                }
         );
     }
 
@@ -141,7 +139,9 @@ public class StaffEditController {
         StageManager.getInstance().navigateWithData(
                 View.STAFF_INDEX,
                 "Staff Management",
-                (StaffIndexController controller) -> { controller.initData(currentWarehouse, currentUser); }
+                (StaffIndexController controller) -> {
+                    controller.initData(currentWarehouse, currentUser);
+                }
         );
     }
 
@@ -157,6 +157,7 @@ public class StaffEditController {
         );
     }
 
+    // action handlers
     @FXML
     private void handleCancel() {
         goToStaffMenu();
@@ -164,5 +165,15 @@ public class StaffEditController {
 
     @FXML
     private void handleLogout() {
+        SessionManager.getInstance().endSession();
+        StageManager.getInstance().navigate(View.LOGIN, "Login");
+    }
+
+    // helper methods
+    private void loadPageContext() {
+        nameLabel.setText(currentUser.getName());
+        roleLabel.setText(currentUser.getUserType().getDbValue());
+        dateLabel.setText(DateTimeUtils.getCurrentDate());
+        initialLabel.setText(StringUtils.getInitial(currentUser.getName()));
     }
 }

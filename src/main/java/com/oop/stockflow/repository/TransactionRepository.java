@@ -91,25 +91,46 @@ public class TransactionRepository {
         return transactions;
     }
 
-    public Transaction getTransactionDetailById(long transactionId) {
-        String sql = "SELECT id, user_id, date, transaction_type, destination_address, shipping_method, product_sku, quantity, status " +
-                "FROM transactions WHERE id = ?";
+    public int countTodayOutboundTransaction() {
+        String sql = "SELECT COUNT(*) FROM transactions " +
+                "WHERE transaction_type = 'outbound'::transaction_type " +
+                "AND date >= CURRENT_DATE " +
+                "AND date < CURRENT_DATE + interval '1 day'";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setLong(1, transactionId);
-
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToTransaction(rs);
+                    return rs.getInt(1);
                 }
             }
         } catch (SQLException e) {
             System.err.println("[ERROR] " + e.getMessage());
             e.printStackTrace();
         }
-        return null;
+        return -1;
+    }
+
+    public int countTodayInboundTransaction() {
+        String sql = "SELECT COUNT(*) FROM transactions " +
+                "WHERE transaction_type = 'inbound'::transaction_type " +
+                "AND date >= CURRENT_DATE " +
+                "AND date < CURRENT_DATE + interval '1 day'";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // Ambil hasil COUNT
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERROR] " + e.getMessage());
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     public boolean updateTransactionStatus(long transactionId, TransactionStatus newStatus) {

@@ -7,6 +7,8 @@ import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.UserType;
 import com.oop.stockflow.model.WarehouseStatus;
 import com.oop.stockflow.repository.WarehouseRepository;
+import com.oop.stockflow.utils.DateTimeUtils;
+import com.oop.stockflow.utils.StringUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,19 +16,40 @@ import javafx.scene.control.*;
 import java.io.IOException;
 
 public class WarehouseCreateController {
+    // data
+    AuthenticatedUser currentUser;
 
-    @FXML private TextField warehouseNameField;
-    @FXML private TextArea addressField;
-    @FXML private TextField cityField;
-    @FXML private TextField stateField;
-    @FXML private TextField postalCodeField;
-    @FXML private TextField storageCapacityKgField;
-    @FXML private TextField storageCapacityM3Field;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label roleLabel;
+    @FXML
+    private Label dateLabel;
+    @FXML
+    private Label initialLabel;
+    @FXML
+    private TextField warehouseNameField;
+    @FXML
+    private TextArea addressField;
+    @FXML
+    private TextField cityField;
+    @FXML
+    private TextField stateField;
+    @FXML
+    private TextField postalCodeField;
+    @FXML
+    private TextField storageCapacityKgField;
+    @FXML
+    private TextField storageCapacityM3Field;
 
-    @FXML private RadioButton activeStatus;
-    @FXML private RadioButton inactiveStatus;
-    @FXML private RadioButton maintenanceStatus;
-    @FXML private ToggleGroup statusToggleGroup;
+    @FXML
+    private RadioButton activeStatus;
+    @FXML
+    private RadioButton inactiveStatus;
+    @FXML
+    private RadioButton maintenanceStatus;
+    @FXML
+    private ToggleGroup statusToggleGroup;
 
 
     private final WarehouseRepository warehouseRepository = WarehouseRepository.getInstance();
@@ -38,8 +61,20 @@ public class WarehouseCreateController {
         maintenanceStatus.setUserData(WarehouseStatus.MAINTENANCE);
     }
 
+    public void initData(AuthenticatedUser user) {
+        currentUser = user;
+        loadPageContext();
+    }
+
+    // action handlers
     @FXML
-    private void onRegisterWarehouse() {
+    private void handleLogout() {
+        SessionManager.getInstance().endSession();
+        StageManager.getInstance().navigate(View.LOGIN, "Login");
+    }
+
+    @FXML
+    private void handleRegisterWarehouse() {
         String name = warehouseNameField.getText().trim();
         String address = addressField.getText().trim();
         String city = cityField.getText().trim();
@@ -77,7 +112,11 @@ public class WarehouseCreateController {
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Success", "Warehouse registered successfully!");
             clearForm();
-            StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
+            StageManager.getInstance().navigateWithData(
+                    View.WAREHOUSE_INDEX,
+                    "Warehouse List",
+                    (WarehouseController controller) -> { controller.initData(currentUser); }
+            );
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to register warehouse.");
         }
@@ -112,7 +151,19 @@ public class WarehouseCreateController {
 
     @FXML
     private void goToWarehouseList(ActionEvent event) throws IOException {
-        StageManager.getInstance().navigate(View.WAREHOUSE_INDEX, "Warehouse List");
+        StageManager.getInstance().navigateWithData(
+                View.WAREHOUSE_INDEX,
+                "Warehouse List",
+                (WarehouseController controller) -> { controller.initData(currentUser); }
+        );
+    }
+
+    // helper methods
+    private void loadPageContext() {
+        nameLabel.setText(currentUser.getName());
+        roleLabel.setText(currentUser.getUserType().getDbValue());
+        dateLabel.setText(DateTimeUtils.getCurrentDate());
+        initialLabel.setText(StringUtils.getInitial(currentUser.getName()));
     }
 
 }

@@ -20,15 +20,6 @@
     -fx-background-color: transparent;
 }
 
-/* Page Headers */
-.page-title {
-    -fx-text-fill: #111827;
-}
-
-.page-subtitle {
-    -fx-text-fill: #6b7280;
-}
-
 /* Stats Cards */
 .stat-card {
     -fx-background-color: white;

@@ -5,6 +5,8 @@ import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
 import com.oop.stockflow.model.*; // Import model & enum
 import com.oop.stockflow.repository.ProductRepository;
+import com.oop.stockflow.utils.DateTimeUtils;
+import com.oop.stockflow.utils.StringUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -22,42 +24,38 @@ public class ProductEditController {
     // === Repositori ===
     private final ProductRepository productRepository = ProductRepository.getInstance();
 
-    // === FXML Fields ===
-    // Sidebar User Info (Keep if they exist in FXML)
-    @FXML private Label userNameLabel;
-    @FXML private Label userRole;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label roleLabel;
+    @FXML
+    private Label dateLabel;
+    @FXML
+    private Label initialLabel;
 
-    // Form Fields - Product Type (Disabled)
     @FXML private RadioButton rbDryGood;
     @FXML private RadioButton rbFresh;
 
-    // Form Fields - Basic Info
-    @FXML private TextField txtSku; // Read-only
+    @FXML private TextField txtSku;
     @FXML private TextField txtName;
     @FXML private TextField txtBrand;
     @FXML private TextArea txtDescription;
 
-    // Form Fields - Pricing & Measurements
     @FXML private TextField txtPurchasePrice;
     @FXML private TextField txtWeight;
     @FXML private TextField txtVolume;
-    // Quantity field removed from FXML/Controller
 
-    // Form Fields - Dry Good Specific (Container VBox)
     @FXML private VBox dryGoodFields;
     @FXML private TextField txtReorderPoint;
     @FXML private TextField txtReorderQuantity;
     @FXML private TextField txtUnitsPerCase;
 
-    // Form Fields - Fresh Product Specific (Container VBox)
     @FXML private VBox freshFields;
     @FXML private TextField txtRequiredTemp;
     @FXML private TextField txtDaysToAlert;
 
-    // Action Buttons
     @FXML private Button btnSave;
     @FXML private Button btnCancel;
-
 
     /**
      * Menerima data dari controller sebelumnya dan setup UI.
@@ -67,16 +65,14 @@ public class ProductEditController {
         this.currentUser = user;
         this.productToEdit = product;
 
-        // Basic validation on received data
         if (this.currentUser == null || this.productToEdit == null || this.currentWarehouse == null) {
             System.err.println("Error: User, Product, and Warehouse data are required for editing.");
             showAlert(Alert.AlertType.ERROR, "Initialization Error", "Cannot load product data for editing.");
-            // Try to navigate back gracefully if possible
             navigateToProductList();
             return;
         }
 
-        // Setup UI based on the product
+        loadPageContext();
         populateForm();
         setupFieldVisibility();
     }
@@ -284,5 +280,13 @@ public class ProductEditController {
                     controller.initData(currentWarehouse, currentUser);
                 }
         );
+    }
+
+    // helper methods
+    private void loadPageContext() {
+        nameLabel.setText(currentUser.getName());
+        roleLabel.setText(currentUser.getUserType().getDbValue());
+        dateLabel.setText(DateTimeUtils.getCurrentDate());
+        initialLabel.setText(StringUtils.getInitial(currentUser.getName()));
     }
 }

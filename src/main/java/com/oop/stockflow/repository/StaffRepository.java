@@ -96,6 +96,24 @@ public class StaffRepository {
         return null;
     }
 
+    public int countStaffByWarehouseId(int warehouseId) {
+        String sql = "SELECT COUNT(*) FROM staff WHERE warehouse_id = ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, warehouseId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERROR] " + e.getMessage());
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     /**
      * Mengupdate detail staf (nama, email, dan/atau password) secara opsional.
      * Kolom warehouse_id TIDAK diubah oleh method ini.

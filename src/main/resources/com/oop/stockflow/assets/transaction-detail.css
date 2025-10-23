@@ -4,12 +4,6 @@
     -fx-font-family: "Segoe UI", "Arial", sans-serif;
 }
 
-/* Main Content */
-.main-content {
-    -fx-padding: 0;
-    -fx-spacing: 20;
-}
-
 .header {
     -fx-background-color: white;
     -fx-padding: 20 30 20 30;
@@ -43,20 +37,6 @@
     -fx-background-color: #f9fafb;
 }
 
-.page-header {
-    -fx-padding: 30 30 0 30;
-}
-
-.page-title {
-    -fx-font-size: 32px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #111827;
-}
-
-.page-subtitle {
-    -fx-font-size: 14px;
-    -fx-text-fill: #6b7280;
-}
 
 /* Transaction Header Card */
 .transaction-header-card {

@@ -117,6 +117,54 @@ public class ProductRepository {
         return products;
     }
 
+    public int countProductsByWarehouseId(int warehouseId) {
+        String sql = "SELECT COUNT(*) FROM products WHERE warehouse_id = ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, warehouseId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERROR] " + e.getMessage());
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     * Counts the number of products considered "low stock" in a specific warehouse.
+     * Currently, only checks the condition for 'dry good' products (quantity < reorder_point).
+     * The condition for 'fresh' products cannot be implemented as stated without an expiry_date column.
+     *
+     * @param warehouseId The ID of the warehouse.
+     * @return The count of low stock products, or -1 if an error occurs.
+     */
+    public int countLowStockByWarehouseId(int warehouseId) {
+        String sql = "SELECT COUNT(*) FROM products " +
+                "WHERE warehouse_id = ? " +
+                "AND (product_type = 'dry good'::product_type AND quantity < reorder_point)";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, warehouseId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERROR] " + e.getMessage());
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     /**
      * Retrieves a single product by its SKU.
      * Note: Assumes SKU in Java is int, converts to String for DB query.

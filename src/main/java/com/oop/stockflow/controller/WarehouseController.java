@@ -1,19 +1,18 @@
 package com.oop.stockflow.controller;
 
-import com.oop.stockflow.app.SceneManager;
 import com.oop.stockflow.app.SessionManager;
 import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
 import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.Warehouse;
+import com.oop.stockflow.repository.ProductRepository;
+import com.oop.stockflow.repository.StaffRepository;
 import com.oop.stockflow.repository.WarehouseRepository;
+import com.oop.stockflow.utils.StringUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -21,7 +20,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,31 +28,50 @@ public class WarehouseController {
     @FXML
     private GridPane warehouseContainer;
     @FXML
-    private Label userNameLabel;
+    private Label nameLabel;
     @FXML
-    private Label userRole;
+    private Label roleLabel;
+    @FXML
+    private Label initialLabel;
 
     final private WarehouseRepository warehouseRepository;
+    final private ProductRepository productRepository;
+    final private StaffRepository staffRepository;
 
     private AuthenticatedUser currentUser;
 
     public void initData(AuthenticatedUser user) {
         currentUser = user;
+        loadPageContext();
         loadWarehouses();
-        userNameLabel.setText(user.getName());
-        userRole.setText(user.getUserType().getDbValue());
     }
 
     public WarehouseController() {
         this.warehouseRepository = WarehouseRepository.getInstance();
+        this.productRepository = ProductRepository.getInstance();
+        this.staffRepository = StaffRepository.getInstance();
     }
 
+    // navigations
     @FXML
     private void goToAddWarehouse(ActionEvent event) throws IOException {
-        StageManager.getInstance().navigate(View.WAREHOUSE_CREATE, "Add Warehouse");
-
+        StageManager.getInstance().navigateWithData(
+                View.WAREHOUSE_CREATE,
+                "Add Warehouse",
+                (WarehouseCreateController controller) -> {
+                    controller.initData(currentUser);
+                }
+        );
     }
 
+    // action handlers
+    @FXML
+    private void handleLogout() {
+        SessionManager.getInstance().endSession();
+        StageManager.getInstance().navigate(View.LOGIN, "Login");
+    }
+
+    // helper methods
     private void loadWarehouses() {
         List<Warehouse> warehouses = warehouseRepository.getAllWarehouses();
 
@@ -87,7 +104,7 @@ public class WarehouseController {
 
         // Top sections
         // Left initials label
-        Label initials = new Label(getInitials(warehouse.getName()));
+        Label initials = new Label(StringUtils.getInitial(warehouse.getName()));
         initials.getStyleClass().add("warehouse-icon-blue");
         initials.setFont(Font.font("System Bold", 30));
         initials.setAlignment(Pos.CENTER);
@@ -124,15 +141,19 @@ public class WarehouseController {
         headerBox.setFillHeight(false);
 
         // Stats Section
+        // calculate staff
+        int totalStaff = staffRepository.countStaffByWarehouseId(warehouse.getId());
         VBox staffBox = new VBox(4,
-                styledLabel("24", 28, true, "warehouse-stat-value"),
+                styledLabel(String.valueOf(totalStaff), 28, true, "warehouse-stat-value"),
                 styledLabel("Staff", 12, false, "warehouse-stat-label")
         );
         staffBox.setAlignment(Pos.CENTER);
         HBox.setHgrow(staffBox, Priority.ALWAYS);
 
+        // calculate stock
+        int stockTotal = productRepository.countProductsByWarehouseId(warehouse.getId());
         VBox stockBox = new VBox(4,
-                styledLabel("4,523", 28, true, "warehouse-stat-value"),
+                styledLabel(String.valueOf(stockTotal), 28, true, "warehouse-stat-value"),
                 styledLabel("Stock Items", 12, false, "warehouse-stat-label")
         );
         stockBox.setAlignment(Pos.CENTER);
@@ -168,13 +189,9 @@ public class WarehouseController {
         return lbl;
     }
 
-    private String getInitials(String name) {
-        String[] parts = name.trim().split("\\s+");
-        if (parts.length >= 2) {
-            return (parts[0].substring(0, 1) + parts[1].substring(0, 1)).toUpperCase();
-        } else if (parts.length == 1 && parts[0].length() > 0) {
-            return parts[0].substring(0, 1).toUpperCase();
-        }
-        return "W";
+    private void loadPageContext() {
+        nameLabel.setText(currentUser.getName());
+        roleLabel.setText(currentUser.getUserType().getDbValue());
+        initialLabel.setText(StringUtils.getInitial(currentUser.getName()));
     }
 }

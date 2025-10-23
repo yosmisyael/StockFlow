@@ -4,23 +4,12 @@
     -fx-font-family: "Segoe UI", Arial, sans-serif;
 }
 
-/* Main Content */
-.main-content {
-    -fx-background-color: #f5f7fa;
-}
-
 .header {
     -fx-background-color: white;
     -fx-padding: 20 32;
     -fx-spacing: 16;
     -fx-border-color: #e5e7eb;
     -fx-border-width: 0 0 1 0;
-}
-
-.page-title {
-    -fx-font-size: 24;
-    -fx-font-weight: bold;
-    -fx-text-fill: #111827;
 }
 
 .notification-badge {

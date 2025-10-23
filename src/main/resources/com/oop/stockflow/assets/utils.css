@@ -124,3 +124,20 @@
     -fx-text-fill: #6b7280;
     -fx-font-size: 14px;
 }
+
+/* Page Header */
+.page-title {
+    -fx-text-fill: #111827;
+    -fx-font-size: 32px;
+    -fx-font-weight: 700;
+}
+
+.page-subtitle {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 15px;
+}
+
+/* Main Content */
+.main-content {
+    -fx-background-color: #f8f9fa;
+}

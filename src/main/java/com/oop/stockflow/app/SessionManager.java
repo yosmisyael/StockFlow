@@ -52,7 +52,7 @@ public final class SessionManager {
      * @return true if the session was deleted from DB (or no user was logged in), false if DB deletion failed.
      */
     public boolean endSession() {
-        boolean deletedFromDb = true; // Assume success if no user logged in
+        boolean deletedFromDb = true;
         if (this.currentUser != null) {
             System.out.println("[INFO] Ending session for user: " + currentUser.getName());
             deletedFromDb = authRepository.deleteSession(currentUser.getId());

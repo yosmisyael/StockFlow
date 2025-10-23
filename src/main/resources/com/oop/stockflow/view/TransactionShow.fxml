@@ -17,7 +17,10 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.layout.StackPane?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<BorderPane styleClass="root" stylesheets="@../assets/topbar.css, @../assets/sidebar.css, @../assets/transaction-detail.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.TransactionShowController">
+<BorderPane styleClass="root"
+            stylesheets="@../assets/topbar.css, @../assets/sidebar.css, @../assets/utils.css, @../assets/transaction-detail.css"
+            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.oop.stockflow.controller.TransactionShowController">
 
     <!-- Top Navigation Bar -->
     <top>
@@ -113,7 +116,8 @@
                     <Insets top="12"/>
                 </padding>
 
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="Transaction Index">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active"
+                        text="Transaction Index">
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
@@ -174,40 +178,41 @@
     <!-- Main Content -->
     <center>
         <VBox styleClass="main-content">
-            <!-- Header -->
-            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="header">
-                <Region HBox.hgrow="ALWAYS" />
-                <Button onAction="#goToTransactionIndex" styleClass="back-button" text="← Back" />
-            </HBox>
-
             <!-- Page Title -->
-            <VBox spacing="8" styleClass="page-header">
-            <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="297.0" style="-fx-spacing: 2;">
-               <children>
-                      <Label styleClass="breadcrumb" text="Transactions" />
-                      <Label styleClass="breadcrumb-separator" text="›" />
-                      <Label styleClass="breadcrumb" text="Transaction Details" />
-               </children>
+            <HBox styleClass="content-container">
+                <VBox spacing="8">
+                    <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="297.0" style="-fx-spacing: 2;">
+                        <children>
+                            <Label styleClass="breadcrumb" text="Transactions"/>
+                            <Label styleClass="breadcrumb-separator" text="›"/>
+                            <Label styleClass="breadcrumb" text="Transaction Details"/>
+                        </children>
+                    </HBox>
+                    <Label styleClass="page-title" text="Transaction Details"/>
+                    <Label styleClass="page-subtitle" text="View comprehensive information about this transaction"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <HBox alignment="CENTER_LEFT" spacing="10" styleClass="header">
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button onAction="#goToTransactionIndex" styleClass="back-button" text="← Back"/>
+                </HBox>
             </HBox>
-                <Label styleClass="page-title" text="Transaction Details" />
-                <Label styleClass="page-subtitle" text="View comprehensive information about this transaction" />
-            </VBox>
 
             <!-- Transaction Header Card -->
             <HBox alignment="CENTER_LEFT" styleClass="transaction-header-card">
                 <VBox spacing="5">
-                    <Label fx:id="transactionId" styleClass="transaction-id" text="Transaction ID" />
+                    <Label fx:id="transactionId" styleClass="transaction-id" text="Transaction ID"/>
                     <HBox spacing="15">
                         <HBox alignment="CENTER_LEFT" spacing="5">
-                            <Label fx:id="transactionDate" styleClass="transaction-meta" text="October 22, 2025" />
+                            <Label fx:id="transactionDate" styleClass="transaction-meta" text="October 22, 2025"/>
                         </HBox>
                     </HBox>
                 </VBox>
-                <Region HBox.hgrow="ALWAYS" />
-                <Label fx:id="statusHeader" text="Committed" />
-            <VBox.margin>
-               <Insets left="30.0" right="30.0" />
-            </VBox.margin>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="statusHeader" text="Committed"/>
+                <VBox.margin>
+                    <Insets left="30.0" right="30.0"/>
+                </VBox.margin>
             </HBox>
 
             <!-- Content Grid -->
@@ -218,61 +223,76 @@
                         <!-- Transaction Information -->
                         <VBox spacing="15" styleClass="info-card" HBox.hgrow="ALWAYS">
                             <HBox alignment="CENTER_LEFT" spacing="8">
-                                <Label styleClass="section-title" text="Transaction Information" />
+                                <Label styleClass="section-title" text="Transaction Information"/>
                             </HBox>
 
                             <GridPane hgap="20" styleClass="info-grid" vgap="15">
-                                <Label style="-fx-font-size: 14;" styleClass="label-key" text="Transaction Type:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                <Label fx:id="transactionType" styleClass="label-value, badge-outbound" text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <Label style="-fx-font-size: 14;" styleClass="label-key" text="Transaction Type:"
+                                       GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                <Label fx:id="transactionType" styleClass="label-value, badge-outbound" text="N/A"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-                                <Label styleClass="label-key" text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                <Label fx:id="status" style="-fx-font-size: 16;" styleClass="label-value, badge-shipped" text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="27.0" />
-                           </font></Label>
+                                <Label styleClass="label-key" text="Status:" GridPane.columnIndex="0"
+                                       GridPane.rowIndex="1"/>
+                                <Label fx:id="status" style="-fx-font-size: 16;" styleClass="label-value, badge-shipped"
+                                       text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <font>
+                                        <Font size="27.0"/>
+                                    </font>
+                                </Label>
 
-                                <Label styleClass="label-key" text="Shipping Method:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                <Label fx:id="shippingMethod" styleClass="label-value" text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <columnConstraints>
-                           <ColumnConstraints />
-                           <ColumnConstraints />
-                        </columnConstraints>
-                        <rowConstraints>
-                           <RowConstraints />
-                           <RowConstraints />
-                           <RowConstraints />
-                        </rowConstraints>
+                                <Label styleClass="label-key" text="Shipping Method:" GridPane.columnIndex="0"
+                                       GridPane.rowIndex="2"/>
+                                <Label fx:id="shippingMethod" styleClass="label-value" text="N/A"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                <columnConstraints>
+                                    <ColumnConstraints/>
+                                    <ColumnConstraints/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                </rowConstraints>
                             </GridPane>
                         </VBox>
 
                         <!-- Product Information -->
                         <VBox spacing="15" styleClass="info-card" HBox.hgrow="ALWAYS">
                             <HBox alignment="CENTER_LEFT" spacing="8">
-                                <Label styleClass="section-title" text="Product Information" />
+                                <Label styleClass="section-title" text="Product Information"/>
                             </HBox>
 
                             <GridPane hgap="20" styleClass="info-grid" vgap="15">
-                                <Label styleClass="label-key" text="Product Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                <Label fx:id="productName" styleClass="label-value" text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <Label styleClass="label-key" text="Product Name:" GridPane.columnIndex="0"
+                                       GridPane.rowIndex="0"/>
+                                <Label fx:id="productName" styleClass="label-value" text="N/A" GridPane.columnIndex="1"
+                                       GridPane.rowIndex="0"/>
 
-                                <Label styleClass="label-key" text="Product SKU:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                <Label fx:id="productSku" styleClass="label-value, sku-value" text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label styleClass="label-key" text="Product SKU:" GridPane.columnIndex="0"
+                                       GridPane.rowIndex="1"/>
+                                <Label fx:id="productSku" styleClass="label-value, sku-value" text="N/A"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-                                <Label styleClass="label-key" text="Brand:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                <Label fx:id="productBrand" styleClass="label-value" text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label styleClass="label-key" text="Brand:" GridPane.columnIndex="0"
+                                       GridPane.rowIndex="2"/>
+                                <Label fx:id="productBrand" styleClass="label-value" text="N/A" GridPane.columnIndex="1"
+                                       GridPane.rowIndex="2"/>
 
-                                <Label styleClass="label-key" text="Product Type:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                                <Label fx:id="productType" styleClass="label-value" text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <columnConstraints>
-                           <ColumnConstraints />
-                           <ColumnConstraints />
-                        </columnConstraints>
-                        <rowConstraints>
-                           <RowConstraints />
-                           <RowConstraints />
-                           <RowConstraints />
-                           <RowConstraints />
-                        </rowConstraints>
+                                <Label styleClass="label-key" text="Product Type:" GridPane.columnIndex="0"
+                                       GridPane.rowIndex="3"/>
+                                <Label fx:id="productType" styleClass="label-value" text="N/A" GridPane.columnIndex="1"
+                                       GridPane.rowIndex="3"/>
+                                <columnConstraints>
+                                    <ColumnConstraints/>
+                                    <ColumnConstraints/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                </rowConstraints>
                             </GridPane>
                         </VBox>
                     </HBox>
@@ -282,38 +302,44 @@
                         <!-- Destination Address -->
                         <VBox spacing="15" styleClass="info-card" HBox.hgrow="ALWAYS">
                             <HBox alignment="CENTER_LEFT" spacing="8">
-                                <Label styleClass="section-title" text="Destination Address" />
+                                <Label styleClass="section-title" text="Destination Address"/>
                             </HBox>
 
                             <VBox spacing="5" styleClass="address-content">
-                                <Label fx:id="destinationAddress" styleClass="address-line" text="N/A" />
+                                <Label fx:id="destinationAddress" styleClass="address-line" text="N/A"/>
                             </VBox>
                         </VBox>
 
                         <!-- Quantity & Pricing -->
                         <VBox spacing="15" styleClass="info-card" HBox.hgrow="ALWAYS">
                             <HBox alignment="CENTER_LEFT" spacing="8">
-                                <Label styleClass="section-title" text="Quantity &amp; Pricing" />
+                                <Label styleClass="section-title" text="Quantity &amp; Pricing"/>
                             </HBox>
 
                             <GridPane hgap="20" styleClass="info-grid" vgap="15">
-                                <Label styleClass="label-key" text="Quantity:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                <Label fx:id="quantity" styleClass="label-value, label-value-bold" text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <Label styleClass="label-key" text="Quantity:" GridPane.columnIndex="0"
+                                       GridPane.rowIndex="0"/>
+                                <Label fx:id="quantity" styleClass="label-value, label-value-bold" text="N/A"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-                                <Label styleClass="label-key" text="Purchase Price:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                <Label fx:id="purchasePrice" styleClass="label-value" text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label styleClass="label-key" text="Purchase Price:" GridPane.columnIndex="0"
+                                       GridPane.rowIndex="1"/>
+                                <Label fx:id="purchasePrice" styleClass="label-value" text="N/A"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-                                <Label styleClass="label-key" text="Total Value:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                <Label fx:id="totalValue" styleClass="label-value, label-value-total" text="N/A" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <columnConstraints>
-                           <ColumnConstraints />
-                           <ColumnConstraints />
-                        </columnConstraints>
-                        <rowConstraints>
-                           <RowConstraints />
-                           <RowConstraints />
-                           <RowConstraints />
-                        </rowConstraints>
+                                <Label styleClass="label-key" text="Total Value:" GridPane.columnIndex="0"
+                                       GridPane.rowIndex="2"/>
+                                <Label fx:id="totalValue" styleClass="label-value, label-value-total" text="N/A"
+                                       GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                <columnConstraints>
+                                    <ColumnConstraints/>
+                                    <ColumnConstraints/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                    <RowConstraints/>
+                                </rowConstraints>
                             </GridPane>
                         </VBox>
                     </HBox>
@@ -321,22 +347,22 @@
                     <!-- Physical Specifications -->
                     <VBox spacing="20" styleClass="info-card">
                         <HBox alignment="CENTER_LEFT" spacing="8">
-                            <Label styleClass="section-title" text="Physical Specifications" />
+                            <Label styleClass="section-title" text="Physical Specifications"/>
                         </HBox>
 
                         <HBox alignment="CENTER" spacing="40" styleClass="specs-container">
                             <!-- Weight -->
                             <VBox alignment="CENTER" spacing="10" styleClass="spec-box" HBox.hgrow="ALWAYS">
-                                <Label fx:id="totalWeight" styleClass="spec-value" text="N/A" />
-                                <Label styleClass="spec-label" text="Total Weight" />
-                                <Label fx:id="weightPerUnit" styleClass="spec-sublabel" text="N/A" />
+                                <Label fx:id="totalWeight" styleClass="spec-value" text="N/A"/>
+                                <Label styleClass="spec-label" text="Total Weight"/>
+                                <Label fx:id="weightPerUnit" styleClass="spec-sublabel" text="N/A"/>
                             </VBox>
 
                             <!-- Volume -->
                             <VBox alignment="CENTER" spacing="10" styleClass="spec-box" HBox.hgrow="ALWAYS">
-                                <Label fx:id="totalVolume" styleClass="spec-value" text="N/A" />
-                                <Label styleClass="spec-label" text="Total Volume" />
-                                <Label fx:id="volumePerUnit" styleClass="spec-sublabel" text="N/A" />
+                                <Label fx:id="totalVolume" styleClass="spec-value" text="N/A"/>
+                                <Label styleClass="spec-label" text="Total Volume"/>
+                                <Label fx:id="volumePerUnit" styleClass="spec-sublabel" text="N/A"/>
                             </VBox>
                         </HBox>
                     </VBox>

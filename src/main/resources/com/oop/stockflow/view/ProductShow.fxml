@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<BorderPane styleClass="root"
+            stylesheets="@../assets/topbar.css, @../assets/sidebar.css, @../assets/utils.css, @../assets/product-detail.css"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.oop.stockflow.controller.ProductShowController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
+            <padding>
+                <Insets bottom="16" left="24" right="24" top="16"/>
+            </padding>
+
+            <!-- Logo Section -->
+            <HBox alignment="CENTER_LEFT" spacing="12" HBox.hgrow="NEVER">
+                <Group>
+                    <SVGPath
+                            content="M30 0C34.4183 0 38 3.58172 38 8V32C38 36.4183 34.4183 40 30 40H8C3.58172 40 0 36.4183 0 32V8C0 3.58172 3.58172 0 8 0H30Z"
+                            fill="#2563EB" scaleX="1.3" scaleY="1.3"/>
+                    <SVGPath
+                            content="M30 0C34.4183 0 38 3.58172 38 8V32C38 36.4183 34.4183 40 30 40H8C3.58172 40 0 36.4183 0 32V8C0 3.58172 3.58172 0 8 0H30Z"
+                            fill="transparent" scaleX="1.3" scaleY="1.3" stroke="#E5E7EB"/>
+                    <SVGPath
+                            content="M7.75 27.4063V16.2723C7.75 15.3512 8.30898 14.525 9.16328 14.184L18.5816 10.4188C18.8488 10.3098 19.1477 10.3098 19.4184 10.4188L28.8367 14.184C29.691 14.525 30.25 15.3547 30.25 16.2723V27.4063C30.25 27.8739 29.8738 28.25 29.4062 28.25H27.7188C27.2512 28.25 26.875 27.8739 26.875 27.4063V18.125C26.875 17.5028 26.3723 17 25.75 17H12.25C11.6277 17 11.125 17.5028 11.125 18.125V27.4063C11.125 27.8739 10.7488 28.25 10.2812 28.25H8.59375C8.12617 28.25 7.75 27.8739 7.75 27.4063ZM24.9062 28.25H13.0938C12.6262 28.25 12.25 27.8739 12.25 27.4063V25.4375H25.75V27.4063C25.75 27.8739 25.3738 28.25 24.9062 28.25ZM12.25 24.3125V22.0625H25.75V24.3125H12.25ZM12.25 20.9375V18.125H25.75V20.9375H12.25Z"
+                            fill="white" scaleX="1.3" scaleY="1.3"/>
+                </Group>
+                <VBox>
+                    <Label styleClass="app-title" text="StockFlow">
+                        <font>
+                            <Font name="System Bold" size="20.0"/>
+                        </font>
+                    </Label>
+                    <Label styleClass="app-subtitle" text="Warehouse Management">
+                        <font>
+                            <Font size="16.0"/>
+                        </font>
+                    </Label>
+                </VBox>
+            </HBox>
+
+            <!-- Spacer -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Notification Bell -->
+            <StackPane styleClass="notification-bell">
+                <Label styleClass="bell-icon" text="🔔">
+                    <font>
+                        <Font size="24"/>
+                    </font>
+                </Label>
+                <Label styleClass="notification-badge" text="3">
+                    <font>
+                        <Font name="System Bold" size="10"/>
+                    </font>
+                    <StackPane.margin>
+                        <Insets right="-8" top="-8"/>
+                    </StackPane.margin>
+                </Label>
+            </StackPane>
+
+            <!-- Date and Status -->
+            <HBox alignment="CENTER" spacing="16">
+                <Label fx:id="dateLabel" styleClass="date-label" text="N/A">
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Label>
+            </HBox>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox minWidth="200" prefWidth="200" spacing="0" styleClass="sidebar">
+            <padding>
+                <Insets bottom="24" left="0" right="0" top="24"/>
+            </padding>
+
+            <VBox spacing="8" styleClass="user-section">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <StackPane styleClass="user-avatar">
+                        <Label fx:id="initialLabel" styleClass="user-initials" text="JS"/>
+                    </StackPane>
+                    <VBox spacing="2">
+                        <Label fx:id="nameLabel" styleClass="user-name" text="N/A"/>
+                        <Label fx:id="roleLabel" style="-fx-background-radius: 24;" styleClass="user-role" text="N/A">
+                            <font>
+                                <Font size="13.0"/>
+                            </font>
+                        </Label>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Navigation Menu -->
+            <VBox spacing="4" VBox.vgrow="NEVER">
+                <padding>
+                    <Insets top="12"/>
+                </padding>
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" onAction="#goToWarehouseDashboard"
+                        styleClass="nav-button" text="Warehouse Dashboard">
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Button>
+
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" onAction="#goToProductIndex" styleClass="nav-button"
+                        text="Stock Management">
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Button>
+
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active"
+                        text="Staff Management">
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Button>
+            </VBox>
+
+            <VBox VBox.vgrow="ALWAYS">
+                <Region VBox.vgrow="ALWAYS"/>
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" onAction="#handleLogout" styleClass="logout-button"
+                        text="Logout">
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <graphic>
+                        <FontIcon iconColor="#ef4444" iconLiteral="fas-sign-out-alt" iconSize="16"/>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets bottom="50" left="12.0" right="12.0"/>
+                    </VBox.margin>
+                </Button>
+            </VBox>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="content-scroll">
+            <VBox spacing="24" styleClass="main-content">
+                <padding>
+                    <Insets bottom="40" left="40" right="40" top="32"/>
+                </padding>
+
+                <!-- Header Section -->
+                <HBox alignment="CENTER_LEFT">
+                    <VBox spacing="8" HBox.hgrow="ALWAYS">
+                        <Label styleClass="page-title" text="Product Information">
+                            <font>
+                                <Font name="System Bold" size="32"/>
+                            </font>
+                        </Label>
+                        <Label styleClass="page-subtitle" text="Detailed product specifications and inventory data">
+                            <font>
+                                <Font size="14"/>
+                            </font>
+                        </Label>
+                    </VBox>
+
+                    <!-- Back Button -->
+                    <Button onAction="#handleBack" styleClass="back-button" text="← Back">
+                        <font>
+                            <Font size="14"/>
+                        </font>
+                        <padding>
+                            <Insets bottom="10" left="20" right="20" top="10"/>
+                        </padding>
+                    </Button>
+                </HBox>
+
+                <!-- Main Grid Layout -->
+                <GridPane hgap="24" vgap="24">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50"/>
+                        <ColumnConstraints percentWidth="50"/>
+                    </columnConstraints>
+
+                    <!-- Basic Information Card -->
+                    <VBox spacing="20" styleClass="info-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <padding>
+                            <Insets bottom="24" left="24" right="24" top="24"/>
+                        </padding>
+
+                        <!-- Card Header -->
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <Label>
+                                <graphic>
+                                    <FontIcon iconLiteral="fas-info" iconSize="16"/>
+                                </graphic>
+                                <font>
+                                    <Font size="20"/>
+                                </font>
+                                <styleClass>
+                                    <String fx:value="card-icon"/>
+                                    <String fx:value="card-icon-blue"/>
+                                </styleClass>
+                            </Label>
+                            <Label styleClass="card-title" text="Basic Information">
+                                <font>
+                                    <Font name="System Bold" size="20"/>
+                                </font>
+                            </Label>
+                        </HBox>
+
+                        <!-- SKU and Product Type Row -->
+                        <GridPane hgap="20" vgap="16">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="50"/>
+                                <ColumnConstraints percentWidth="50"/>
+                            </columnConstraints>
+
+                            <!-- SKU -->
+                            <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                <Label styleClass="field-label" text="SKU">
+                                    <font>
+                                        <Font size="13"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="skuLabel" styleClass="field-value" text="WH-2024-001">
+                                    <font>
+                                        <Font name="System Bold" size="14"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+
+                            <!-- Product Type -->
+                            <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <Label styleClass="field-label" text="Product Type">
+                                    <font>
+                                        <Font size="13"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="productTypeLabel" styleClass="field-value" text="Electronics">
+                                    <font>
+                                        <Font name="System Bold" size="14"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+
+                            <rowConstraints>
+                                <RowConstraints/>
+                            </rowConstraints>
+                        </GridPane>
+
+                        <!-- Product Name -->
+                        <VBox spacing="8">
+                            <Label styleClass="field-label" text="Product Name">
+                                <font>
+                                    <Font size="13"/>
+                                </font>
+                            </Label>
+                            <Label fx:id="productNameLabel" styleClass="field-value"
+                                   text="Wireless Bluetooth Headphones Pro">
+                                <font>
+                                    <Font name="System Bold" size="15"/>
+                                </font>
+                            </Label>
+                        </VBox>
+
+                        <!-- Brand -->
+                        <VBox spacing="8">
+                            <Label styleClass="field-label" text="Brand">
+                                <font>
+                                    <Font size="13"/>
+                                </font>
+                            </Label>
+                            <Label fx:id="brandLabel" styleClass="field-value" text="TechSound">
+                                <font>
+                                    <Font name="System Bold" size="15"/>
+                                </font>
+                            </Label>
+                        </VBox>
+
+                        <!-- Description -->
+                        <VBox spacing="8">
+                            <Label styleClass="field-label" text="Description">
+                                <font>
+                                    <Font size="13"/>
+                                </font>
+                            </Label>
+                            <Label fx:id="descriptionLabel" styleClass="field-description"
+                                   text="Premium wireless headphones with active noise cancellation, 30-hour battery life, and premium audio drivers for exceptional sound quality."
+                                   wrapText="true">
+                                <font>
+                                    <Font size="15"/>
+                                </font>
+                            </Label>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Inventory Details Card -->
+                    <VBox spacing="20" styleClass="info-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <padding>
+                            <Insets bottom="24" left="24" right="24" top="24"/>
+                        </padding>
+
+                        <!-- Card Header -->
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <Label styleClass="card-icon, card-icon-blue">
+                                <font>
+                                    <Font size="18"/>
+                                </font>
+                                <graphic>
+                                    <FontIcon iconLiteral="fas-cubes" iconSize="16"/>
+                                </graphic>
+                            </Label>
+                            <Label styleClass="card-title" text="Inventory Details">
+                                <font>
+                                    <Font name="System Bold" size="20"/>
+                                </font>
+                            </Label>
+                        </HBox>
+
+                        <!-- Inventory Grid -->
+                        <GridPane hgap="20" vgap="20">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="50"/>
+                                <ColumnConstraints percentWidth="50"/>
+                            </columnConstraints>
+
+                            <!-- Current Quantity -->
+                            <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                <Label styleClass="field-label" text="Current Quantity">
+                                    <font>
+                                        <Font size="13"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="currentQuantityLabel" styleClass="field-value, value-bold"
+                                       text="247 units">
+                                    <font>
+                                        <Font name="System Bold" size="15"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+
+                            <!-- Reorder Point -->
+                            <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <Label styleClass="field-label" text="Reorder Point">
+                                    <font>
+                                        <Font size="13"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="reorderPointLabel" styleClass="field-value, value-warning"
+                                       text="50 units">
+                                    <font>
+                                        <Font name="System Bold" size="15"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+
+                            <!-- Reorder Quantity -->
+                            <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                <Label styleClass="field-label" text="Reorder Quantity">
+                                    <font>
+                                        <Font size="13"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="reorderQuantityLabel" styleClass="field-value, value-bold"
+                                       text="200 units">
+                                    <font>
+                                        <Font name="System Bold" size="15"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+
+                            <!-- Units per Case -->
+                            <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <Label styleClass="field-label" text="Units per Case">
+                                    <font>
+                                        <Font size="13"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="unitsPerCaseLabel" styleClass="field-value, value-bold" text="12 units">
+                                    <font>
+                                        <Font name="System Bold" size="15"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+
+                            <rowConstraints>
+                                <RowConstraints/>
+                                <RowConstraints/>
+                            </rowConstraints>
+                        </GridPane>
+
+                        <!-- Purchase Price -->
+                        <VBox spacing="8">
+                            <Label styleClass="field-label" text="Purchase Price">
+                                <font>
+                                    <Font size="13"/>
+                                </font>
+                            </Label>
+                            <Label fx:id="purchasePriceLabel" styleClass="price-badge" text="N/A">
+                                <font>
+                                    <Font name="System Bold" size="16"/>
+                                </font>
+                                <padding>
+                                    <Insets bottom="8" left="16" right="16" top="8"/>
+                                </padding>
+                            </Label>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Physical Specifications Card -->
+                    <VBox spacing="20" styleClass="info-card" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <padding>
+                            <Insets bottom="24" left="24" right="24" top="24"/>
+                        </padding>
+
+                        <!-- Card Header -->
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <Label styleClass="card-icon, card-icon-blue">
+                                <graphic>
+                                    <FontIcon iconLiteral="fas-balance-scale" iconSize="16"/>
+                                </graphic>
+                                <font>
+                                    <Font size="18"/>
+                                </font>
+                            </Label>
+                            <Label styleClass="card-title" text="Physical Specifications">
+                                <font>
+                                    <Font name="System Bold" size="20"/>
+                                </font>
+                            </Label>
+                        </HBox>
+
+                        <!-- Specifications Grid -->
+                        <GridPane hgap="20" vgap="16">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="50"/>
+                                <ColumnConstraints percentWidth="50"/>
+                            </columnConstraints>
+
+                            <!-- Weight -->
+                            <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                <Label styleClass="field-label" text="Weight">
+                                    <font>
+                                        <Font size="13"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="weightLabel" styleClass="field-value" text="0.35 kg">
+                                    <font>
+                                        <Font name="System Bold" size="15"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+
+                            <!-- Volume -->
+                            <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <Label styleClass="field-label" text="Volume">
+                                    <font>
+                                        <Font size="13"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="volumeLabel" styleClass="field-value" text="0.002 m³">
+                                    <font>
+                                        <Font name="System Bold" size="15"/>
+                                    </font>
+                                </Label>
+                            </VBox>
+
+                            <rowConstraints>
+                                <RowConstraints/>
+                            </rowConstraints>
+                        </GridPane>
+                    </VBox>
+
+                    <!-- Storage & Alerts Card -->
+                    <VBox spacing="20" styleClass="info-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <padding>
+                            <Insets bottom="24" left="24" right="24" top="24"/>
+                        </padding>
+
+                        <!-- Card Header -->
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <Label styleClass="card-icon, card-icon-blue">
+                                <font>
+                                    <Font size="18"/>
+                                </font>
+                                <graphic>
+                                    <FontIcon iconLiteral="fas-temperature-low" iconSize="16"/>
+                                </graphic>
+                            </Label>
+                            <Label styleClass="card-title" text="Storage Alerts">
+                                <font>
+                                    <Font name="System Bold" size="20"/>
+                                </font>
+                            </Label>
+                        </HBox>
+
+                        <!-- Required Temperature -->
+                        <VBox spacing="8">
+                            <Label styleClass="field-label" text="Required Temperature">
+                                <font>
+                                    <Font size="13"/>
+                                </font>
+                            </Label>
+                            <Label fx:id="temperatureLabel" styleClass="temperature-badge"
+                                   text="🌡 15°C - 25°C (Room Temperature)">
+                                <font>
+                                    <Font name="System Bold" size="15"/>
+                                </font>
+                                <padding>
+                                    <Insets bottom="8" left="12" right="12" top="8"/>
+                                </padding>
+                            </Label>
+                        </VBox>
+
+                        <!-- Days to Alert Before Expiry -->
+                        <VBox spacing="8">
+                            <Label styleClass="field-label" text="Days to Alert Before Expiry">
+                                <font>
+                                    <Font size="13"/>
+                                </font>
+                            </Label>
+                            <Label fx:id="expiryAlertLabel" styleClass="expiry-badge" text="⚠ N/A (Non-perishable)">
+                                <font>
+                                    <Font name="System Bold" size="15"/>
+                                </font>
+                                <padding>
+                                    <Insets bottom="8" left="12" right="12" top="8"/>
+                                </padding>
+                            </Label>
+                        </VBox>
+                    </VBox>
+
+                    <rowConstraints>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                    </rowConstraints>
+                </GridPane>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

@@ -5,28 +5,11 @@
     -fx-background-color: #f8f9fa;
     -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
-/* Main Content */
-.content-scroll {
-    -fx-background-color: transparent;
-}
 
 .content-scroll > .viewport {
     -fx-background-color: transparent;
 }
 
-.main-content {
-    -fx-background-color: transparent;
-}
-
-/* Page Headers */
-.page-title {
-    -fx-text-fill: #111827;
-    -fx-font-weight: bold;
-}
-
-.page-subtitle {
-    -fx-text-fill: #6b7280;
-}
 
 /* Form Container */
 .form-container {

@@ -6,6 +6,8 @@ import com.oop.stockflow.app.View;
 import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.Warehouse;
 import com.oop.stockflow.repository.StaffRepository;
+import com.oop.stockflow.utils.DateTimeUtils;
+import com.oop.stockflow.utils.StringUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -21,13 +23,13 @@ public class StaffCreateController {
     private final StaffRepository staffRepository = StaffRepository.getInstance();
 
     @FXML
-    private TextField name;
+    private Label nameLabel;
     @FXML
-    private TextField email;
+    private Label roleLabel;
     @FXML
-    private Label userNameLabel;
+    private Label dateLabel;
     @FXML
-    private Label userRole;
+    private Label initialLabel;
     @FXML
     private TextField nameField;
     @FXML
@@ -36,7 +38,7 @@ public class StaffCreateController {
     private PasswordField passwordField;
 
     @FXML
-    private void goToDashboard() {
+    private void goToWarehouseDashboard() {
         StageManager.getInstance().navigateWithData(
                 View.WAREHOUSE_DASHBOARD,
                 "Dashboard",
@@ -67,7 +69,7 @@ public class StaffCreateController {
 
     @FXML
     private void handleCancel() {
-        StageManager.getInstance().navigate(View.STAFF_INDEX, "Warehouse Staff");
+        goToStaffMenu();
     }
 
     @FXML
@@ -113,11 +115,14 @@ public class StaffCreateController {
 
     @FXML
     private void handleLogout() {
-        StageManager.getInstance().navigate(View.STAFF_INDEX, "Warehouse Staff");
+        SessionManager.getInstance().endSession();
+        StageManager.getInstance().navigate(View.LOGIN, "Login");
     }
 
-    public void setWarehouseId(Warehouse warehouse) {
+    public void initData(Warehouse warehouse, AuthenticatedUser user) {
+        currentUser = user;
         this.currentWarehouse = warehouse;
+        loadPageContext();
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
@@ -126,5 +131,13 @@ public class StaffCreateController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    // helper methods
+    private void loadPageContext() {
+        nameLabel.setText(currentUser.getName());
+        roleLabel.setText(currentUser.getUserType().getDbValue());
+        dateLabel.setText(DateTimeUtils.getCurrentDate());
+        initialLabel.setText(StringUtils.getInitial(currentUser.getName()));
     }
 }

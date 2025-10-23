@@ -70,19 +70,6 @@
     -fx-background-color: transparent;
 }
 
-.main-content {
-    -fx-background-color: transparent;
-}
-
-/* Page Headers */
-.page-title {
-    -fx-text-fill: #111827;
-}
-
-.page-subtitle {
-    -fx-text-fill: #6b7280;
-}
-
 /* Back Button */
 .back-button {
     -fx-background-color: white;
@@ -115,12 +102,18 @@
 /* Card Headers */
 .card-icon {
     -fx-text-fill: #4b5563;
+    -fx-alignment: center;
 }
 
 .card-icon-blue {
     -fx-background-color: #dbeafe;
     -fx-background-radius: 6;
-    -fx-padding: 4 8;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
 }
 
 .card-title {

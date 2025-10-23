@@ -128,7 +128,7 @@ public class TransactionShowController {
             // Transaction Header
             transactionId.setText("Transaction ID #" + currentTransaction.getId());
             transactionDate.setText(dateFormat.format(currentTransaction.getDate()));
-            statusHeader.setText(currentTransaction.getStatus().getDbValue());
+            statusHeader.setText(StringUtils.toTitleCase(currentTransaction.getStatus().getDbValue()));
             if (currentTransaction.getStatus() == TransactionStatus.COMMITTED) {
                 statusHeader.getStyleClass().add("status-badge-committed");
             } else if (currentTransaction.getStatus() == TransactionStatus.PENDING) {
@@ -138,17 +138,17 @@ public class TransactionShowController {
             }
 
             // Transaction Info Card
-            transactionType.setText(currentTransaction.getType().getDbValue());
-            status.setText(currentTransaction.getStatus().getDbValue());
-            shippingMethod.setText(currentTransaction.getShippingType().getDbValue());
+            transactionType.setText(StringUtils.toTitleCase(currentTransaction.getType().getDbValue()));
+            status.setText(StringUtils.toTitleCase(currentTransaction.getStatus().getDbValue()));
+            shippingMethod.setText(StringUtils.toTitleCase(currentTransaction.getShippingType().getDbValue()));
             updateBadgeStyles();
 
             productSku.setText(String.valueOf(currentTransaction.getSku()));
 
             if (relatedProduct != null) {
-                productName.setText(relatedProduct.getName());
-                productBrand.setText(relatedProduct.getBrand() != null ? relatedProduct.getBrand() : "N/A");
-                productType.setText(relatedProduct.getProductType().toString());
+                productName.setText(StringUtils.toTitleCase(relatedProduct.getName()));
+                productBrand.setText(relatedProduct.getBrand() != null ? StringUtils.toTitleCase(relatedProduct.getBrand()) : "N/A");
+                productType.setText(StringUtils.toTitleCase(relatedProduct.getProductType().getDbValue()));
             } else {
                 productName.setText("Product Not Found");
                 productBrand.setText("N/A");

@@ -8,7 +8,7 @@
 
 <?import javafx.scene.Group?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<BorderPane styleClass="root" stylesheets="@../assets/topbar.css, @../assets/sidebar.css, @../assets/staff-setting.css"
+<BorderPane styleClass="root" stylesheets="@../assets/topbar.css, @../assets/sidebar.css, @../assets/utils.css, @../assets/staff-setting.css"
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.oop.stockflow.controller.StaffSettingsController">
     <!-- Top Navigation Bar -->
@@ -192,7 +192,7 @@
                         <Insets top="24" right="24" bottom="24" left="24"/>
                     </padding>
 
-                    <Label text="Account Information" styleClass="section-title">
+                    <Label text="Account Information" styleClass="form-title">
                         <font>
                             <Font name="System Bold" size="16"/>
                         </font>

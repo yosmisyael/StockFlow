@@ -223,7 +223,7 @@ public class TransactionIndexController {
             private final HBox actionBox = new HBox(8, detailBtn, updateBtn);
 
             {
-                actionBox.setAlignment(Pos.CENTER);
+                actionBox.setAlignment(Pos.CENTER_LEFT);
                 detailBtn.getStyleClass().add("action-button-show");
                 updateBtn.getStyleClass().add("action-button-edit");
 

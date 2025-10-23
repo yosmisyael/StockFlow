@@ -7,126 +7,144 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <BorderPane stylesheets="@../assets/sidebar.css, @../assets/topbar.css, @../assets/utils.css, @../assets/product-create.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.ProductCreateController">
-    <!-- Top Navigation Bar -->
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
             <padding>
-                <Insets bottom="16" left="24" right="24" top="16" />
+                <Insets bottom="16" left="24" right="24" top="16"/>
             </padding>
 
             <!-- Logo Section -->
             <HBox alignment="CENTER_LEFT" spacing="12" HBox.hgrow="NEVER">
                 <Group>
-                    <SVGPath content="M30 0C34.4183 0 38 3.58172 38 8V32C38 36.4183 34.4183 40 30 40H8C3.58172 40 0 36.4183 0 32V8C0 3.58172 3.58172 0 8 0H30Z" fill="#2563EB" scaleX="1.3" scaleY="1.3" />
-                    <SVGPath content="M30 0C34.4183 0 38 3.58172 38 8V32C38 36.4183 34.4183 40 30 40H8C3.58172 40 0 36.4183 0 32V8C0 3.58172 3.58172 0 8 0H30Z" fill="transparent" scaleX="1.3" scaleY="1.3" stroke="#E5E7EB" />
-                    <SVGPath content="M7.75 27.4063V16.2723C7.75 15.3512 8.30898 14.525 9.16328 14.184L18.5816 10.4188C18.8488 10.3098 19.1477 10.3098 19.4184 10.4188L28.8367 14.184C29.691 14.525 30.25 15.3547 30.25 16.2723V27.4063C30.25 27.8739 29.8738 28.25 29.4062 28.25H27.7188C27.2512 28.25 26.875 27.8739 26.875 27.4063V18.125C26.875 17.5028 26.3723 17 25.75 17H12.25C11.6277 17 11.125 17.5028 11.125 18.125V27.4063C11.125 27.8739 10.7488 28.25 10.2812 28.25H8.59375C8.12617 28.25 7.75 27.8739 7.75 27.4063ZM24.9062 28.25H13.0938C12.6262 28.25 12.25 27.8739 12.25 27.4063V25.4375H25.75V27.4063C25.75 27.8739 25.3738 28.25 24.9062 28.25ZM12.25 24.3125V22.0625H25.75V24.3125H12.25ZM12.25 20.9375V18.125H25.75V20.9375H12.25Z" fill="white" scaleX="1.3" scaleY="1.3" />
+                    <SVGPath
+                            content="M30 0C34.4183 0 38 3.58172 38 8V32C38 36.4183 34.4183 40 30 40H8C3.58172 40 0 36.4183 0 32V8C0 3.58172 3.58172 0 8 0H30Z"
+                            fill="#2563EB" scaleX="1.3" scaleY="1.3"/>
+                    <SVGPath
+                            content="M30 0C34.4183 0 38 3.58172 38 8V32C38 36.4183 34.4183 40 30 40H8C3.58172 40 0 36.4183 0 32V8C0 3.58172 3.58172 0 8 0H30Z"
+                            fill="transparent" scaleX="1.3" scaleY="1.3" stroke="#E5E7EB"/>
+                    <SVGPath
+                            content="M7.75 27.4063V16.2723C7.75 15.3512 8.30898 14.525 9.16328 14.184L18.5816 10.4188C18.8488 10.3098 19.1477 10.3098 19.4184 10.4188L28.8367 14.184C29.691 14.525 30.25 15.3547 30.25 16.2723V27.4063C30.25 27.8739 29.8738 28.25 29.4062 28.25H27.7188C27.2512 28.25 26.875 27.8739 26.875 27.4063V18.125C26.875 17.5028 26.3723 17 25.75 17H12.25C11.6277 17 11.125 17.5028 11.125 18.125V27.4063C11.125 27.8739 10.7488 28.25 10.2812 28.25H8.59375C8.12617 28.25 7.75 27.8739 7.75 27.4063ZM24.9062 28.25H13.0938C12.6262 28.25 12.25 27.8739 12.25 27.4063V25.4375H25.75V27.4063C25.75 27.8739 25.3738 28.25 24.9062 28.25ZM12.25 24.3125V22.0625H25.75V24.3125H12.25ZM12.25 20.9375V18.125H25.75V20.9375H12.25Z"
+                            fill="white" scaleX="1.3" scaleY="1.3"/>
                 </Group>
                 <VBox>
                     <Label styleClass="app-title" text="StockFlow">
                         <font>
-                            <Font name="System Bold" size="20.0" />
+                            <Font name="System Bold" size="20.0"/>
                         </font>
                     </Label>
                     <Label styleClass="app-subtitle" text="Warehouse Management">
                         <font>
-                            <Font size="16.0" />
+                            <Font size="16.0"/>
                         </font>
                     </Label>
                 </VBox>
             </HBox>
 
             <!-- Spacer -->
-            <Region HBox.hgrow="ALWAYS" />
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Notification Bell -->
+            <StackPane styleClass="notification-bell">
+                <Label styleClass="bell-icon" text="🔔">
+                    <font>
+                        <Font size="24"/>
+                    </font>
+                </Label>
+                <Label styleClass="notification-badge" text="3">
+                    <font>
+                        <Font name="System Bold" size="10"/>
+                    </font>
+                    <StackPane.margin>
+                        <Insets right="-8" top="-8"/>
+                    </StackPane.margin>
+                </Label>
+            </StackPane>
 
             <!-- Date and Status -->
             <HBox alignment="CENTER" spacing="16">
-                <Label styleClass="date-label" text="Today: Dec 15, 2024">
+                <Label fx:id="dateLabel" styleClass="date-label" text="N/A">
                     <font>
-                        <Font size="14" />
+                        <Font size="14"/>
                     </font>
                 </Label>
             </HBox>
         </HBox>
     </top>
 
-    <!-- Sidebar -->
     <left>
-        <VBox minWidth="200" prefWidth="200" spacing="8" styleClass="sidebar">
+        <VBox styleClass="sidebar" minWidth="200" prefWidth="200" spacing="0">
             <padding>
-                <Insets bottom="20" left="12" right="12" top="20" />
+                <Insets top="24" right="0" bottom="24" left="0"/>
             </padding>
 
-            <!-- User Profile -->
-            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="user-profile">
-                <padding>
-                    <Insets bottom="12" left="12" right="12" top="12" />
-                </padding>
-                <Label styleClass="user-icon" text="👤">
-                    <font>
-                        <Font size="24" />
-                    </font>
-                </Label>
-                <VBox>
-                    <Label fx:id="userNameLabel" styleClass="user-name" text="Yanto">
-                        <font>
-                            <Font name="System Bold" size="16.0" />
-                        </font>
-                    </Label>
-                    <Label fx:id="userRole" style="-fx-background-radius: 24;" styleClass="user-role" text="Manager">
-                        <font>
-                            <Font size="13.0" />
-                        </font>
-                    </Label>
-                </VBox>
-            </HBox>
+            <VBox spacing="8" styleClass="user-section">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <StackPane styleClass="user-avatar">
+                        <Label fx:id="initialLabel" styleClass="user-initials" text="JS"/>
+                    </StackPane>
+                    <VBox spacing="2">
+                        <Label fx:id="nameLabel" styleClass="user-name" text="N/A"/>
+                        <Label fx:id="roleLabel" style="-fx-background-radius: 24;" styleClass="user-role" text="N/A">
+                            <font>
+                                <Font size="13.0"/>
+                            </font>
+                        </Label>
+                    </VBox>
+                </HBox>
+            </VBox>
 
             <!-- Navigation Menu -->
             <VBox spacing="4" VBox.vgrow="NEVER">
                 <padding>
-                    <Insets top="12" />
+                    <Insets top="12"/>
                 </padding>
-
-                <!-- Dashboard -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="📊  Dashboard" onAction="#goToWarehouseDashboard">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="Warehouse Dashboard" onAction="#goToWarehouseDashboard">
                     <padding>
-                        <Insets bottom="12" left="16" right="12" top="12" />
+                        <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
                     <font>
-                        <Font size="14" />
+                        <Font size="14"/>
                     </font>
                 </Button>
 
-                <!-- Stock Management -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active"  text="📦  Stock Management" onAction="#goToProductIndex">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active" text="Stock Management"
+                        onAction="#goToProductIndex">
                     <padding>
-                        <Insets bottom="12" left="16" right="12" top="12" />
+                        <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
                     <font>
-                        <Font size="14" />
+                        <Font size="14"/>
                     </font>
                 </Button>
 
-                <!-- Staff Management -->
-                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" onAction="#goToStaffMenu" text="👥  Staff Management">
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"
+                        onAction="#goToStaffMenu" text="Staff Management">
                     <padding>
-                        <Insets bottom="12" left="16" right="12" top="12" />
+                        <Insets bottom="12" left="16" right="12" top="12"/>
                     </padding>
                     <font>
-                        <Font size="14" />
+                        <Font size="14"/>
                     </font>
                 </Button>
             </VBox>
 
-            <!-- Spacer -->
-            <Region VBox.vgrow="ALWAYS" />
-
-            <!-- Logout Button -->
-            <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="logout-button" text="⎋ Logout">
-                <padding>
-                    <Insets bottom="12" left="12" right="12" top="12" />
-                </padding>
-            </Button>
+            <VBox VBox.vgrow="ALWAYS">
+                <Region VBox.vgrow="ALWAYS"/>
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="logout-button" text="Logout"
+                        onAction="#handleLogout">
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <graphic>
+                        <FontIcon iconColor="#ef4444" iconLiteral="fas-sign-out-alt" iconSize="16"/>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets left="12.0" right="12.0" bottom="50"/>
+                    </VBox.margin>
+                </Button>
+            </VBox>
         </VBox>
     </left>
 

@@ -5,6 +5,8 @@ import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
 import com.oop.stockflow.model.*;
 import com.oop.stockflow.repository.ProductRepository;
+import com.oop.stockflow.utils.DateTimeUtils;
+import com.oop.stockflow.utils.StringUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,44 +28,76 @@ public class ProductCreateController implements Initializable {
     private final ProductRepository productRepository = ProductRepository.getInstance();
 
     // Sidebar Buttons
-    @FXML private Button btnTransactionsList;
-    @FXML private Button btnInbound;
-    @FXML private Button btnOutbound;
-    @FXML private Button btnAddStock; // Current page button
-    @FXML private Button btnSettings;
-    // Add fx:id for Logout button if needed
+    @FXML
+    private Button btnTransactionsList;
+    @FXML
+    private Button btnInbound;
+    @FXML
+    private Button btnOutbound;
+    @FXML
+    private Button btnAddStock;
+    @FXML
+    private Button btnSettings;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label roleLabel;
+    @FXML
+    private Label dateLabel;
+    @FXML
+    private Label initialLabel;
 
     // Form Fields - Product Type
-    @FXML private ToggleGroup productTypeGroup;
-    @FXML private RadioButton rbDryGood;
-    @FXML private RadioButton rbFresh;
+    @FXML
+    private ToggleGroup productTypeGroup;
+    @FXML
+    private RadioButton rbDryGood;
+    @FXML
+    private RadioButton rbFresh;
 
     // Form Fields - Basic Info
-    @FXML private TextField txtSku;
-    @FXML private TextField txtName;
-    @FXML private TextField txtBrand;
-    @FXML private TextArea txtDescription;
+    @FXML
+    private TextField txtSku;
+    @FXML
+    private TextField txtName;
+    @FXML
+    private TextField txtBrand;
+    @FXML
+    private TextArea txtDescription;
 
     // Form Fields - Pricing & Measurements
-    @FXML private TextField txtPurchasePrice;
-    @FXML private TextField txtWeight;
-    @FXML private TextField txtVolume;
-    @FXML private TextField txtQuantity;
+    @FXML
+    private TextField txtPurchasePrice;
+    @FXML
+    private TextField txtWeight;
+    @FXML
+    private TextField txtVolume;
+    @FXML
+    private TextField txtQuantity;
 
     // Form Fields - Dry Good Specific (Container VBox)
-    @FXML private VBox dryGoodFields;
-    @FXML private TextField txtReorderPoint;
-    @FXML private TextField txtReorderQuantity;
-    @FXML private TextField txtUnitsPerCase;
+    @FXML
+    private VBox dryGoodFields;
+    @FXML
+    private TextField txtReorderPoint;
+    @FXML
+    private TextField txtReorderQuantity;
+    @FXML
+    private TextField txtUnitsPerCase;
 
     // Form Fields - Fresh Product Specific (Container VBox)
-    @FXML private VBox freshFields;
-    @FXML private TextField txtRequiredTemp;
-    @FXML private TextField txtDaysToAlert;
+    @FXML
+    private VBox freshFields;
+    @FXML
+    private TextField txtRequiredTemp;
+    @FXML
+    private TextField txtDaysToAlert;
 
     // Action Buttons
-    @FXML private Button btnCreate;
-    @FXML private Button btnCancel;
+    @FXML
+    private Button btnCreate;
+    @FXML
+    private Button btnCancel;
 
     /**
      * Called by JavaFX after FXML loading but before initData.
@@ -85,16 +119,11 @@ public class ProductCreateController implements Initializable {
     public void initData(Warehouse warehouse, AuthenticatedUser user) {
         this.currentWarehouse = warehouse;
         this.currentUser = user;
-
+        loadPageContext();
         if (this.currentUser == null) {
             System.err.println("Error: AuthenticatedUser is required for Add Stock.");
-            // Handle error, maybe navigate to login
             handleLogout(null);
-            return;
         }
-
-        // Load user data into sidebar if needed (add @FXML fields for sidebar labels)
-        // loadSidebarUserData();
     }
 
     /**
@@ -321,5 +350,13 @@ public class ProductCreateController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    // helper methods
+    private void loadPageContext() {
+        nameLabel.setText(currentUser.getName());
+        roleLabel.setText(currentUser.getUserType().getDbValue());
+        dateLabel.setText(DateTimeUtils.getCurrentDate());
+        initialLabel.setText(StringUtils.getInitial(currentUser.getName()));
     }
 }

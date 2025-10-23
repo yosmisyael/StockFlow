@@ -3,10 +3,6 @@
     -fx-background-color: #f5f5f7;
     -fx-font-family: "Segoe UI", "San Francisco", Arial, sans-serif;
 }
-/* Main Content */
-.main-content {
-    -fx-background-color: #f5f5f7;
-}
 
 .form-wrapper {
     -fx-spacing: 32;
@@ -17,17 +13,6 @@
     -fx-background-color: white;
     -fx-background-radius: 16;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 4);
-}
-
-.form-title {
-    -fx-font-size: 32;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1d1d1f;
-}
-
-.form-subtitle {
-    -fx-font-size: 15;
-    -fx-text-fill: #86868b;
 }
 
 /* Form Fields */
