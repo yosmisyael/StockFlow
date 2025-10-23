@@ -151,6 +151,36 @@ public class ProductRepository {
     }
 
     /**
+     * Counts the total number of products aggregated across all warehouses
+     * owned by a specific manager.
+     *
+     * @param managerId The ID of the manager.
+     * @return The total aggregated count of products, or -1 if an error occurs.
+     */
+    public int countProductsByManagerId(int managerId) {
+        String sql = "SELECT COUNT(p.sku) " +
+                "FROM products p " +
+                "JOIN warehouses w ON p.warehouse_id = w.id " +
+                "WHERE w.manager_id = ?";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, managerId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Failed to count products by manager ID " + managerId + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    /**
      * Counts the number of products considered "low stock" in a specific warehouse.
      *
      * @param warehouseId The ID of the warehouse.

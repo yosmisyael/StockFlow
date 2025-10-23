@@ -19,7 +19,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.layout.Region?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<BorderPane stylesheets="@../assets/topbar.css, @../assets/sidebar.css, @../assets/utils.css, @../assets/inbound-transaction.css" xmlns="http://javafx.com/javafx/25"
+<BorderPane stylesheets="@../assets/topbar.css, @../assets/sidebar.css, @../assets/utils.css, @../assets/inbound-transaction.css" xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.oop.stockflow.controller.InboundTransactionsController">
 

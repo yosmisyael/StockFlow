@@ -5,7 +5,6 @@ import com.oop.stockflow.app.StageManager;
 import com.oop.stockflow.app.View;
 import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.model.Warehouse;
-import com.oop.stockflow.model.WarehouseStatus;
 import com.oop.stockflow.repository.ProductRepository;
 import com.oop.stockflow.repository.StaffRepository;
 import com.oop.stockflow.repository.WarehouseRepository;
@@ -25,7 +24,7 @@ import javafx.scene.text.Font;
 import java.io.IOException;
 import java.util.List;
 
-public class WarehouseController {
+public class WarehouseIndexController {
     @FXML
     private GridPane warehouseContainer;
     @FXML
@@ -34,10 +33,18 @@ public class WarehouseController {
     private Label roleLabel;
     @FXML
     private Label initialLabel;
+    @FXML
+    private Label totalLocationsLabel;
+    @FXML
+    private Label totalStaffLabel;
+    @FXML
+    private Label totalWarehouseLabel;
+    @FXML
+    private Label totalStockLabel;
 
-    final private WarehouseRepository warehouseRepository;
-    final private ProductRepository productRepository;
-    final private StaffRepository staffRepository;
+    final private WarehouseRepository warehouseRepository = WarehouseRepository.getInstance();
+    final private ProductRepository productRepository = ProductRepository.getInstance();
+    final private StaffRepository staffRepository = StaffRepository.getInstance();
 
     private AuthenticatedUser currentUser;
 
@@ -45,12 +52,7 @@ public class WarehouseController {
         currentUser = user;
         loadPageContext();
         loadWarehouses();
-    }
-
-    public WarehouseController() {
-        this.warehouseRepository = WarehouseRepository.getInstance();
-        this.productRepository = ProductRepository.getInstance();
-        this.staffRepository = StaffRepository.getInstance();
+        loadStats();
     }
 
     // navigations
@@ -74,7 +76,7 @@ public class WarehouseController {
 
     // helper methods
     private void loadWarehouses() {
-        List<Warehouse> warehouses = warehouseRepository.getAllWarehouses();
+        List<Warehouse> warehouses = warehouseRepository.getAllWarehousesByManagerId(currentUser.getId());
 
         int col = 0;
         int row = 0;
@@ -94,6 +96,23 @@ public class WarehouseController {
                 row++;
             }
         }
+    }
+
+    private void loadStats() {
+        int totalWarehouse = 0;
+        totalWarehouse = warehouseRepository.countWarehouseByManagerId(currentUser.getId());
+        totalWarehouseLabel.setText(String.valueOf(totalWarehouse));
+
+        int totalStaff = 0;
+        totalStaff = staffRepository.countAllStaffByManagerId(currentUser.getId());
+        totalStaffLabel.setText(String.valueOf(totalStaff));
+
+        int totalStock = 0;
+        totalStock = productRepository.countProductsByManagerId(currentUser.getId());
+        totalStockLabel.setText(String.valueOf(totalStock));
+
+        int totalLocations = totalWarehouse;
+        totalLocationsLabel.setText(String.valueOf(totalLocations));
     }
 
     private VBox createWarehouseCard(Warehouse warehouse) {
@@ -129,13 +148,19 @@ public class WarehouseController {
 
         // Status Label
         Label statusLabel = new Label(warehouse.getStatus().getDbVal().toUpperCase());
-        System.out.println(warehouse.getStatus().getDbVal());
-        if (warehouse.getStatus() == WarehouseStatus.ACTIVE) {
-            statusLabel.getStyleClass().add("status-badge-active");
-        } else if (warehouse.getStatus() == WarehouseStatus.INACTIVE) {
-            statusLabel.getStyleClass().add("status-badge-pending");
-        } else {
-            statusLabel.getStyleClass().add("status-badge-inactive");
+        switch (warehouse.getStatus()) {
+            case ACTIVE:
+                statusLabel.getStyleClass().add("status-badge-active");
+                break;
+            case INACTIVE:
+                statusLabel.getStyleClass().add("status-badge-inactive");
+                break;
+            case MAINTENANCE:
+                statusLabel.getStyleClass().add("status-badge-maintenance");
+                break;
+            default:
+                statusLabel.getStyleClass().add("status-badge-inactive");
+                break;
         }
         VBox.setMargin(statusLabel, new Insets(0, 0, 0, 60));
 
@@ -174,9 +199,9 @@ public class WarehouseController {
 
         viewBtn.setOnAction(event -> {
             StageManager.getInstance().navigateWithData(
-                    View.WAREHOUSE_DASHBOARD,
+                    View.WAREHOUSE_SHOW,
                     "Warehouse Dashboard of " + warehouse.getName(),
-                    (WarehouseDashboardController controller) -> controller.initData(warehouse, currentUser)
+                    (WarehouseShowController controller) -> controller.initData(warehouse, currentUser)
             );
         });
 

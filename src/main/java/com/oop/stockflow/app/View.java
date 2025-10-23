@@ -7,8 +7,6 @@ public enum View {
     PRODUCT_CREATE("ProductCreate.fxml"),
     PRODUCT_EDIT("ProductEdit.fxml"),
     PRODUCT_SHOW("ProductShow.fxml"),
-    WAREHOUSE_INDEX("WarehouseView.fxml"),
-    WAREHOUSE_CREATE("WarehouseCreate.fxml"),
     STAFF_INDEX("StaffIndex.fxml"),
     STAFF_CREATE("StaffCreate.fxml"),
     STAFF_EDIT("StaffEdit.fxml"),
@@ -17,7 +15,10 @@ public enum View {
     TRANSACTION_SHOW("TransactionShow.fxml"),
     TRANSACTION_CREATE_OUTBOUND("OutboundTransaction.fxml"),
     TRANSACTION_CREATE_INBOUND("InboundTransaction.fxml"),
-    WAREHOUSE_DASHBOARD("WarehouseDashboard.fxml");
+    WAREHOUSE_INDEX("WarehouseIndex.fxml"),
+    WAREHOUSE_SHOW("WarehouseShow.fxml"),
+    WAREHOUSE_CREATE("WarehouseCreate.fxml"),
+    WAREHOUSE_EDIT("WarehouseEdit.fxml");
 
     private final String fxmlFile;
 

@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.layout.StackPane?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane styleClass="root-layout"
+            stylesheets="@../assets/topbar.css, @../assets/sidebar.css, @../assets/utils.css, @../assets/warehouse-form.css"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.oop.stockflow.controller.WarehouseEditController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
+            <padding>
+                <Insets bottom="16" left="24" right="24" top="16"/>
+            </padding>
+
+            <!-- Logo Section -->
+            <HBox alignment="CENTER_LEFT" spacing="12" HBox.hgrow="NEVER">
+                <Group>
+                    <SVGPath
+                            content="M30 0C34.4183 0 38 3.58172 38 8V32C38 36.4183 34.4183 40 30 40H8C3.58172 40 0 36.4183 0 32V8C0 3.58172 3.58172 0 8 0H30Z"
+                            fill="#2563EB" scaleX="1.3" scaleY="1.3"/>
+                    <SVGPath
+                            content="M30 0C34.4183 0 38 3.58172 38 8V32C38 36.4183 34.4183 40 30 40H8C3.58172 40 0 36.4183 0 32V8C0 3.58172 3.58172 0 8 0H30Z"
+                            fill="transparent" scaleX="1.3" scaleY="1.3" stroke="#E5E7EB"/>
+                    <SVGPath
+                            content="M7.75 27.4063V16.2723C7.75 15.3512 8.30898 14.525 9.16328 14.184L18.5816 10.4188C18.8488 10.3098 19.1477 10.3098 19.4184 10.4188L28.8367 14.184C29.691 14.525 30.25 15.3547 30.25 16.2723V27.4063C30.25 27.8739 29.8738 28.25 29.4062 28.25H27.7188C27.2512 28.25 26.875 27.8739 26.875 27.4063V18.125C26.875 17.5028 26.3723 17 25.75 17H12.25C11.6277 17 11.125 17.5028 11.125 18.125V27.4063C11.125 27.8739 10.7488 28.25 10.2812 28.25H8.59375C8.12617 28.25 7.75 27.8739 7.75 27.4063ZM24.9062 28.25H13.0938C12.6262 28.25 12.25 27.8739 12.25 27.4063V25.4375H25.75V27.4063C25.75 27.8739 25.3738 28.25 24.9062 28.25ZM12.25 24.3125V22.0625H25.75V24.3125H12.25ZM12.25 20.9375V18.125H25.75V20.9375H12.25Z"
+                            fill="white" scaleX="1.3" scaleY="1.3"/>
+                </Group>
+                <VBox>
+                    <Label styleClass="app-title" text="StockFlow">
+                        <font>
+                            <Font name="System Bold" size="20.0"/>
+                        </font>
+                    </Label>
+                    <Label styleClass="app-subtitle" text="Warehouse Management">
+                        <font>
+                            <Font size="16.0"/>
+                        </font>
+                    </Label>
+                </VBox>
+            </HBox>
+
+            <!-- Spacer -->
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Notification Bell -->
+            <StackPane styleClass="notification-bell">
+                <Label styleClass="bell-icon" text="🔔">
+                    <font>
+                        <Font size="24"/>
+                    </font>
+                </Label>
+                <Label styleClass="notification-badge" text="3">
+                    <font>
+                        <Font name="System Bold" size="10"/>
+                    </font>
+                    <StackPane.margin>
+                        <Insets right="-8" top="-8"/>
+                    </StackPane.margin>
+                </Label>
+            </StackPane>
+
+            <!-- Date and Status -->
+            <HBox alignment="CENTER" spacing="16">
+                <Label fx:id="dateLabel" styleClass="date-label" text="N/A">
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Label>
+            </HBox>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox styleClass="sidebar" minWidth="200" prefWidth="200" spacing="0">
+            <padding>
+                <Insets top="24" right="0" bottom="24" left="0"/>
+            </padding>
+
+            <!-- User Profile -->
+            <VBox spacing="8" styleClass="user-section">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <StackPane styleClass="user-avatar">
+                        <Label fx:id="initialLabel" styleClass="user-initials" text="N/A"/>
+                    </StackPane>
+                    <VBox spacing="2">
+                        <Label fx:id="nameLabel" styleClass="user-name" text="N/A"/>
+                        <Label fx:id="roleLabel" styleClass="user-role" text="N/A">
+                            <font>
+                                <Font size="13.0"/>
+                            </font>
+                        </Label>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Navigation Menu -->
+            <VBox spacing="4" VBox.vgrow="NEVER">
+                <padding>
+                    <Insets top="12"/>
+                </padding>
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"
+                        text="Warehouse Dashboard" graphicTextGap="12" onAction="#goToWarehouseDashboard">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-home" iconSize="16"/>
+                    </graphic>
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Button>
+
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button" text="Stock Management"
+                        onAction="#goToProductIndex" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-boxes" iconSize="16"/>
+                    </graphic>
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Button>
+
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"
+                        onAction="#goToStaffMenu" text="Staff Management" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-users" iconSize="16"/>
+                    </graphic>
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Button>
+
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button, nav-button-active"
+                        onAction="#goToWarehouseEdit" text="Manage Dashboard" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-sliders-h" iconSize="16"/>
+                    </graphic>
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Button>
+            </VBox>
+
+            <!-- Logout -->
+            <VBox VBox.vgrow="ALWAYS">
+                <Region VBox.vgrow="ALWAYS"/>
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="logout-button" text="Logout"
+                        onAction="#handleLogout">
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <graphic>
+                        <FontIcon iconColor="#ef4444" iconLiteral="fas-sign-out-alt" iconSize="16"/>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets left="12.0" right="12.0" bottom="50"/>
+                    </VBox.margin>
+                </Button>
+            </VBox>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="content-scroll">
+            <VBox spacing="24" styleClass="main-content">
+                <padding>
+                    <Insets bottom="32" left="32" right="32" top="32"/>
+                </padding>
+
+                <!-- Page Header -->
+                <HBox alignment="CENTER_LEFT">
+                    <VBox spacing="8">
+                        <Label styleClass="page-title" text="Edit Warehouse">
+                            <font>
+                                <Font name="System Bold" size="28.0"/>
+                            </font>
+                        </Label>
+                        <Label styleClass="page-subtitle" text="Update the details for this warehouse facility">
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                        </Label>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button onAction="#handleCancel" styleClass="back-button" text="← Back to Dashboard"/>
+                </HBox>
+
+                <!-- Form Card -->
+                <VBox styleClass="form-card" VBox.vgrow="ALWAYS">
+                    <padding>
+                        <Insets bottom="30" left="30" right="30" top="30"/>
+                    </padding>
+
+                    <VBox spacing="30">
+                        <!-- Basic Information Section -->
+                        <VBox spacing="20">
+                            <Label styleClass="form-section-title" text="Basic Information"/>
+                            <HBox spacing="20">
+                                <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="form-label" text="Warehouse Name *"/>
+                                    <TextField fx:id="warehouseNameField" promptText="Enter warehouse name"
+                                               styleClass="form-input"/>
+                                </VBox>
+                                <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="form-label" text="Warehouse ID (Read-Only)"/>
+                                    <TextField fx:id="warehouseIdField" editable="false"
+                                               styleClass="form-input, form-input-disabled"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+
+                        <Separator styleClass="form-separator"/>
+
+                        <!-- Location Information Section -->
+                        <VBox spacing="20">
+                            <Label styleClass="form-section-title" text="Location Information"/>
+                            <VBox spacing="8">
+                                <Label styleClass="form-label" text="Address *"/>
+                                <TextArea fx:id="addressField" prefRowCount="3"
+                                          promptText="Enter complete warehouse address"
+                                          styleClass="form-textarea"
+                                          wrapText="true"/>
+                            </VBox>
+                            <HBox spacing="20">
+                                <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="form-label" text="City"/>
+                                    <TextField fx:id="cityField" promptText="Enter city" styleClass="form-input"/>
+                                </VBox>
+                                <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="form-label" text="State"/>
+                                    <TextField fx:id="stateField" promptText="Enter state" styleClass="form-input"/>
+                                </VBox>
+                                <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="form-label" text="Postal Code"/>
+                                    <TextField fx:id="postalCodeField" promptText="Enter postal code"
+                                               styleClass="form-input"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+
+                        <Separator styleClass="form-separator"/>
+
+                        <!-- Capacity Section -->
+                        <VBox spacing="20">
+                            <Label styleClass="form-section-title" text="Capacity"/>
+                            <HBox spacing="20">
+                                <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="form-label" text="Storage Capacity (Kg)"/>
+                                    <TextField fx:id="storageCapacityKgField" promptText="0" styleClass="form-input"/>
+                                </VBox>
+                                <VBox spacing="8" HBox.hgrow="ALWAYS">
+                                    <Label styleClass="form-label" text="Storage Capacity (m³)"/>
+                                    <TextField fx:id="storageCapacityM3Field" promptText="0" styleClass="form-input"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+
+                        <Separator styleClass="form-separator"/>
+
+                        <!-- Status Section -->
+                        <VBox spacing="12">
+                            <Label styleClass="form-label" text="Warehouse Status *"/>
+                            <HBox spacing="15">
+                                <fx:define>
+                                    <ToggleGroup fx:id="statusToggleGroup"/>
+                                </fx:define>
+
+                                <!-- Active Status -->
+                                <VBox spacing="8" styleClass="status-radio-card" HBox.hgrow="ALWAYS">
+                                    <HBox alignment="CENTER_LEFT" spacing="10">
+                                        <RadioButton fx:id="activeStatus" toggleGroup="$statusToggleGroup"/>
+                                        <Circle radius="4" styleClass="status-indicator-active"/>
+                                        <Label styleClass="status-radio-label" text="Active"/>
+                                    </HBox>
+                                    <Label styleClass="status-radio-desc" text="Fully operational"/>
+                                </VBox>
+
+                                <!-- Inactive Status -->
+                                <VBox spacing="8" styleClass="status-radio-card" HBox.hgrow="ALWAYS">
+                                    <HBox alignment="CENTER_LEFT" spacing="10">
+                                        <RadioButton fx:id="inactiveStatus" toggleGroup="$statusToggleGroup"/>
+                                        <Circle radius="4" styleClass="status-indicator-inactive"/>
+                                        <Label styleClass="status-radio-label" text="Inactive"/>
+                                    </HBox>
+                                    <Label styleClass="status-radio-desc" text="Not operational"/>
+                                </VBox>
+
+                                <!-- Maintenance Status -->
+                                <VBox spacing="8" styleClass="status-radio-card" HBox.hgrow="ALWAYS">
+                                    <HBox alignment="CENTER_LEFT" spacing="10">
+                                        <RadioButton fx:id="maintenanceStatus" toggleGroup="$statusToggleGroup"/>
+                                        <Circle radius="4" styleClass="status-indicator-maintenance"/>
+                                        <Label styleClass="status-radio-label" text="Maintenance"/>
+                                    </HBox>
+                                    <Label styleClass="status-radio-desc" text="Under maintenance"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+
+                        <Separator styleClass="form-separator"/>
+
+                        <!-- Action Buttons -->
+                        <HBox alignment="CENTER_RIGHT" spacing="12">
+                            <Button onAction="#handleCancel" styleClass="button-secondary" text="Cancel"/>
+                            <Button onAction="#handleUpdateWarehouse" styleClass="button-primary" text="Save Changes"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

@@ -78,6 +78,6 @@
 }
 
 .logout-button:hover {
-    -fx-background-color: #cc0505;
-    -fx-text-fill: #ef4444;
+    -fx-background-color: #f4caca;
+    -fx-text-fill: #c31818;
 }

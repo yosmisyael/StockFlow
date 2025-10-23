@@ -150,6 +150,19 @@
                         <Font size="14"/>
                     </font>
                 </Button>
+
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"
+                        onAction="#goToWarehouseEdit" text="Manage Dashboard" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-sliders-h"  iconSize="16"/>
+                    </graphic>
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Button>
             </VBox>
 
             <VBox VBox.vgrow="ALWAYS">
@@ -196,13 +209,13 @@
                                     <Font size="18"/>
                                 </font>
                             </Label>
-                            <Label fx:id="totalStaffLabel" styleClass="total-staff-number" text="24">
+                            <Label fx:id="totalStaffLabel" styleClass="total-staff-number" text="0">
                                 <font>
                                     <Font name="System Bold" size="48"/>
                                 </font>
                             </Label>
                             <Label fx:id="warehouseLabel" styleClass="warehouse-label"
-                                   text="Staff aktif di Warehouse Jakarta">
+                                   text="No staff found">
                                 <font>
                                     <Font size="16"/>
                                 </font>
@@ -237,7 +250,7 @@
 
                     <!-- Header with Search and Filter -->
                     <HBox alignment="CENTER_LEFT" spacing="16">
-                        <Label styleClass="section-title" text="Daftar Staff">
+                        <Label styleClass="section-title" text="Staff List">
                             <font>
                                 <Font name="System Bold" size="20"/>
                             </font>
@@ -276,62 +289,11 @@
 
                     <!-- Staff List -->
                     <VBox fx:id="staffListContainer" spacing="12">
-                        <!-- Staff Item 1 -->
-                        <!--                        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="staff-item">-->
-                        <!--                            <padding>-->
-                        <!--                                <Insets bottom="16" left="16" right="16" top="16" />-->
-                        <!--                            </padding>-->
-
-                        <!--                            &lt;!&ndash; Avatar &ndash;&gt;-->
-                        <!--                            <Label text="👤" styleClass="staff-avatar">-->
-                        <!--                                <font>-->
-                        <!--                                    <Font size="32" />-->
-                        <!--                                </font>-->
-                        <!--                            </Label>-->
-
-                        <!--                            &lt;!&ndash; Staff Info &ndash;&gt;-->
-                        <!--                            <VBox spacing="4" HBox.hgrow="ALWAYS">-->
-                        <!--                                <Label text="Ahmad Rizki" styleClass="staff-name">-->
-                        <!--                                    <font>-->
-                        <!--                                        <Font name="System Bold" size="16" />-->
-                        <!--                                    </font>-->
-                        <!--                                </Label>-->
-                        <!--                                <HBox spacing="16">-->
-                        <!--                                    <Label text="ID: STF001" styleClass="staff-detail">-->
-                        <!--                                        <font>-->
-                        <!--                                            <Font size="13" />-->
-                        <!--                                        </font>-->
-                        <!--                                    </Label>-->
-                        <!--                                    <Label text="Username: ahmad.rizki" styleClass="staff-detail">-->
-                        <!--                                        <font>-->
-                        <!--                                            <Font size="13" />-->
-                        <!--                                        </font>-->
-                        <!--                                    </Label>-->
-                        <!--                                </HBox>-->
-                        <!--                            </VBox>-->
-
-                        <!--                            &lt;!&ndash; Status Badge &ndash;&gt;-->
-                        <!--                            <Label text="Aktif" styleClass="status-badge-active">-->
-                        <!--                                <padding>-->
-                        <!--                                    <Insets top="6" right="16" bottom="6" left="16" />-->
-                        <!--                                </padding>-->
-                        <!--                                <font>-->
-                        <!--                                    <Font name="System Bold" size="12" />-->
-                        <!--                                </font>-->
-                        <!--                            </Label>-->
-
-                        <!--                            &lt;!&ndash; Menu Button &ndash;&gt;-->
-                        <!--                            <Button text="⋮" styleClass="menu-button">-->
-                        <!--                                <font>-->
-                        <!--                                    <Font size="20" />-->
-                        <!--                                </font>-->
-                        <!--                            </Button>-->
-                        <!--                        </HBox>-->
                     </VBox>
 
                     <!-- Pagination Footer -->
                     <HBox alignment="CENTER" spacing="20">
-                        <Label styleClass="pagination-info" text="Menampilkan 1-6 dari 24 staff">
+                        <Label styleClass="pagination-info" text="Showing all staff">
                             <font>
                                 <Font size="13"/>
                             </font>

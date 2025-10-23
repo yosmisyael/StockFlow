@@ -278,9 +278,9 @@ public class ProductCreateController implements Initializable {
     @FXML
     private void goToWarehouseDashboard() {
         StageManager.getInstance().navigateWithData(
-                View.WAREHOUSE_DASHBOARD,
+                View.WAREHOUSE_SHOW,
                 "Warehouse " + currentWarehouse.getId(),
-                (WarehouseDashboardController controller) -> {
+                (WarehouseShowController controller) -> {
                     controller.initData(currentWarehouse, currentUser);
                 }
         );
@@ -292,6 +292,18 @@ public class ProductCreateController implements Initializable {
                 View.STAFF_INDEX,
                 "Warehouse " + currentWarehouse.getId() + " Staff Management",
                 (StaffIndexController controller) -> {
+                    controller.initData(currentWarehouse, currentUser);
+                }
+        );
+    }
+
+    @FXML
+    private void goToWarehouseEdit() {
+        currentUser = SessionManager.getInstance().getCurrentUser();
+        StageManager.getInstance().navigateWithData(
+                View.WAREHOUSE_EDIT,
+                "Manage Warehouse " + currentWarehouse.getName(),
+                (WarehouseEditController controller) -> {
                     controller.initData(currentWarehouse, currentUser);
                 }
         );

@@ -58,7 +58,7 @@ public class LoginController {
                 StageManager.getInstance().navigateWithData(
                         View.WAREHOUSE_INDEX,
                         "Warehouse List",
-                        (WarehouseController controller) -> { controller.initData(user); }
+                        (WarehouseIndexController controller) -> { controller.initData(user); }
                 );
             }
         } else {

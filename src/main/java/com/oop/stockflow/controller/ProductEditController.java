@@ -191,6 +191,18 @@ public class ProductEditController {
     }
 
     // Helper: Navigate Back to Product List
+    @FXML
+    private void goToWarehouseEdit() {
+        currentUser = SessionManager.getInstance().getCurrentUser();
+        StageManager.getInstance().navigateWithData(
+                View.WAREHOUSE_EDIT,
+                "Manage Warehouse " + currentWarehouse.getName(),
+                (WarehouseEditController controller) -> {
+                    controller.initData(currentWarehouse, currentUser);
+                }
+        );
+    }
+
     private void navigateToProductList() {
         if (currentWarehouse == null || currentUser == null) {
             System.err.println("Error: Cannot navigate back to product list - context lost.");
@@ -264,9 +276,9 @@ public class ProductEditController {
 
     public void goToWarehouseDashboard(ActionEvent actionEvent) {
         StageManager.getInstance().navigateWithData(
-                View.WAREHOUSE_DASHBOARD,
+                View.WAREHOUSE_SHOW,
                 "Warehouse " + currentWarehouse.getId(),
-                (WarehouseDashboardController controller) -> {
+                (WarehouseShowController controller) -> {
                     controller.initData(currentWarehouse, currentUser);
                 }
         );

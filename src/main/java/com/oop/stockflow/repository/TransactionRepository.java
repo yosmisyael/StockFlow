@@ -9,7 +9,9 @@ import java.util.List;
 
 public class TransactionRepository {
     private static TransactionRepository instance;
-    private TransactionRepository() {}
+
+    private TransactionRepository() {
+    }
 
     /**
      * Returns the singleton instance of the TransactionRepository.
@@ -30,13 +32,10 @@ public class TransactionRepository {
      *
      * @return The singleton TransactionRepository instance.
      */
-    public boolean createInboundTransaction(int staffId, Timestamp date, ShippingType shippingMethod,
-                                            int productSku, int quantity, TransactionStatus initialStatus) {
-        String sql = "INSERT INTO transactions (user_id, date, transaction_type, destination_address, shipping_method, product_sku, quantity, status) " +
-                "VALUES (?, ?, 'inbound'::transaction_type, NULL, ?::shipping_method, ?, ?, ?::transaction_status)";
+    public boolean createInboundTransaction(int staffId, Timestamp date, ShippingType shippingMethod, int productSku, int quantity, TransactionStatus initialStatus) {
+        String sql = "INSERT INTO transactions (user_id, date, transaction_type, destination_address, shipping_method, product_sku, quantity, status) " + "VALUES (?, ?, 'inbound'::transaction_type, NULL, ?::shipping_method, ?, ?, ?::transaction_status)";
 
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, staffId);
             stmt.setTimestamp(2, date);
@@ -65,14 +64,10 @@ public class TransactionRepository {
      * @param initialStatus      The initial {@link TransactionStatus} (e.g., PENDING).
      * @return {@code true} if the transaction was created successfully, {@code false} otherwise.
      */
-    public boolean createOutboundTransaction(int staffId, Timestamp date, String destinationAddress,
-                                             ShippingType shippingMethod,
-                                             int quantity, int productSku, TransactionStatus initialStatus) {
-        String sql = "INSERT INTO transactions (user_id, date, transaction_type, destination_address, shipping_method, quantity, product_sku, status) " +
-                "VALUES (?, ?, 'outbound'::transaction_type, ?, ?::shipping_method, ?, ?, ?::transaction_status)";
+    public boolean createOutboundTransaction(int staffId, Timestamp date, String destinationAddress, ShippingType shippingMethod, int quantity, int productSku, TransactionStatus initialStatus) {
+        String sql = "INSERT INTO transactions (user_id, date, transaction_type, destination_address, shipping_method, quantity, product_sku, status) " + "VALUES (?, ?, 'outbound'::transaction_type, ?, ?::shipping_method, ?, ?, ?::transaction_status)";
 
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, staffId);
             stmt.setTimestamp(2, date);
@@ -100,11 +95,9 @@ public class TransactionRepository {
      */
     public List<Transaction> getAllTransactionsByStaffId(int staffId) {
         List<Transaction> transactions = new ArrayList<>();
-        String sql = "SELECT id, user_id, date, transaction_type, destination_address, shipping_method, product_sku, quantity, status " +
-                "FROM transactions WHERE user_id = ? ORDER BY date DESC";
+        String sql = "SELECT id, user_id, date, transaction_type, destination_address, shipping_method, product_sku, quantity, status " + "FROM transactions WHERE user_id = ? ORDER BY date DESC";
 
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, staffId);
 
@@ -128,15 +121,11 @@ public class TransactionRepository {
      *
      * @return The total count of today's outbound transactions, or -1 if an error occurs.
      */
-    public int countTodayOutboundTransaction() {
-        String sql = "SELECT COUNT(*) FROM transactions " +
-                "WHERE transaction_type = 'outbound'::transaction_type " +
-                "AND date >= CURRENT_DATE " +
-                "AND date < CURRENT_DATE + interval '1 day'";
+    public int countTodayOutboundTransaction(int warehouseId) {
+        String sql = "SELECT COUNT(t.*) FROM transactions t " + "JOIN products p ON t.product_sku = p.sku " + "WHERE t.transaction_type = 'outbound'::transaction_type " + "AND t.date >= CURRENT_DATE " + "AND t.date < CURRENT_DATE + interval '1 day' " + "AND p.warehouse_id = ?";
 
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, warehouseId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1);
@@ -150,22 +139,19 @@ public class TransactionRepository {
     }
 
     /**
-     * Counts the number of inbound transactions recorded today (since 00:00).
+     * Counts the number of inbound transactions recorded today (since 00:00) in a warehouse.
      *
      * @return The total count of today's inbound transactions, or -1 if an error occurs.
      */
-    public int countTodayInboundTransaction() {
-        String sql = "SELECT COUNT(*) FROM transactions " +
-                "WHERE transaction_type = 'inbound'::transaction_type " +
-                "AND date >= CURRENT_DATE " +
-                "AND date < CURRENT_DATE + interval '1 day'";
+    public int countTodayInboundTransaction(int warehouseId) {
+        String sql = "SELECT COUNT(t.*) FROM transactions t " + "JOIN products p ON t.product_sku = p.sku " + "WHERE t.transaction_type = 'inbound'::transaction_type " + "AND t.date >= CURRENT_DATE " + "AND t.date < CURRENT_DATE + interval '1 day' " + "AND p.warehouse_id = ?";
 
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, warehouseId);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getInt(1); // Ambil hasil COUNT
+                    return rs.getInt(1);
                 }
             }
         } catch (SQLException e) {
@@ -185,8 +171,7 @@ public class TransactionRepository {
     public boolean updateTransactionStatus(long transactionId, TransactionStatus newStatus) {
         String sql = "UPDATE transactions SET status = ?::transaction_status WHERE id = ?";
 
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, newStatus.getDbValue());
             stmt.setLong(2, transactionId);
@@ -209,7 +194,7 @@ public class TransactionRepository {
      * @throws SQLException If an error occurs while reading from the ResultSet.
      */
     private Transaction mapResultSetToTransaction(ResultSet rs) throws SQLException {
-        int id = (int)rs.getLong("id");
+        int id = (int) rs.getLong("id");
         int staffId = rs.getInt("user_id");
         Timestamp date = rs.getTimestamp("date");
         String typeString = rs.getString("transaction_type");

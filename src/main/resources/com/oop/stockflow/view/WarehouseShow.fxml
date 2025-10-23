@@ -27,7 +27,7 @@
 <BorderPane styleClass="root"
             stylesheets="@../assets/sidebar.css, @../assets/topbar.css, @../assets/utils.css, @../assets/warehouse-dashboard.css"
             xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.oop.stockflow.controller.WarehouseDashboardController">
+            fx:controller="com.oop.stockflow.controller.WarehouseShowController">
 
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
@@ -150,6 +150,19 @@
                         onAction="#goToStaffMenu" text="Staff Management" graphicTextGap="12">
                     <graphic>
                         <FontIcon iconLiteral="fas-users"  iconSize="16"/>
+                    </graphic>
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Button>
+
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"
+                        onAction="#goToWarehouseEdit" text="Manage Dashboard" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-sliders-h"  iconSize="16"/>
                     </graphic>
                     <padding>
                         <Insets bottom="12" left="16" right="12" top="12"/>
@@ -585,8 +598,8 @@
                                 <ColumnConstraints percentWidth="50"/>
                             </columnConstraints>
 
-                            <!-- Request Delivery -->
-                            <VBox alignment="CENTER" spacing="12" styleClass="action-card, action-card-blue"
+                            <!-- Manage Warehouse -->
+                            <VBox alignment="CENTER" spacing="12" onMouseClicked="#goToWarehouseEdit" styleClass="action-card, action-card-blue"
                                   GridPane.columnIndex="0" GridPane.rowIndex="0">
                                 <padding>
                                     <Insets bottom="20" left="20" right="20" top="20"/>
@@ -596,7 +609,7 @@
                                         <Font size="32"/>
                                     </font>
                                 </Label>
-                                <Label styleClass="action-label" text="Request Delivery" textAlignment="CENTER"
+                                <Label styleClass="action-label" text="Manage Warehouse" textAlignment="CENTER"
                                        wrapText="true">
                                     <font>
                                         <Font name="System Bold" size="14"/>
@@ -604,8 +617,8 @@
                                 </Label>
                             </VBox>
 
-                            <!-- Add Stock -->
-                            <VBox alignment="CENTER" spacing="12" styleClass="action-card, action-card-green"
+                            <!-- Add Product -->
+                            <VBox alignment="CENTER" spacing="12" onMouseClicked="#goToProductCreate" styleClass="action-card, action-card-green"
                                   GridPane.columnIndex="1" GridPane.rowIndex="0">
                                 <padding>
                                     <Insets bottom="20" left="20" right="20" top="20"/>
@@ -615,7 +628,7 @@
                                         <Font size="32"/>
                                     </font>
                                 </Label>
-                                <Label styleClass="action-label" text="Add Stock" textAlignment="CENTER"
+                                <Label styleClass="action-label" text="Add Product" textAlignment="CENTER"
                                        wrapText="true">
                                     <font>
                                         <Font name="System Bold" size="14"/>

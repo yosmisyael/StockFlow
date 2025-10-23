@@ -6,9 +6,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
-
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<BorderPane style="-fx-background-color: #f5f5f5;" stylesheets="@../assets/topbar.css, @../assets/sidebar.css, @../assets/utils.css, @../assets/app.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.stockflow.controller.WarehouseCreateController">
+
+<BorderPane styleClass="root-layout"
+            stylesheets="@../assets/topbar.css, @../assets/sidebar.css, @../assets/utils.css, @../assets/warehouse-form.css"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.oop.stockflow.controller.WarehouseCreateController">
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
             <padding>
@@ -115,195 +118,195 @@
 
     <!-- Main Content -->
     <center>
-        <ScrollPane fitToWidth="true">
-            <VBox spacing="20" style="-fx-background-color: #f5f5f5;">
+        <ScrollPane fitToWidth="true" styleClass="content-scroll-pane">
+            <VBox spacing="20" styleClass="main-form-container">
                 <padding>
-                    <Insets bottom="30" left="40" right="40" top="30" />
+                    <Insets bottom="30" left="40" right="40" top="30"/>
                 </padding>
 
                 <!-- Breadcrumb and Title -->
                 <VBox spacing="15">
                     <HBox alignment="CENTER_LEFT" spacing="8">
-                        <Label style="-fx-text-fill: #6b7280; -fx-font-size: 13px;" text="Warehouses" />
-                        <Label style="-fx-text-fill: #9ca3af;" text="&gt;" />
-                        <Label style="-fx-text-fill: #6b7280; -fx-font-size: 13px;" text="Add Warehouse" />
+                        <Label styleClass="breadcrumb-text" text="Warehouses"/>
+                        <Label styleClass="breadcrumb-separator" text="&gt;"/>
+                        <Label styleClass="breadcrumb-text" text="Add Warehouse"/>
                     </HBox>
 
                     <HBox alignment="CENTER_LEFT">
-                        <Label style="-fx-font-size: 28px; -fx-font-weight: bold;" text="Add New Warehouse" />
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Button
-                                style="
-                                -fx-background-color: white;
-                                -fx-border-color: #d1d5db;
-                                -fx-border-radius: 6;
-                                -fx-background-radius: 6;
-                                -fx-padding: 8 16;
-                                -fx-cursor: hand;"
-                                text="← Back to Warehouses"
-                                onAction="#goToWarehouseList"
-                        />
+                        <Label styleClass="page-header-title" text="Add New Warehouse"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button styleClass="back-button" text="← Back to Warehouses" onAction="#goToWarehouseList"/>
                     </HBox>
                 </VBox>
 
                 <!-- Form Card -->
-                <VBox style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e5e7eb; -fx-border-width: 1;">
-
+                <VBox styleClass="form-card-container">
                     <padding>
-                        <Insets bottom="30" left="30" right="30" top="30" />
+                        <Insets bottom="30" left="30" right="30" top="30"/>
                     </padding>
 
                     <VBox spacing="30">
                         <!-- Warehouse Information Header -->
                         <HBox alignment="CENTER_LEFT" spacing="12" VBox.vgrow="ALWAYS">
                             <Group>
-                                <SVGPath content="M25.5 28H0.5V0H25.5V28Z" fill="transparent" stroke="#E5E7EB" />
-                                <SVGPath content="M0.5 22.5625V10.1914C0.5 9.16797 1.12109 8.25 2.07031 7.87109L12.5352 3.6875C12.832 3.56641 13.1641 3.56641 13.4648 3.6875L23.9297 7.87109C24.8789 8.25 25.5 9.17188 25.5 10.1914V22.5625C25.5 23.082 25.082 23.5 24.5625 23.5H22.6875C22.168 23.5 21.75 23.082 21.75 22.5625V12.25C21.75 11.5586 21.1914 11 20.5 11H5.5C4.80859 11 4.25 11.5586 4.25 12.25V22.5625C4.25 23.082 3.83203 23.5 3.3125 23.5H1.4375C0.917969 23.5 0.5 23.082 0.5 22.5625ZM19.5625 23.5H6.4375C5.91797 23.5 5.5 23.082 5.5 22.5625V20.375H20.5V22.5625C20.5 23.082 20.082 23.5 19.5625 23.5ZM5.5 19.125V16.625H20.5V19.125H5.5ZM5.5 15.375V12.25H20.5V15.375H5.5Z" fill="#2563EB" scaleX="1.3" scaleY="1.3" />
+                                <SVGPath styleClass="form-header-icon-border"
+                                         content="M25.5 28H0.5V0H25.5V28Z"/>
+                                <SVGPath styleClass="form-header-icon"
+                                         content="M0.5 22.5625V10.1914C0.5 9.16797 1.12109 8.25 2.07031 7.87109L12.5352 3.6875C12.832 3.56641 13.1641 3.56641 13.4648 3.6875L23.9297 7.87109C24.8789 8.25 25.5 9.17188 25.5 10.1914V22.5625C25.5 23.082 25.082 23.5 24.5625 23.5H22.6875C22.168 23.5 21.75 23.082 21.75 22.5625V12.25C21.75 11.5586 21.1914 11 20.5 11H5.5C4.80859 11 4.25 11.5586 4.25 12.25V22.5625C4.25 23.082 3.83203 23.5 3.3125 23.5H1.4375C0.917969 23.5 0.5 23.082 0.5 22.5625ZM19.5625 23.5H6.4375C5.91797 23.5 5.5 23.082 5.5 22.5625V20.375H20.5V22.5625C20.5 23.082 20.082 23.5 19.5625 23.5ZM5.5 19.125V16.625H20.5V19.125H5.5ZM5.5 15.375V12.25H20.5V15.375H5.5Z"
+                                         scaleX="1.3" scaleY="1.3"/>
                             </Group>
                             <VBox nodeOrientation="LEFT_TO_RIGHT" spacing="2" HBox.hgrow="ALWAYS">
-                                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Warehouse Information">
-                            <font>
-                               <Font name="System Bold" size="28.0" />
-                            </font></Label>
-                                <Label style="-fx-font-size: 14px; -fx-text-fill: #6b7280;" text="Fill in the details for the new warehouse facility">
-                            <font>
-                               <Font size="20.0" />
-                            </font></Label>
+                                <Label styleClass="form-header-title" text="Warehouse Information">
+                                    <font>
+                                        <Font name="System Bold" size="28.0"/>
+                                    </font>
+                                </Label>
+                                <Label styleClass="form-header-subtitle"
+                                       text="Fill in the details for the new warehouse facility">
+                                    <font>
+                                        <Font size="20.0"/>
+                                    </font>
+                                </Label>
                             </VBox>
                         </HBox>
 
-                        <Separator style="-fx-background-color: #f3f4f6;" />
+                        <Separator styleClass="form-separator"/>
 
                         <!-- Basic Information Section -->
                         <VBox spacing="20">
                             <HBox alignment="CENTER_LEFT" spacing="8">
-                                <Circle radius="10" style="-fx-fill: #3b82f6;" />
-                                <Label style="-fx-font-size: 14px; -fx-font-weight: 600;" text="Basic Information" />
+                                <Circle radius="10" styleClass="section-indicator"/>
+                                <Label styleClass="section-title" text="Basic Information"/>
                             </HBox>
 
                             <HBox spacing="20">
                                 <VBox spacing="8" HBox.hgrow="ALWAYS">
-                                    <Label style="-fx-font-size: 13px; -fx-font-weight: 500;" text="Warehouse Name *" />
-                                    <TextField fx:id="warehouseNameField" promptText="Enter warehouse name" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10 12; -fx-font-size: 13px;" />
+                                    <Label styleClass="form-label" text="Warehouse Name *"/>
+                                    <TextField fx:id="warehouseNameField" promptText="Enter warehouse name"
+                                               styleClass="form-input"/>
                                 </VBox>
                             </HBox>
                         </VBox>
 
-                        <Separator style="-fx-background-color: #f3f4f6;" />
+                        <Separator styleClass="form-separator"/>
 
                         <!-- Location Information Section -->
                         <VBox spacing="20">
                             <HBox alignment="CENTER_LEFT" spacing="8">
-                                <Circle radius="10" style="-fx-fill: #3b82f6;" />
-                                <Label style="-fx-font-size: 14px; -fx-font-weight: 600;" text="Location Information" />
+                                <Circle radius="10" styleClass="section-indicator"/>
+                                <Label styleClass="section-title" text="Location Information"/>
                             </HBox>
 
                             <VBox spacing="8">
-                                <Label style="-fx-font-size: 13px; -fx-font-weight: 500;" text="Address *" />
-                                <TextArea fx:id="addressField" prefRowCount="3" promptText="Enter complete warehouse address" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10 12; -fx-font-size: 13px;" wrapText="true" />
+                                <Label styleClass="form-label" text="Address *"/>
+                                <TextArea fx:id="addressField" prefRowCount="3"
+                                          promptText="Enter complete warehouse address"
+                                          styleClass="form-textarea" wrapText="true"/>
                             </VBox>
 
                             <HBox spacing="20">
                                 <VBox spacing="8" HBox.hgrow="ALWAYS">
-                                    <Label style="-fx-font-size: 13px; -fx-font-weight: 500;" text="City" />
-                                    <TextField fx:id="cityField" promptText="Enter city" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10 12; -fx-font-size: 13px;" />
+                                    <Label styleClass="form-label" text="City"/>
+                                    <TextField fx:id="cityField" promptText="Enter city" styleClass="form-input"/>
                                 </VBox>
                                 <VBox spacing="8" HBox.hgrow="ALWAYS">
-                                    <Label style="-fx-font-size: 13px; -fx-font-weight: 500;" text="State" />
-                                    <TextField fx:id="stateField" promptText="Enter state" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10 12; -fx-font-size: 13px;" />
+                                    <Label styleClass="form-label" text="State"/>
+                                    <TextField fx:id="stateField" promptText="Enter state" styleClass="form-input"/>
                                 </VBox>
                                 <VBox spacing="8" HBox.hgrow="ALWAYS">
-                                    <Label style="-fx-font-size: 13px; -fx-font-weight: 500;" text="Postal Code" />
-                                    <TextField fx:id="postalCodeField" promptText="Enter postal code" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10 12; -fx-font-size: 13px;" />
+                                    <Label styleClass="form-label" text="Postal Code"/>
+                                    <TextField fx:id="postalCodeField" promptText="Enter postal code"
+                                               styleClass="form-input"/>
                                 </VBox>
                             </HBox>
                         </VBox>
 
-                        <Separator style="-fx-background-color: #f3f4f6;" />
+                        <Separator styleClass="form-separator"/>
 
                         <!-- Capacity & Operations Section -->
                         <VBox spacing="20">
                             <HBox alignment="CENTER_LEFT" spacing="8">
-                                <Circle radius="10" style="-fx-fill: #3b82f6;" />
-                                <Label style="-fx-font-size: 14px; -fx-font-weight: 600;" text="Capacity &amp; Operations" />
+                                <Circle radius="10" styleClass="section-indicator"/>
+                                <Label styleClass="section-title" text="Capacity &amp; Operations"/>
                             </HBox>
 
                             <HBox spacing="20">
                                 <VBox spacing="8" HBox.hgrow="ALWAYS">
-                                    <Label style="-fx-font-size: 13px; -fx-font-weight: 500;" text="Storage Capacity (Kg) *" />
-                                    <HBox alignment="CENTER_LEFT" spacing="0" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6;">
-                                        <TextField fx:id="storageCapacityKgField" promptText="0" style="-fx-background-color: transparent; -fx-border-width: 0; -fx-padding: 10 12; -fx-font-size: 13px;" HBox.hgrow="ALWAYS" />
-                                        <Label style="-fx-text-fill: #9ca3af; -fx-padding: 0 12 0 0; -fx-font-size: 13px;" text="Kg" />
+                                    <Label styleClass="form-label" text="Storage Capacity (Kg) *"/>
+                                    <HBox alignment="CENTER_LEFT" spacing="0" styleClass="input-with-unit">
+                                        <TextField fx:id="storageCapacityKgField" promptText="0"
+                                                   styleClass="form-input" HBox.hgrow="ALWAYS"/>
+                                        <Label styleClass="input-unit-label" text="Kg"/>
                                     </HBox>
                                 </VBox>
                                 <VBox spacing="8" HBox.hgrow="ALWAYS">
-                                    <Label style="-fx-font-size: 13px; -fx-font-weight: 500;" text="Storage Capacity (m³)" />
-                                    <HBox alignment="CENTER_LEFT" spacing="0" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6;">
-                                        <TextField fx:id="storageCapacityM3Field" promptText="0" style="-fx-background-color: transparent; -fx-border-width: 0; -fx-padding: 10 12; -fx-font-size: 13px;" HBox.hgrow="ALWAYS" />
-                                        <Label style="-fx-text-fill: #9ca3af; -fx-padding: 0 12 0 0; -fx-font-size: 13px;" text="m³" />
+                                    <Label styleClass="form-label" text="Storage Capacity (m³)"/>
+                                    <HBox alignment="CENTER_LEFT" spacing="0" styleClass="input-with-unit">
+                                        <TextField fx:id="storageCapacityM3Field" promptText="0"
+                                                   styleClass="form-input" HBox.hgrow="ALWAYS"/>
+                                        <Label styleClass="input-unit-label" text="m³"/>
                                     </HBox>
                                 </VBox>
                             </HBox>
                         </VBox>
 
-                        <Separator style="-fx-background-color: #f3f4f6;" />
+                        <Separator styleClass="form-separator"/>
 
                         <!-- Status Configuration Section -->
                         <VBox spacing="20">
                             <HBox alignment="CENTER_LEFT" spacing="8">
-                                <Circle radius="10" style="-fx-fill: #3b82f6;" />
-                                <Label style="-fx-font-size: 14px; -fx-font-weight: 600;" text="Status Configuration" />
+                                <Circle radius="10" styleClass="section-indicator"/>
+                                <Label styleClass="section-title" text="Status Configuration"/>
                             </HBox>
 
                             <VBox spacing="12">
-                                <Label style="-fx-font-size: 13px; -fx-font-weight: 500;" text="Warehouse Status *" />
+                                <Label styleClass="form-label" text="Warehouse Status *"/>
                                 <HBox spacing="15">
                                     <fx:define>
-                                        <ToggleGroup fx:id="statusToggleGroup" />
+                                        <ToggleGroup fx:id="statusToggleGroup"/>
                                     </fx:define>
 
                                     <!-- Active Status -->
-                                    <VBox spacing="8"
-                                          style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 16; -fx-cursor: hand;"
-                                          HBox.hgrow="ALWAYS">
+                                    <VBox spacing="8" styleClass="status-radio-card" HBox.hgrow="ALWAYS">
                                         <HBox alignment="CENTER_LEFT" spacing="10">
-                                            <RadioButton fx:id="activeStatus" toggleGroup="$statusToggleGroup" selected="true" />
-                                            <Circle radius="4" style="-fx-fill: #10b981;"/>
-                                            <Label style="-fx-font-size: 13px; -fx-font-weight: 600;" text="Active"/>
+                                            <RadioButton fx:id="activeStatus" toggleGroup="$statusToggleGroup"
+                                                         selected="true"/>
+                                            <Circle radius="4" styleClass="status-indicator-active"/>
+                                            <Label styleClass="status-radio-label" text="Active"/>
                                         </HBox>
-                                        <Label style="-fx-font-size: 12px; -fx-text-fill: #6b7280; -fx-padding: 0 0 0 34;"
-                                               text="Fully operational"/>
+                                        <Label styleClass="status-radio-description" text="Fully operational"/>
                                     </VBox>
 
                                     <!-- Inactive Status -->
-                                    <VBox spacing="8" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 16; -fx-cursor: hand;" HBox.hgrow="ALWAYS">
+                                    <VBox spacing="8" styleClass="status-radio-card" HBox.hgrow="ALWAYS">
                                         <HBox alignment="CENTER_LEFT" spacing="10">
-                                            <RadioButton fx:id="inactiveStatus" toggleGroup="$statusToggleGroup" />
-                                            <Circle radius="4" style="-fx-fill: #ef4444;" />
-                                            <Label style="-fx-font-size: 13px; -fx-font-weight: 600;" text="Inactive" />
+                                            <RadioButton fx:id="inactiveStatus" toggleGroup="$statusToggleGroup"/>
+                                            <Circle radius="4" styleClass="status-indicator-inactive"/>
+                                            <Label styleClass="status-radio-label" text="Inactive"/>
                                         </HBox>
-                                        <Label style="-fx-font-size: 12px; -fx-text-fill: #6b7280; -fx-padding: 0 0 0 34;" text="Not operational" />
+                                        <Label styleClass="status-radio-description" text="Not operational"/>
                                     </VBox>
 
                                     <!-- Maintenance Status -->
-                                    <VBox spacing="8" style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 16; -fx-cursor: hand;" HBox.hgrow="ALWAYS">
+                                    <VBox spacing="8" styleClass="status-radio-card" HBox.hgrow="ALWAYS">
                                         <HBox alignment="CENTER_LEFT" spacing="10">
-                                            <RadioButton fx:id="maintenanceStatus" toggleGroup="$statusToggleGroup" />
-                                            <Circle radius="4" style="-fx-fill: #f59e0b;" />
-                                            <Label style="-fx-font-size: 13px; -fx-font-weight: 600;" text="Maintenance" />
+                                            <RadioButton fx:id="maintenanceStatus" toggleGroup="$statusToggleGroup"/>
+                                            <Circle radius="4" styleClass="status-indicator-maintenance"/>
+                                            <Label styleClass="status-radio-label" text="Maintenance"/>
                                         </HBox>
-                                        <Label style="-fx-font-size: 12px; -fx-text-fill: #6b7280; -fx-padding: 0 0 0 34;" text="Under maintenance" />
+                                        <Label styleClass="status-radio-description" text="Under maintenance"/>
                                     </VBox>
                                 </HBox>
                             </VBox>
                         </VBox>
 
-                        <Separator style="-fx-background-color: #f3f4f6;" />
+                        <Separator styleClass="form-separator"/>
 
                         <!-- Action Buttons -->
                         <HBox alignment="CENTER_RIGHT" spacing="15">
-                            <Button style="-fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10 24; -fx-font-size: 13px; -fx-font-weight: 500; -fx-cursor: hand; -fx-text-fill: #374151;" text="Cancel" onAction="#goToWarehouseList" />
-                            <Button style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10 24; -fx-font-size: 13px; -fx-font-weight: 500; -fx-cursor: hand;" text="+ Register Warehouse" onAction="#handleRegisterWarehouse"/>
+                            <Button styleClass="button-cancel" text="Cancel" onAction="#goToWarehouseList"/>
+                            <Button styleClass="button-primary-large" text="+ Register Warehouse"
+                                    onAction="#handleRegisterWarehouse"/>
                         </HBox>
                     </VBox>
                 </VBox>

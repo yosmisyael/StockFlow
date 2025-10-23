@@ -137,6 +137,19 @@
                         <Font size="14"/>
                     </font>
                 </Button>
+
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"
+                        onAction="#goToWarehouseEdit" text="Manage Dashboard" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-sliders-h"  iconSize="16"/>
+                    </graphic>
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Button>
             </VBox>
 
             <VBox VBox.vgrow="ALWAYS">

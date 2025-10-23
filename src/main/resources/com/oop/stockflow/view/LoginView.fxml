@@ -161,7 +161,7 @@
             </VBox>
             <HBox alignment="CENTER">
                 <Text style="-fx-fill: #666;" text="Didn't have an account yet?"/>
-                <Hyperlink text="Sign in here" onAction="#goToRegister"/>
+                <Hyperlink text="Sign up here" onAction="#goToRegister"/>
             </HBox>
             <HBox.margin>
                 <Insets/>

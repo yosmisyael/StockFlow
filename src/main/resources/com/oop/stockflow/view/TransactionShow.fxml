@@ -19,7 +19,7 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <BorderPane styleClass="root"
             stylesheets="@../assets/topbar.css, @../assets/sidebar.css, @../assets/utils.css, @../assets/transaction-detail.css"
-            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.oop.stockflow.controller.TransactionShowController">
 
     <!-- Top Navigation Bar -->

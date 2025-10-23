@@ -40,9 +40,9 @@ public class StaffCreateController {
     @FXML
     private void goToWarehouseDashboard() {
         StageManager.getInstance().navigateWithData(
-                View.WAREHOUSE_DASHBOARD,
+                View.WAREHOUSE_SHOW,
                 "Dashboard",
-                (WarehouseDashboardController controller) -> controller.initData(currentWarehouse, currentUser)
+                (WarehouseShowController controller) -> controller.initData(currentWarehouse, currentUser)
         );
     }
 
@@ -62,6 +62,18 @@ public class StaffCreateController {
                 View.PRODUCT_INDEX,
                 "Warehouse " + currentWarehouse.getId() + " Product Management",
                 (ProductIndexController controller) -> {
+                    controller.initData(currentWarehouse, currentUser);
+                }
+        );
+    }
+
+    @FXML
+    private void goToWarehouseEdit() {
+        currentUser = SessionManager.getInstance().getCurrentUser();
+        StageManager.getInstance().navigateWithData(
+                View.WAREHOUSE_EDIT,
+                "Manage Warehouse " + currentWarehouse.getName(),
+                (WarehouseEditController controller) -> {
                     controller.initData(currentWarehouse, currentUser);
                 }
         );

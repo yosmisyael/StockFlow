@@ -11,6 +11,7 @@ module com.oop.stockflow {
     requires java.desktop;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome5;
+    requires kotlin.stdlib;
 
     opens com.oop.stockflow to javafx.fxml;
     exports com.oop.stockflow;

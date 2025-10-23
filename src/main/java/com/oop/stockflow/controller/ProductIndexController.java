@@ -90,12 +90,12 @@ public class ProductIndexController implements Initializable {
     private void loadStats() {
         // count inbound today
         int countInboundToday = 0;
-        countInboundToday = transactionRepository.countTodayInboundTransaction();
+        countInboundToday = transactionRepository.countTodayInboundTransaction(currentWarehouse.getId());
         inboundTodayLabel.setText(String.valueOf(countInboundToday));
 
         // count outbound today
         int countOutboundToday = 0;
-        countOutboundToday = transactionRepository.countTodayOutboundTransaction();
+        countOutboundToday = transactionRepository.countTodayOutboundTransaction(currentWarehouse.getId());
         outboundTodayLabel.setText(String.valueOf(countOutboundToday));
 
         // count low stock
@@ -234,11 +234,23 @@ public class ProductIndexController implements Initializable {
 
     // navigations
     @FXML
+    private void goToWarehouseEdit() {
+        currentUser = SessionManager.getInstance().getCurrentUser();
+        StageManager.getInstance().navigateWithData(
+                View.WAREHOUSE_EDIT,
+                "Manage Warehouse " + currentWarehouse.getName(),
+                (WarehouseEditController controller) -> {
+                    controller.initData(currentWarehouse, currentUser);
+                }
+        );
+    }
+
+    @FXML
     private void goToWarehouseDashboard() {
         StageManager.getInstance().navigateWithData(
-                View.WAREHOUSE_DASHBOARD,
+                View.WAREHOUSE_SHOW,
                 "Warehouse " + currentWarehouse.getId(),
-                (WarehouseDashboardController controller) -> {
+                (WarehouseShowController controller) -> {
                     controller.initData(currentWarehouse, currentUser);
                 }
         );

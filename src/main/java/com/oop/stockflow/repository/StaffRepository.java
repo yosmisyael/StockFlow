@@ -153,6 +153,36 @@ public class StaffRepository {
     }
 
     /**
+     * Counts the total number of staff members assigned to all warehouses
+     * that are managed by a specific manager.
+     * This is a transitive count: Manager -> Warehouses -> Staff.
+     *
+     * @param managerId The ID of the manager.
+     * @return The total count of all staff members working under that manager,
+     * or -1 if an error occurs.
+     */
+    public int countAllStaffByManagerId(int managerId) {
+        String sql = "SELECT COUNT(s.id) " +
+                "FROM staff s " +
+                "JOIN warehouses w ON s.warehouse_id = w.id " +
+                "WHERE w.manager_id = ?";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, managerId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Failed to count all staff by manager ID " + managerId + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
      * Mengupdate detail staf (nama, email, dan/atau password) secara opsional.
      * Kolom warehouse_id TIDAK diubah oleh method ini.
      *

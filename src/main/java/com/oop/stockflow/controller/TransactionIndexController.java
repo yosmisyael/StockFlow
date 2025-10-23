@@ -101,7 +101,7 @@ public class TransactionIndexController {
     private void loadTransactions() {
         if (currentUser == null) {
             transactionsTable.setItems(FXCollections.emptyObservableList());
-            updateStatisticsDisplay(0, 0, 0, 0); // Reset stats
+            updateStatisticsDisplay(0, 0, 0, 0);
             return;
         }
         List<Transaction> dbTransactions = transactionRepository.getAllTransactionsByStaffId(currentUser.getId());

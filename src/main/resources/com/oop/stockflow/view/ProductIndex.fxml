@@ -153,6 +153,19 @@
                         <Font size="14"/>
                     </font>
                 </Button>
+
+                <Button alignment="CENTER_LEFT" maxWidth="Infinity" styleClass="nav-button"
+                        onAction="#goToWarehouseEdit" text="Manage Dashboard" graphicTextGap="12">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-sliders-h"  iconSize="16"/>
+                    </graphic>
+                    <padding>
+                        <Insets bottom="12" left="16" right="12" top="12"/>
+                    </padding>
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Button>
             </VBox>
 
             <VBox VBox.vgrow="ALWAYS">
@@ -369,7 +382,7 @@
 
                         <!-- Pagination -->
                         <HBox alignment="CENTER" spacing="16" styleClass="pagination-container">
-                            <Label styleClass="pagination-info" text="Showing 1 to 5 of 2,847 results"
+                            <Label styleClass="pagination-info" text="Showing all stuff"
                                    HBox.hgrow="ALWAYS"/>
 
                             <HBox alignment="CENTER_RIGHT" spacing="8">

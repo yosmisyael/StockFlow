@@ -14,7 +14,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class WarehouseDashboardController {
+public class WarehouseShowController {
     private ProductRepository productRepository = ProductRepository.getInstance();
     private TransactionRepository transactionRepository = TransactionRepository.getInstance();
 
@@ -26,7 +26,6 @@ public class WarehouseDashboardController {
     private Label dateLabel;
     @FXML
     private Label initialLabel;
-
 
     // Main Content Header
     @FXML
@@ -50,8 +49,7 @@ public class WarehouseDashboardController {
     @FXML
     private Label outStockLabel;
 
-
-    // Charts & Notifications
+    // charts and notifications
     @FXML
     private LineChart<?, ?> outboundChart;
     @FXML
@@ -60,30 +58,15 @@ public class WarehouseDashboardController {
     private Warehouse currentWarehouse;
     private AuthenticatedUser currentUser;
 
-    public void initData(Warehouse warehouse, AuthenticatedUser user) {
-        currentUser = user;
-        currentWarehouse = warehouse;
-        loadPageContext();
-        updateUI();
-    }
-
-    private void updateUI() {
-        if (currentWarehouse != null) {
-            warehouseName.setText(currentWarehouse.getName());
-            warehouseAddress.setText(currentWarehouse.getAddress());
-            loadStats();
-        }
-    }
-
     private void loadStats() {
         // count inbound today
         int countInboundToday = 0;
-        countInboundToday = transactionRepository.countTodayInboundTransaction();
+        countInboundToday = transactionRepository.countTodayInboundTransaction(currentWarehouse.getId());
         inboundTodayCardLabel.setText(String.valueOf(countInboundToday));
 
         // count outbound today
         int countOutboundToday = 0;
-        countOutboundToday = transactionRepository.countTodayOutboundTransaction();
+        countOutboundToday = transactionRepository.countTodayOutboundTransaction(currentWarehouse.getId());
         outboundTodayCardLabel.setText(String.valueOf(countOutboundToday));
 
         // count low stock product
@@ -108,12 +91,13 @@ public class WarehouseDashboardController {
         totalStockCardLabel.setText(String.valueOf(countStock));
     }
 
+    // navigations
     @FXML
     private void goToWarehouseList() {
         StageManager.getInstance().navigateWithData(
                 View.WAREHOUSE_INDEX,
                 "Warehouse List",
-                (WarehouseController controller) -> {
+                (WarehouseIndexController controller) -> {
                     controller.initData(currentUser);
                 }
         );
@@ -142,6 +126,30 @@ public class WarehouseDashboardController {
         );
     }
 
+    @FXML
+    private void goToWarehouseEdit() {
+        currentUser = SessionManager.getInstance().getCurrentUser();
+        StageManager.getInstance().navigateWithData(
+                View.WAREHOUSE_EDIT,
+                "Manage Warehouse " + currentWarehouse.getName(),
+                (WarehouseEditController controller) -> {
+                    controller.initData(currentWarehouse, currentUser);
+                }
+        );
+    }
+
+    @FXML
+    private void goToProductCreate() {
+        currentUser = SessionManager.getInstance().getCurrentUser();
+        StageManager.getInstance().navigateWithData(
+                View.PRODUCT_CREATE,
+                "Add Product " + currentWarehouse.getName(),
+                (ProductCreateController controller) -> {
+                    controller.initData(currentWarehouse, currentUser);
+                }
+        );
+    }
+
     // action handlers
     @FXML
     private void handleLogout() {
@@ -155,5 +163,20 @@ public class WarehouseDashboardController {
         roleLabel.setText(currentUser.getUserType().getDbValue());
         dateLabel.setText(DateTimeUtils.getCurrentDate());
         initialLabel.setText(StringUtils.getInitial(currentUser.getName()));
+    }
+
+    public void initData(Warehouse warehouse, AuthenticatedUser user) {
+        currentUser = user;
+        currentWarehouse = warehouse;
+        loadPageContext();
+        updateUI();
+    }
+
+    private void updateUI() {
+        if (currentWarehouse != null) {
+            warehouseName.setText(currentWarehouse.getName());
+            warehouseAddress.setText(currentWarehouse.getAddress());
+            loadStats();
+        }
     }
 }

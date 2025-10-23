@@ -124,7 +124,33 @@
     -fx-text-fill: #6b7280;
     -fx-font-size: 14px;
 }
+.form-container {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 2);
+}
 
+/* Field Labels */
+.field-label {
+    -fx-text-fill: #374151;
+    -fx-font-weight: bold;
+}
+
+/* Form Inputs */
+.form-input {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 12 16;
+    -fx-font-size: 14;
+    -fx-text-fill: #374151;
+    -fx-prompt-text-fill: #9ca3af;
+}
 /* Page Header */
 .page-title {
     -fx-text-fill: #111827;

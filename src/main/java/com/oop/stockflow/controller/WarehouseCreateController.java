@@ -9,6 +9,7 @@ import com.oop.stockflow.model.WarehouseStatus;
 import com.oop.stockflow.repository.WarehouseRepository;
 import com.oop.stockflow.utils.DateTimeUtils;
 import com.oop.stockflow.utils.StringUtils;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -59,6 +60,22 @@ public class WarehouseCreateController {
         activeStatus.setUserData(WarehouseStatus.ACTIVE);
         inactiveStatus.setUserData(WarehouseStatus.INACTIVE);
         maintenanceStatus.setUserData(WarehouseStatus.MAINTENANCE);
+        postalCodeField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                return;
+            }
+
+            if (newValue.equals("0") && oldValue.isEmpty()) {
+                Platform.runLater(() -> postalCodeField.clear());
+                return;
+            }
+
+            if (!newValue.matches("\\d*")) {
+                postalCodeField.setText(oldValue);
+            }
+        });
+        addDecimalValidationListener(storageCapacityKgField);
+        addDecimalValidationListener(storageCapacityM3Field);
     }
 
     public void initData(AuthenticatedUser user) {
@@ -80,8 +97,8 @@ public class WarehouseCreateController {
         String city = cityField.getText().trim();
         String state = stateField.getText().trim();
         String postalCode = postalCodeField.getText().trim();
-        int capacityKg = parseIntSafe(storageCapacityKgField.getText());
-        int capacityM3 = parseIntSafe(storageCapacityM3Field.getText());
+        double capacityKg = parseDoubleSafe(storageCapacityKgField.getText());
+        double capacityM3 = parseDoubleSafe(storageCapacityM3Field.getText());
         Toggle selectedToggle = statusToggleGroup.getSelectedToggle();
 
         if (name.isEmpty() || address.isEmpty()) {
@@ -115,18 +132,21 @@ public class WarehouseCreateController {
             StageManager.getInstance().navigateWithData(
                     View.WAREHOUSE_INDEX,
                     "Warehouse List",
-                    (WarehouseController controller) -> { controller.initData(currentUser); }
+                    (WarehouseIndexController controller) -> { controller.initData(currentUser); }
             );
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to register warehouse.");
         }
     }
 
-    private int parseIntSafe(String value) {
+    private Double parseDoubleSafe(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return 0.0;
+        }
         try {
-            return Integer.parseInt(value.trim());
+            return Double.parseDouble(value.trim());
         } catch (NumberFormatException e) {
-            return 0;
+            return 0.0;
         }
     }
 
@@ -154,7 +174,7 @@ public class WarehouseCreateController {
         StageManager.getInstance().navigateWithData(
                 View.WAREHOUSE_INDEX,
                 "Warehouse List",
-                (WarehouseController controller) -> { controller.initData(currentUser); }
+                (WarehouseIndexController controller) -> { controller.initData(currentUser); }
         );
     }
 
@@ -166,4 +186,17 @@ public class WarehouseCreateController {
         initialLabel.setText(StringUtils.getInitial(currentUser.getName()));
     }
 
+    private void addDecimalValidationListener(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                return;
+            }
+
+            String validRegex = "^(?!0\\d)\\d*(\\.\\d*)?$";
+
+            if (!newValue.matches(validRegex)) {
+                textField.setText(oldValue);
+            }
+        });
+    }
 }
