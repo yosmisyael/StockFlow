@@ -1,6 +1,6 @@
 package com.oop.stockflow.model;
 
-public class User {
+public abstract class User {
     protected int id;
     protected String name;
     protected String email;
