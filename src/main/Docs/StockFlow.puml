@@ -1,0 +1,220 @@
+@startuml
+skinParam classAttributeIconSize 0
+hide empty members
+top to bottom direction
+' --- Enums ---
+enum ProductType {
+    DRY_GOOD
+    FRESH
+    --
+    - dbValue: String
+    --
+    + getDbValue(): String
+    + {static} fromDbValue(value: String): ProductType
+}
+
+enum UserType {
+    MANAGER
+    STAFF
+    --
+    - dbValue: String
+    --
+    + getDbValue(): String
+    + {static} fromDbValue(value: String): UserType
+}
+
+enum TransactionType {
+    INBOUND
+    OUTBOUND
+    --
+    - dbValue: String
+    --
+    + getDbValue(): String
+    + {static} fromDbValue(value: String): TransactionType
+}
+
+enum ShippingType {
+    STANDARD_GROUND
+    SEA_FREIGHT
+    EXPRESS_AIR
+    --
+    - dbValue: String
+    --
+    + getDbValue(): String
+    + {static} fromDbValue(value: String): ShippingType
+}
+
+enum TransactionStatus {
+    COMMITTED
+    PENDING
+    VOIDED
+    --
+    - dbValue: String
+    --
+    + getDbValue(): String
+    + {static} fromDbValue(value: String): TransactionStatus
+}
+
+
+' --- Abstract Base Classes ---
+abstract class Product {
+    # sku: Integer
+    # name: String
+    # brand: String
+    # description: String
+    # purchasePrice: BigDecimal
+    # weightPerUnitKg: double
+    # volumePerUnitM3: double
+    # quantity: int
+    # productType: ProductType
+    # warehouseId: int
+    --
+    # Product(sku: Integer, name: String, brand: String, description: String, purchasePrice: BigDecimal, weightPerUnitKg: double, volumePerUnitM3: double, quantity: int, productType: ProductType, warehouseId: int)
+    # Product(name: String, brand: String, description: String, purchasePrice: BigDecimal, weightPerUnitKg: double, volumePerUnitM3: double, quantity: int, productType: ProductType, warehouseId: int)
+    + getWarehouseId(): int
+    + getSku(): Integer
+    + getName(): String
+    + getBrand(): String
+    + getDescription(): String
+    + getPurchasePrice(): BigDecimal
+    + getWeightPerUnitKg(): double
+    + getVolumePerUnitM3(): double
+    + getQuantity(): int
+    + getProductType(): ProductType
+    + setWarehouseId(warehouseId: int): void
+    + setSku(sku: Integer): void
+    + setName(name: String): void
+    + setBrand(brand: String): void
+    + setDescription(description: String): void
+    + setPurchasePrice(purchasePrice: BigDecimal): void
+    + setWeightPerUnitKg(weightPerUnitKg: double): void
+    + setVolumePerUnitM3(volumePerUnitM3: double): void
+    + setQuantity(quantity: int): void
+    + setProductType(productType: ProductType): void
+    + toString(): String
+}
+
+abstract class User {
+    # id: int
+    # name: String
+    # email: String
+    # password: String
+    --
+    + getId(): int
+    + setId(id: int): void
+    + getName(): String
+    + setName(name: String): void
+    + getEmail(): String
+    + setEmail(email: String): void
+    + getPassword(): String
+    + setPassword(password: String): void
+}
+
+abstract class Transaction {
+    # id: int
+    # sku: int
+    # staffId: int
+    # date: Date
+    # quantity: int
+    # type: TransactionType
+    # status: TransactionStatus
+    # shippingType: ShippingType
+    --
+    + getId(): int
+    + setId(id: int): void
+    + getType(): TransactionType
+    + setType(type: TransactionType): void
+    + getQuantity(): int
+    + setQuantity(quantity: int): void
+    + getSku(): int
+    + setSku(sku: int): void
+    + getStaffId(): int
+    + setStaffId(staffId: int): void
+    + getDate(): Date
+    + setDate(date: Date): void
+    + getStatus(): TransactionStatus
+    + setStatus(status: TransactionStatus): void
+    + getShippingType(): ShippingType
+    + setShippingType(shippingType: ShippingType): void
+}
+
+
+' --- Concrete Classes ---
+class DryGoodProduct {
+    - reorderPoint: int
+    - reorderQuantity: int
+    - unitsPerCase: int
+    --
+    + DryGoodProduct(sku: Integer, name: String, brand: String, description: String, purchasePrice: BigDecimal, weightPerUnitKg: double, volumePerUnitM3: double, quantity: int, reorderPoint: int, reorderQuantity: int, unitsPerCase: int, warehouseId: int)
+    + DryGoodProduct(name: String, brand: String, description: String, purchasePrice: BigDecimal, weightPerUnitKg: double, volumePerUnitM3: double, quantity: int, reorderPoint: int, reorderQuantity: int, unitsPerCase: int, warehouseId: int)
+    + getReorderPoint(): int
+    + getReorderQuantity(): int
+    + getUnitsPerCase(): int
+    + setReorderPoint(reorderPoint: int): void
+    + setReorderQuantity(reorderQuantity: int): void
+    + setUnitsPerCase(unitsPerCase: int): void
+}
+
+class FreshProduct {
+    - requiredTemp: BigDecimal
+    - daysToAlertBeforeExpiry: int
+    --
+    + FreshProduct(sku: Integer, name: String, brand: String, description: String, purchasePrice: BigDecimal, weightPerUnitKg: double, volumePerUnitM3: double, quantity: int, requiredTemp: BigDecimal, daysToAlertBeforeExpiry: int, warehouseId: int)
+    + FreshProduct(name: String, brand: String, description: String, purchasePrice: BigDecimal, weightPerUnitKg: double, volumePerUnitM3: double, quantity: int, requiredTemp: BigDecimal, daysToAlertBeforeExpiry: int, warehouseId: int)
+    + getRequiredTemp(): BigDecimal
+    + getDaysToAlertBeforeExpiry(): int
+    + setRequiredTemp(requiredTemp: BigDecimal): void
+    + setDaysToAlertBeforeExpiry(daysToAlertBeforeExpiry: int): void
+}
+
+class Staff {
+    - warehouseId: int
+    --
+    + Staff(id: int, name: String, email: String, warehouseId: int)
+    + getWarehouseId(): int
+    + setWarehouseId(warehouseId: int): void
+}
+
+class Manager {
+    + Manager(id: int, name: String, email: String, warehouseId: int)
+}
+
+class AuthenticatedUser {
+    - userType: UserType
+    --
+    + AuthenticatedUser(id: int, name: String, userType: UserType)
+    + getUserType(): UserType
+}
+
+class InboundTransaction {
+    + InboundTransaction(id: int, sku: int, staffId: int, quantity: int, date: Date, shippingType: ShippingType, status: TransactionStatus, type: TransactionType)
+}
+
+class OutboundTransaction {
+    - destinationAddress: String
+    --
+    + OutboundTransaction(id: int, sku: int, staffId: int, quantity: int, date: Date, shippingType: ShippingType, status: TransactionStatus, destinationAddress: String, type: TransactionType)
+    + getDestinationAddress(): String
+    + setDestinationAddress(destinationAddress: String): void
+}
+
+' --- Relationships ---
+
+' Inheritance
+Product <|-- DryGoodProduct
+Product <|-- FreshProduct
+
+User <|-- Staff
+User <|-- Manager
+User <|-- AuthenticatedUser
+
+Transaction <|-- InboundTransaction
+Transaction <|-- OutboundTransaction
+
+' Composition / Association with Enums
+Product "1" *-- "1" ProductType
+Transaction "1" *-- "1" TransactionType
+Transaction "1" *-- "1" TransactionStatus
+Transaction "1" *-- "1" ShippingType
+AuthenticatedUser "1" *-- "1" UserType
+@enduml
