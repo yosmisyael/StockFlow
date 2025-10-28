@@ -111,6 +111,10 @@ public class InboundTransactionsController {
      */
     @FXML
     private void createTransaction() {
+        if (currentWarehouse.getStatus() != WarehouseStatus.ACTIVE) {
+            showAlert(Alert.AlertType.WARNING, "Prohibited Action", "You are not allowed to perform any transaction on non active warehouse");
+            return;
+        }
         Product selectedProduct = cmbProductSku.getValue();
         String quantityStr = txtQuantity.getText();
         ShippingType selectedShipping = cmbShippingMethod.getValue();

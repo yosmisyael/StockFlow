@@ -108,7 +108,10 @@ public class OutboundTransactionController {
      */
     @FXML
     private void handleCreateTransaction(ActionEvent event) {
-        System.out.println("handleCreateTransaction called");
+        if (currentWarehouse.getStatus() != WarehouseStatus.ACTIVE) {
+            showAlert(Alert.AlertType.WARNING, "Prohibited Action", "You are not allowed to perform any transaction on non active warehouse");
+            return;
+        }
 
         Product selectedProduct = productSKUCombo.getValue();
         String quantityStr = quantityField.getText();
@@ -136,7 +139,7 @@ public class OutboundTransactionController {
         }
 
          // stock validation
-         boolean stockAvailable = checkStockAvailability(selectedProduct.getSku(), quantity);
+         boolean stockAvailable = checkStockAvailability(selectedProduct.getQuantity(), quantity);
          if (!stockAvailable) {
              showAlert(Alert.AlertType.ERROR, "Stock Error", "Insufficient stock for product: " + selectedProduct.getName());
              return;

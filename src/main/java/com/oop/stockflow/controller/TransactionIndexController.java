@@ -333,6 +333,10 @@ public class TransactionIndexController {
             showAlert(Alert.AlertType.WARNING, "Update Not Allowed", "Only 'Pending' transactions can have their status updated.");
             return;
         }
+        if (currentWarehouse.getStatus() != WarehouseStatus.ACTIVE) {
+            showAlert(Alert.AlertType.WARNING, "Prohibited Action", "You are not allowed to perform any transaction on non active warehouse.");
+            return;
+        }
         showUpdateStatusDialog(transaction);
     }
 

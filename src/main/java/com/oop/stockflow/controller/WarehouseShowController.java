@@ -11,8 +11,13 @@ import com.oop.stockflow.utils.DateTimeUtils;
 import com.oop.stockflow.utils.StringUtils;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 public class WarehouseShowController {
     private ProductRepository productRepository = ProductRepository.getInstance();
@@ -51,7 +56,7 @@ public class WarehouseShowController {
 
     // charts and notifications
     @FXML
-    private LineChart<?, ?> outboundChart;
+    private LineChart<String, Number> outboundChart;
     @FXML
     private VBox notificationsContainer;
 
@@ -172,11 +177,46 @@ public class WarehouseShowController {
         updateUI();
     }
 
+    /**
+     * Helper method to draw the outbound transaction chart.
+     * Assuming the chart shows outbound counts over the last 7 days.
+     */
+    private void drawOutboundChart() {
+        outboundChart.getData().clear();
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Outbound Transactions");
+
+        final int DAYS_TO_SHOW = 7;
+        Map<LocalDate, Integer> counts = transactionRepository.getOutboundTransactionCounts(
+                currentWarehouse.getId(),
+                DAYS_TO_SHOW
+        );
+
+        DateTimeFormatter chartLabelFormatter = DateTimeFormatter.ofPattern("M/d");
+        LocalDate today = LocalDate.now();
+
+        for (Map.Entry<LocalDate, Integer> entry : counts.entrySet()) {
+            LocalDate date = entry.getKey();
+            int count = entry.getValue();
+
+            String label = date.equals(today) ? "Today" : date.format(chartLabelFormatter);
+
+            series.getData().add(new XYChart.Data<>(label, count));
+        }
+
+        outboundChart.getData().add(series);
+
+        outboundChart.getXAxis().setLabel("Day");
+        outboundChart.getYAxis().setLabel("Count");
+    }
+
     private void updateUI() {
         if (currentWarehouse != null) {
             warehouseName.setText(currentWarehouse.getName());
             warehouseAddress.setText(currentWarehouse.getAddress());
             loadStats();
+            drawOutboundChart();
         }
     }
 }

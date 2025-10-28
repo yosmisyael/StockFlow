@@ -4,8 +4,11 @@ import com.oop.stockflow.db.DatabaseManager;
 import com.oop.stockflow.model.*;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TransactionRepository {
     private static TransactionRepository instance;
@@ -221,5 +224,55 @@ public class TransactionRepository {
             System.err.println("Warning: Unknown transaction type found in DB: " + typeString);
             return null;
         }
+    }
+
+    /**
+     * Gets the outbound transaction counts for a warehouse over the last N days.
+     *
+     * @param warehouseId The ID of the warehouse.
+     * @param days The total number of days to retrieve (e.g., 7 for the last 7 days).
+     * @return A Map<LocalDate, Integer> containing the counts for each day.
+     * Days with no transactions will be included with a count of 0.
+     */
+    public Map<LocalDate, Integer> getOutboundTransactionCounts(int warehouseId, int days) {
+        // Use LinkedHashMap to preserve date order
+        Map<LocalDate, Integer> dailyCounts = new LinkedHashMap<>();
+
+        // 1. Initialize all days with 0 counts
+        // This ensures that even days with no transactions appear in the map
+        LocalDate today = LocalDate.now();
+        for (int i = 0; i < days; i++) {
+            LocalDate date = today.minusDays((days - 1) - i); // Start from (days-1) ago up to today
+            dailyCounts.put(date, 0);
+        }
+
+        String sql = "SELECT DATE(t.date) AS transaction_day, COUNT(t.*) AS transaction_count " +
+                "FROM transactions t " +
+                "JOIN products p ON t.product_sku = p.sku " +
+                "WHERE t.transaction_type = 'outbound'::transaction_type " +
+                "AND p.warehouse_id = ? " +
+                "AND t.date >= (CURRENT_DATE - (? || ' days')::interval) " +
+                "AND t.date < (CURRENT_DATE + '1 day'::interval) " +
+                "GROUP BY transaction_day";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, warehouseId);
+            stmt.setInt(2, days - 1);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    LocalDate date = rs.getDate("transaction_day").toLocalDate();
+                    int count = rs.getInt("transaction_count");
+                    dailyCounts.put(date, count);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERROR] " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return dailyCounts;
     }
 }
