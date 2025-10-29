@@ -3,6 +3,11 @@ package com.oop.stockflow.app;
 import com.oop.stockflow.model.AuthenticatedUser;
 import com.oop.stockflow.repository.AuthRepository;
 
+/**
+ * Manages user session state throughout the application lifecycle.
+ * Implements singleton pattern to ensure only one session manager exists.
+ * Handles session creation, persistence to database, and cleanup during logout.
+ */
 public final class SessionManager {
 
     private static SessionManager instance;
@@ -10,8 +15,18 @@ public final class SessionManager {
 
     private AuthRepository authRepository = AuthRepository.getInstance();
 
+    /**
+     * Private constructor to prevent direct instantiation.
+     * Ensures only one instance can be created through getInstance().
+     */
     private SessionManager() {}
 
+    /**
+     * Returns the singleton instance of SessionManager.
+     * Creates a new instance if one doesn't exist yet (lazy initialization).
+     *
+     * @return The single SessionManager instance used throughout the application.
+     */
     public static SessionManager getInstance() {
         if (instance == null) {
             instance = new SessionManager();
@@ -68,10 +83,20 @@ public final class SessionManager {
         return deletedFromDb;
     }
 
+    /**
+     * Retrieves the currently authenticated user in this session.
+     *
+     * @return The current AuthenticatedUser object if logged in, null otherwise.
+     */
     public AuthenticatedUser getCurrentUser() {
         return currentUser;
     }
 
+    /**
+     * Checks whether a user is currently logged in.
+     *
+     * @return true if a user session is active, false if no user is logged in.
+     */
     public boolean isLoggedIn() {
         return currentUser != null;
     }

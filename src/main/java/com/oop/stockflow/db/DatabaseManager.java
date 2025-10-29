@@ -6,9 +6,28 @@ import io.github.cdimascio.dotenv.Dotenv;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+/**
+ * Manages database connections using HikariCP connection pooling.
+ * Provides centralized access to database connections throughout the application.
+ * Automatically initializes the connection pool on class loading and manages
+ * connection lifecycle with optimal performance settings.
+ */
 public class DatabaseManager {
     private static HikariDataSource dataSource;
 
+    /**
+     * Static initializer block that sets up the HikariCP connection pool.
+     * Loads database credentials from environment variables (.env file) and configures
+     * the connection pool with optimal settings for performance and resource management.
+     * This block executes once when the class is first loaded.
+     *
+     * Configuration includes:
+     * - Maximum pool size: 10 connections
+     * - Idle timeout: 30 seconds
+     * - Leak detection threshold: 20 seconds
+     *
+     * @throws Exception If database connection fails or environment variables are missing.
+     */
     static {
         try {
             Dotenv dotenv = Dotenv.load();
@@ -36,10 +55,23 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Retrieves a database connection from the HikariCP connection pool.
+     * The connection should be closed after use to return it to the pool.
+     *
+     * @return A Connection object from the pool.
+     * @throws SQLException If unable to obtain a connection from the pool.
+     */
     public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
 
+    /**
+     * Closes the HikariCP connection pool and releases all database resources.
+     * Should be called during application shutdown to properly clean up connections.
+     *
+     * @throws SQLException If an error occurs while closing the connection pool.
+     */
     public static void closeDataSource() throws SQLException {
         if (dataSource != null) {
             dataSource.close();
