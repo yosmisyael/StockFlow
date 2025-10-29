@@ -109,7 +109,6 @@ public class AuthRepository {
      * @param userId   The ID of the user (Manager or Staff).
      * @param userType The type of the user (MANAGER or STAFF).
      * @return The generated session token if successful, otherwise null.
-     * @throws SQLException If a database access error occurs.
      */
     public boolean saveSession(long userId, UserType userType) { // Changed return type
         String token = UUID.randomUUID().toString(); // Generate token here

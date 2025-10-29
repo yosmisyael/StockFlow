@@ -11,19 +11,6 @@ import java.sql.SQLException;
  * Provides methods for manager registration and data persistence.
  */
 public class ManagerRepository {
-
-    /**
-     * Constructor for the ManagerRepository class.
-     *
-     * This class serves as the Data Access Object (DAO) or Repository layer
-     * for Manager entities, handling database operations like fetching, saving,
-     * and updating Manager records. It may contain logic for dependency injection
-     * or initial setup for the database connection.
-     *
-     * @return A new instance of ManagerRepository.
-     */
-    public ManagerRepository() {}
-
     /**
      * Registers a new manager in the database.
      * Note: This method currently stores the password as plain text.

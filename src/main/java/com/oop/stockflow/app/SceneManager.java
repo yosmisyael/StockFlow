@@ -11,18 +11,6 @@ import java.net.URL;
  * for JavaFX scene construction throughout the application.
  */
 public class SceneManager {
-
-    /**
-     * Constructor for the SceneManager class.
-     *
-     * This class is typically used to handle the loading, switching, and
-     * management of different JavaFX Scenes within the application's main
-     * window (Stage).
-     *
-     * @return A new instance of SceneManager.
-     */
-    public SceneManager(){}
-
     /**
      * Creates and returns an FXMLLoader for the specified view.
      * Locates the FXML file associated with the view and initializes a loader.
