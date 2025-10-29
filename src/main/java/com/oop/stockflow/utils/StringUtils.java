@@ -3,7 +3,19 @@ package com.oop.stockflow.utils;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Utility class for string manipulation operations.
+ * Provides helper methods for formatting and transforming strings used throughout the application.
+ */
 public class StringUtils {
+
+    /**
+     * Default constructor for StringUtils.
+     * Note: As a utility class with only static methods, instantiation is generally not recommended.
+     * Consider making this constructor private to prevent instantiation.
+     */
+    public StringUtils() {}
+
     /**
      * Gets the initials of the first one or two words from a string.
      * Handles null, empty strings, and extra whitespace.

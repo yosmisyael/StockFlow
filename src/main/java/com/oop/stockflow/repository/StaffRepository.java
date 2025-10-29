@@ -11,6 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Repository class for handling staff-related database operations.
+ * Implements singleton pattern to ensure only one instance manages staff data.
+ * Provides methods for staff CRUD operations, warehouse-specific queries,
+ * and password management with BCrypt encryption.
+ */
 public class StaffRepository {
     private static StaffRepository instance;
 

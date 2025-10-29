@@ -155,8 +155,9 @@ public class TransactionRepository {
     }
 
     /**
-     * Counts the number of inbound transactions recorded today (since 00:00) in a warehouse.
+     * Counts the number of inbound transactions recorded today (since 00:00) in a specific warehouse.
      *
+     * @param warehouseId The ID of the warehouse whose inbound transactions to count.
      * @return The total count of today's inbound transactions, or -1 if an error occurs.
      */
     public int countTodayInboundTransaction(int warehouseId) {

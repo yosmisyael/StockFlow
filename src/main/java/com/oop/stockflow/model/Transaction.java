@@ -18,6 +18,12 @@ public abstract class Transaction {
     protected ShippingType shippingType;
 
     /**
+     * Default constructor for Transaction.
+     * Creates an empty Transaction instance to be initialized by subclasses.
+     */
+    public Transaction(){}
+
+    /**
      * Retrieves the unique identifier of this transaction.
      *
      * @return The transaction ID.
