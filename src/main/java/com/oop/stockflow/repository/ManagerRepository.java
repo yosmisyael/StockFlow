@@ -6,6 +6,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * Repository class for handling manager-related database operations.
+ * Provides methods for manager registration and data persistence.
+ */
 public class ManagerRepository {
     /**
      * Registers a new manager in the database.

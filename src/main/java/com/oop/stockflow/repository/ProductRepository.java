@@ -11,8 +11,19 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Repository class for handling product-related database operations.
+ * Implements singleton pattern to ensure only one instance manages product data.
+ * Supports operations for both DryGoodProduct and FreshProduct types including
+ * CRUD operations, inventory queries, and warehouse-specific product management.
+ */
 public class ProductRepository {
     private static ProductRepository instance;
+
+    /**
+     * Private constructor to prevent direct instantiation.
+     * Ensures only one instance can be created through getInstance().
+     */
     private ProductRepository() {}
 
     /**

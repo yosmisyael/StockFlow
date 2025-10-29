@@ -12,8 +12,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
+/**
+ * Repository class for handling authentication-related database operations.
+ * Implements singleton pattern to ensure only one instance manages authentication data.
+ * Provides methods for user login, session management, and password validation using BCrypt.
+ */
 public class AuthRepository {
     private static AuthRepository instance;
+
+    /**
+     * Private constructor to prevent direct instantiation.
+     * Ensures only one instance can be created through getInstance().
+     */
     private AuthRepository() {}
 
     /**
@@ -94,6 +104,7 @@ public class AuthRepository {
 
     /**
      * Generates a unique session token and saves the session details to the database.
+     * Creates a new session record linking the user ID, user type, and generated token.
      *
      * @param userId   The ID of the user (Manager or Staff).
      * @param userType The type of the user (MANAGER or STAFF).
