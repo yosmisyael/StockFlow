@@ -8,6 +8,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Repository class (Data Access Object) for handling all persistence operations
+ * related to the {@code Warehouse} entity.
+ *
+ * This class implements the Singleton pattern to ensure only one instance
+ * manages database access for warehouse data.
+ */
 public class WarehouseRepository {
     private static WarehouseRepository instance;
 
