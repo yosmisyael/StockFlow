@@ -12,6 +12,12 @@ public abstract class User {
     protected String password;
 
     /**
+     * Default constructor for User.
+     * Creates an empty User instance to be initialized by subclasses.
+     */
+    public User() {}
+
+    /**
      * Retrieves the unique identifier of this user.
      *
      * @return The user ID.

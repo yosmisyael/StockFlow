@@ -10,7 +10,22 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * The main application class for StockFlow.
+ *
+ * This class extends JavaFX's Application and serves as the entry point
+ * for the JavaFX GUI framework. It initializes the primary stage, sets up
+ * the StageManager, and loads the initial application view (Login scene).
+ */
 public class App extends Application {
+
+    /**
+     * The primary entry point for the JavaFX application.
+     * Called automatically after the application is launched by the main method in Launcher.
+     *
+     * @param stage The primary Stage (window) provided by the JavaFX system.
+     * @throws IOException If the FXML file for the initial view (LOGIN) cannot be loaded.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         StageManager stageManager = StageManager.getInstance();

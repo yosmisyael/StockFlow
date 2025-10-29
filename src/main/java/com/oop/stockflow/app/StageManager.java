@@ -17,6 +17,17 @@ public class StageManager {
     private Stage mainStage;
 
     /**
+     * Constructor for the StageManager class.
+     *
+     * This class is responsible for managing the main JavaFX Stage and Scenes
+     * of the application. It typically holds a reference to the primary
+     * Stage and provides methods to switch or configure Scenes.
+     *
+     * @return A new instance of StageManager.
+     */
+    public StageManager() {}
+
+    /**
      * Sets a new scene to the main stage with the specified title.
      * Updates both the scene content and window title.
      *

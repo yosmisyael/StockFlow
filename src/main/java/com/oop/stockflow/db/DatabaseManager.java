@@ -16,6 +16,18 @@ public class DatabaseManager {
     private static HikariDataSource dataSource;
 
     /**
+     * Constructor for the DatabaseManager class.
+     *
+     * This class is the central point for managing database connections,
+     * executing SQL queries, and handling transactions for the entire application.
+     * Initialization logic, such as configuring the connection pool or establishing
+     * a connection, is typically performed here.
+     *
+     * @return A new instance of DatabaseManager.
+     */
+    public DatabaseManager() {}
+
+    /**
      * Static initializer block that sets up the HikariCP connection pool.
      * Loads database credentials from environment variables (.env file) and configures
      * the connection pool with optimal settings for performance and resource management.

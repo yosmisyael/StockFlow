@@ -128,12 +128,11 @@ public class AuthRepository {
     }
 
     /**
-     * Deletes a session from the database based on the session token.
+     * Deletes a session from the database based on the user ID associated with the session.
      * Typically called during logout.
      *
-     * @param userId The session token to delete.
-     * @return true if the session was successfully deleted, false otherwise.
-     * @throws SQLException If a database access error occurs.
+     * @param userId The ID of the user whose session should be deleted.
+     * @return true if the session was successfully deleted (one or more rows affected), false otherwise (e.g., no session found or a database error occurred).
      */
     public boolean deleteSession(long userId) { // Parameter changed to long userId
         String query = "DELETE FROM sessions WHERE user_id = ?";

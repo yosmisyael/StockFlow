@@ -1,5 +1,10 @@
 package com.oop.stockflow.app;
 
+/**
+ * Enumeration representing all available FXML views in the application.
+ * Maps view identifiers to their corresponding FXML file names for scene navigation.
+ * Each enum constant corresponds to a specific screen or page in the application.
+ */
 public enum View {
     LOGIN("LoginView.fxml"),
     REGISTER("RegisterView.fxml"),
@@ -22,10 +27,21 @@ public enum View {
 
     private final String fxmlFile;
 
+    /**
+     * Constructs a View enum with its corresponding FXML file name.
+     *
+     * @param fxmlFile The name of the FXML file (without path prefix).
+     */
     View(String fxmlFile) {
         this.fxmlFile = fxmlFile;
     }
 
+    /**
+     * Retrieves the full path to the FXML file for this view.
+     * Prepends the standard view directory path to the file name.
+     *
+     * @return The complete resource path to the FXML file (e.g., "/com/oop/stockflow/view/LoginView.fxml").
+     */
     public String getFxmlFile() {
         return "/com/oop/stockflow/view/" + fxmlFile;
     }
