@@ -82,7 +82,12 @@ public class TransactionShowController {
 
 
     /**
-     * Called after FXML loading to pass the Transaction object to display.
+     * Called after FXML loading to pass data and initialize the transaction detail view.
+     * Validates the transaction data, fetches related product information, and populates the view.
+     *
+     * @param warehouse The current warehouse context.
+     * @param user The authenticated user viewing the transaction.
+     * @param transaction The Transaction object to display (must not be null).
      */
     public void initData(Warehouse warehouse, AuthenticatedUser user, Transaction transaction) {
         currentUser = user;

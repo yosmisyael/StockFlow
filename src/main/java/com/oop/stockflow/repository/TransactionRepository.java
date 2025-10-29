@@ -10,6 +10,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Repository class for handling transaction-related database operations.
+ * Implements singleton pattern to ensure only one instance manages transaction data.
+ * Supports operations for both InboundTransaction and OutboundTransaction types including
+ * creation, retrieval, status updates, and analytics for warehouse inventory movements.
+ */
 public class TransactionRepository {
     private static TransactionRepository instance;
 
@@ -30,10 +36,16 @@ public class TransactionRepository {
     }
 
     /**
-     * Returns the singleton instance of the TransactionRepository.
-     * Creates the instance on the first call (lazy initialization).
+     * Creates a new inbound transaction in the database.
+     * Inbound transactions represent incoming inventory shipments to the warehouse.
      *
-     * @return The singleton TransactionRepository instance.
+     * @param staffId The ID of the staff member creating the transaction.
+     * @param date The timestamp of the transaction.
+     * @param shippingMethod The {@link ShippingType} enum value for the shipping method.
+     * @param productSku The SKU (integer ID) of the product being received.
+     * @param quantity The quantity of the product being received.
+     * @param initialStatus The initial {@link TransactionStatus} (e.g., PENDING, COMMITTED).
+     * @return {@code true} if the transaction was created successfully, {@code false} otherwise.
      */
     public boolean createInboundTransaction(int staffId, Timestamp date, ShippingType shippingMethod, int productSku, int quantity, TransactionStatus initialStatus) {
         String sql = "INSERT INTO transactions (user_id, date, transaction_type, destination_address, shipping_method, product_sku, quantity, status) " + "VALUES (?, ?, 'inbound'::transaction_type, NULL, ?::shipping_method, ?, ?, ?::transaction_status)";
@@ -120,8 +132,9 @@ public class TransactionRepository {
     }
 
     /**
-     * Counts the number of outbound transactions recorded today (since 00:00).
+     * Counts the number of outbound transactions recorded today (since 00:00) in a specific warehouse.
      *
+     * @param warehouseId The ID of the warehouse whose outbound transactions to count.
      * @return The total count of today's outbound transactions, or -1 if an error occurs.
      */
     public int countTodayOutboundTransaction(int warehouseId) {
@@ -231,7 +244,7 @@ public class TransactionRepository {
      *
      * @param warehouseId The ID of the warehouse.
      * @param days The total number of days to retrieve (e.g., 7 for the last 7 days).
-     * @return A Map<LocalDate, Integer> containing the counts for each day.
+     * @return A Map&lt;LocalDate, Integer&gt; containing the counts for each day.
      * Days with no transactions will be included with a count of 0.
      */
     public Map<LocalDate, Integer> getOutboundTransactionCounts(int warehouseId, int days) {
